@@ -1,40 +1,40 @@
 <template>
-    <p v-if="Math.trunc(punt) == 0">
+    <p v-if="Math.round(punt) == 0">
         <span class="fa fa-star"></span>
         <span class="fa fa-star"></span>
         <span class="fa fa-star"></span>
         <span class="fa fa-star"></span>
         <span class="fa fa-star"></span>
     </p>
-    <p v-else-if="Math.trunc(punt) == 1">
+    <p v-else-if="Math.round(punt) == 1">
         <span class="fa fa-star checked"></span>
         <span class="fa fa-star"></span>
         <span class="fa fa-star"></span>
         <span class="fa fa-star"></span>
         <span class="fa fa-star"></span>
     </p>
-    <p v-else-if="Math.trunc(punt) == 2">
+    <p v-else-if="Math.round(punt) == 2">
         <span class="fa fa-star checked"></span>
         <span class="fa fa-star checked"></span>
         <span class="fa fa-star"></span>
         <span class="fa fa-star"></span>
         <span class="fa fa-star"></span>
     </p>
-    <p v-else-if="Math.trunc(punt) == 3">
+    <p v-else-if="Math.round(punt) == 3">
         <span class="fa fa-star checked"></span>
         <span class="fa fa-star checked"></span>
         <span class="fa fa-star checked"></span>
         <span class="fa fa-star"></span>
         <span class="fa fa-star"></span>
     </p>
-    <p v-else-if="Math.trunc(punt) == 4">
+    <p v-else-if="Math.round(punt) == 4">
         <span class="fa fa-star checked"></span>
         <span class="fa fa-star checked"></span>
         <span class="fa fa-star checked"></span>
         <span class="fa fa-star checked"></span>
         <span class="fa fa-star"></span>
     </p>
-    <p v-else-if="Math.trunc(punt) == 5">
+    <p v-else-if="Math.round(punt) == 5">
         <span class="fa fa-star checked"></span>
         <span class="fa fa-star checked"></span>
         <span class="fa fa-star checked"></span>

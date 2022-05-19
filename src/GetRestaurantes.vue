@@ -1,12 +1,17 @@
 <template>
-    <div>
-        <p>
+    <div id="div">
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+        <div>
             <button class="alta">
                 <router-link :to="{ name: 'alta-restaurante' }">
-                    Añadir nuevo restaurante</router-link
+                    <i class="fa fa-plus"></i> Añadir nuevo
+                    restaurante</router-link
                 >
             </button>
-        </p>
+        </div>
         <div class="lista">
             <ul id="GetRestaurantes" v-if="restaurantes != null">
                 <li
@@ -14,30 +19,34 @@
                     v-for="restaurante in restaurantes"
                     :key="restaurante.id"
                 >
+                    <h6 class="id">{{ restaurante.id }}</h6>
                     <b>{{ restaurante.nombre }}</b>
                     <p>
                         <router-link
                             :to="{
                                 name: 'ver-restaurante',
-                                params: { id: restaurante.id },
+                                params: {
+                                    id: restaurante.id,
+                                },
                             }"
-                            >Ver</router-link
+                            ><i class="fa fa-eye"></i> Ver</router-link
                         >
                         <router-link
                             :to="{
                                 name: 'modificar-restaurante',
                                 params: { id: restaurante.id },
                             }"
-                            >Modificar</router-link
+                        >
+                            <i class="fa fa-pencil"></i> Modificar</router-link
                         >
                         <span v-if="idEliminar != restaurante.id">
-                            <!--Si NO se le ha dado click a "Eliminar", NO desaparece"-->
+                            <!--Si NO se le ha dado click a "Eliminar", el botón NO desaparece"-->
                             <a @click="eliminarRestaurante(restaurante.id)"
-                                >Eliminar</a
+                                ><i class="fa fa-trash-o"></i> Eliminar</a
                             >
                         </span>
                         <span class="eliminar" v-else>
-                            <!--Si se le ha dado click a "Eliminar", desaparece"-->
+                            <!--Si se le ha dado click a "Eliminar", el botón desaparece"-->
                             <p>¿Estás seguro de que quieres borrarlo?</p>
                             <button @click="siBorrar(restaurante.id)">
                                 Sí
@@ -48,11 +57,15 @@
                 </li>
             </ul>
             <p v-else>Cargando restaurantes...</p>
+            <button class="arriba" v-show="this.scrollpx>100" @click="irArriba()">
+                <a class="fa fa-arrow-circle-up"></a>
+            </button>
         </div>
     </div>
 </template>
 
 <script>
+//TODO que se pueda ordenar por nombre, número o puntuación
 import axios from "axios";
 
 export default {
@@ -60,19 +73,57 @@ export default {
     data() {
         return {
             restaurantes: null,
-            idEliminar: null,
+            idEliminar: "",
+            scrollpx: 0
         };
     },
     mounted() {
         this.getRestaurantes();
+
+        window.addEventListener("scroll", this.handleScroll);
+        
+        //console.log("mounted", document.body.addEventListener("scroll", this.handleScroll))
     },
     methods: {
         getRestaurantes() {
+            var arrayId = [];
+            var arrayNomDir = [];
+            var nomDir = {};
+
             axios
                 .get(
                     "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes"
                 )
-                .then((respuesta) => (this.restaurantes = respuesta.data.data));
+                .then((respuesta) => {
+                    if (respuesta.data.status == "OK") {
+                        this.restaurantes = respuesta.data.data;
+
+                        for (var i in this.restaurantes) {
+                            arrayId[i] = Object.values(this.restaurantes)[i].id;
+
+                            nomDir.nombre = Object.values(this.restaurantes)[
+                                i
+                            ].nombre;
+                            nomDir.direccion = Object.values(this.restaurantes)[
+                                i
+                            ].direccion;
+
+                            arrayNomDir.push(
+                                JSON.parse(JSON.stringify(nomDir))
+                            );
+                        }
+
+                        this.arrayId = arrayId.sort(function (a, b) {
+                            return a - b;
+                        });
+
+                        localStorage.setItem("arrayId", arrayId);
+                        localStorage.setItem(
+                            "arrayNomDir",
+                            JSON.stringify(arrayNomDir)
+                        );
+                    }
+                });
         },
         eliminarRestaurante(id) {
             this.idEliminar = id;
@@ -87,16 +138,36 @@ export default {
                         id
                 )
                 .then((respuesta) => {
-                    this.idEliminar = null;
-                    this.getRestaurantes();
+                    if (respuesta.data.status == "OK") {
+                        console.info(respuesta.data.message);
+
+                        this.idEliminar = null;
+                        this.getRestaurantes();
+                    }
                 })
-                .catch((error) => console.log(error.response.data));
+                .catch((error) =>
+                    console.error(
+                        "Ha ocurrido un error: ",
+                        error.data.message,
+                        " - ",
+                        error
+                    )
+                );
+        },
+        irArriba() {
+            document.getElementById("div").scrollIntoView({ behavior: "smooth" });
+        },
+        handleScroll() {
+            this.scrollpx = document.body.scrollTop;
+
+            console.log(this.scrollpx);
         },
     },
 };
 </script>
 
 <style>
+/*Botón añadir restaurante*/
 .alta {
     background: #42b983;
     border: 1px solid #2c3e50;
@@ -121,6 +192,7 @@ export default {
     background-color: #2c3e50;
 }
 
+/*Lista de restaurantes*/
 .lista ul {
     display: flex;
     flex-direction: row;
@@ -128,10 +200,16 @@ export default {
     justify-content: center;
 }
 
+/*ID de arriba a la izquierda*/
+.id {
+    margin: -20px 0px 10px 0px;
+    text-align: left;
+}
+
+/*Cajas de restaurantes (li)*/
 .cajas {
     margin: 20px;
     width: 20%;
-    height: 200px;
     border: 1px solid #2c3e50;
     border-radius: 25px;
     background: whitesmoke;
@@ -160,17 +238,25 @@ export default {
     color: white;
 }
 
-.eliminar button {
-    background: #42b983;
-    border: 1px solid #2c3e50;
-    padding: 10px 15px;
-    margin: 0px 10px;
-    color: #2c3e50;
+/*Botón para ir arriba del todo*/
+.arriba {
+    border: none;
+    background-color: inherit;
+    font-size: 50px;
+    float: right;
+    position: fixed;
+    bottom: 0px;
+    right: 0px; 
 }
 
-.eliminar button:hover {
-    background-color: #2c3e50;
+.arriba a {
+    text-decoration: none;
     color: #42b983;
+    transition: all 200ms ease;
+}
+
+.arriba a:hover {
+    color: #2c3e50;
     cursor: pointer;
 }
 </style>

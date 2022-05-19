@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="restaurante != null">
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -15,9 +15,9 @@
         <button class="refresh">
             <a @click="refrescar()"><i class="fa fa-refresh"></i></a>
         </button>
-        <div class="restImg" v-if="restaurante != null">
+        <div class="divRestImg" v-if="restaurante != null">
             <div class="divRest">
-                <h3 class="nombreRestaurante" v-text="restaurante.nombre"></h3>
+                <h3 class="nomRest" v-text="restaurante.nombre"></h3>
                 <p v-text="restaurante.descripcion"></p>
                 <h5 v-text="restaurante.direccion"></h5>
                 <h6>Precio: {{ restaurante.precio }}</h6>
@@ -31,8 +31,8 @@
                 />
             </div>
         </div>
-        <p v-else>Cargando restaurante...</p>
     </div>
+    <p v-else>No hay restaurantes</p>
 </template>
 
 <script>
@@ -43,39 +43,45 @@ export default {
     name: "restauranteRandom",
     data() {
         return {
-            id: null,
-            restaurante: "",
+            id: "",
+            restaurante: null,
         };
     },
-    mounted() {
-        axios
-            .get(
-                "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurante-random"
-            )
-            .then((respuesta) => {
-                this.restaurante = respuesta.data.data;
-
-                if (respuesta.data.status == "OK")
-                    this.$router
-                        .push("/restaurante-random/" + this.restaurante.id)
-                        .catch((error) => {});
-            });
-    },
     methods: {
-        refrescar() {
+        funcionAxios() {
             axios
                 .get(
                     "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurante-random"
                 )
                 .then((respuesta) => {
-                    this.restaurante = respuesta.data.data;
+                    if (respuesta.data.status == "OK") {
+                        this.restaurante = respuesta.data.data;
 
-                    if (respuesta.data.status == "OK")
-                        this.$router
-                            .push("/restaurante-random/" + this.restaurante.id)
-                            .catch((error) => {});
-                });
+                        if (
+                            this.$router.currentRoute.params.id !==
+                            this.restaurante.id
+                        ) {
+                            this.$router.push(
+                                "/restaurante-random/" + this.restaurante.id
+                            );
+                        }
+                    } else {
+                        console.error(
+                            "Ha ocurrido un error: ",
+                            respuesta.data.message
+                        );
+                    }
+                })
+                .catch((error) =>
+                    console.error("Ha ocurrido un error: ", error)
+                );
         },
+        refrescar() {
+            this.funcionAxios();
+        },
+    },
+    mounted() {
+        this.funcionAxios();
     },
     components: {
         Puntuacion,
