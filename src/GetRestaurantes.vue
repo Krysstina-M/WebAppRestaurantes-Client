@@ -57,7 +57,11 @@
                 </li>
             </ul>
             <p v-else>Cargando restaurantes...</p>
-            <button class="arriba" v-show="this.scrollpx>100" @click="irArriba()">
+            <button
+                class="arriba"
+                v-show="this.scrollpx > 300"
+                @click="irArriba()"
+            >
                 <a class="fa fa-arrow-circle-up"></a>
             </button>
         </div>
@@ -74,15 +78,13 @@ export default {
         return {
             restaurantes: null,
             idEliminar: "",
-            scrollpx: 0
+            scrollpx: 0,
         };
     },
     mounted() {
         this.getRestaurantes();
 
         window.addEventListener("scroll", this.handleScroll);
-        
-        //console.log("mounted", document.body.addEventListener("scroll", this.handleScroll))
     },
     methods: {
         getRestaurantes() {
@@ -155,13 +157,13 @@ export default {
                 );
         },
         irArriba() {
-            document.getElementById("div").scrollIntoView({ behavior: "smooth" });
+            document
+                .getElementById("div")
+                .scrollIntoView({ behavior: "smooth" });
         },
         handleScroll() {
-            this.scrollpx = document.body.scrollTop;
-
-            console.log(this.scrollpx);
-        },
+            this.scrollpx = window.scrollY;
+        }
     },
 };
 </script>
@@ -246,7 +248,7 @@ export default {
     float: right;
     position: fixed;
     bottom: 0px;
-    right: 0px; 
+    right: 0px;
 }
 
 .arriba a {

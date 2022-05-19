@@ -32,8 +32,8 @@
 //TODO Probar a meter más de una imagen (habría que hacer otra BD)
 //TODO Probar a meter imagen desde Desktop con BLOB
 //FIXME No funciona en git
+//FIXME A veces no refresca la web con los nuevos cambios
 //TODO convertir todos los mensajes de error en variables globales. Si una imagen no carga en el alt poner que ha habido un error
-//TODO terminar de arreglar el scroll
 import Vue from "vue";
 
 Vue.component("errorNomDir", {
