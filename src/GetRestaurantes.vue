@@ -56,7 +56,8 @@
                     </p>
                 </li>
             </ul>
-            <p v-else>Cargando restaurantes...</p>
+            <p v-else-if="this.errorS">No se ha podido conectar con el servidor. Inténtelo de nuevo más tarde.</p>            
+            <p v-else>No hay restaurantes</p>
             <button
                 class="arriba"
                 v-show="this.scrollpx > 400"
@@ -71,7 +72,7 @@
 <script>
 //TODO que se pueda ordenar por nombre, número o puntuación
 import axios from "axios";
-import error from "./main.js"
+import { ERRORES } from "./main";
 
 export default {
     name: "getRestaurantes",
@@ -80,6 +81,7 @@ export default {
             restaurantes: null,
             idEliminar: "",
             scrollpx: 0,
+            errorS: 0
         };
     },
     mounted() {
@@ -126,6 +128,10 @@ export default {
                             JSON.stringify(arrayNomDir)
                         );
                     }
+                })
+                .catch((error) => {
+                    console.error(ERRORES.ERROR_SERVER, error);
+                    this.errorS = 1;
                 });
         },
         eliminarRestaurante(id) {
@@ -149,12 +155,7 @@ export default {
                     }
                 })
                 .catch((error) =>
-                    console.error(
-                        "Ha ocurrido un error: ",
-                        error.data.message,
-                        " - ",
-                        error
-                    )
+                    console.error("z ", error.data.message, " - ", error)
                 );
         },
         irArriba() {
@@ -164,7 +165,7 @@ export default {
         },
         handleScroll() {
             this.scrollpx = window.scrollY;
-        }
+        },
     },
 };
 </script>
