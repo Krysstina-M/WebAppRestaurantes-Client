@@ -41,7 +41,29 @@ Vue.component("errorNomDir", {
     <tr>
         <td></td>
         <td class="tdError">
-            <input class="error" value="Este restaurante ya existe" disabled></input>
+            <input class="error" value="Este restaurante ya existe" disabled/>
+        </td>
+    </tr>
+`,
+});
+
+Vue.component("errorS", {
+    template: `
+    <tr>
+        <td></td>
+        <td class="tdError">
+            <input class="error" value="No se ha podido conectar con el servidor." disabled/>
+        </td>
+    </tr>
+`,
+});
+
+Vue.component("errorBD", {
+    template: `
+    <tr>
+        <td></td>
+        <td class="tdError">
+            <input class="error" value="No se ha podido conectar con la base de datos." disabled/>
         </td>
     </tr>
 `,

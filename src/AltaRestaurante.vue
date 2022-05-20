@@ -42,7 +42,7 @@
                         />
                     </td>
                 </tr>
-                <errorNomDir v-if="this.existe"></errorNomDir>
+                <errorNomDir v-show="this.existe"></errorNomDir>
                 <tr>
                     <td class="etq">Descripción</td>
                     <td>
@@ -70,6 +70,8 @@
                         </select>
                     </td>
                 </tr>
+                <errorS v-show="this.errorS"></errorS>
+                <errorBD v-show="this.errorBD"></errorBD>
                 <tr>
                     <td colspan="3">
                         <input type="submit" value="Guardar restaurante" />
@@ -82,6 +84,7 @@
 
 <script>
 import axios from "axios";
+import { ERRORES } from "./main";
 
 export default {
     name: "altaRestaurante",
@@ -97,6 +100,8 @@ export default {
             },
             existe: 0,
             arrayNomDir: localStorage.getItem("arrayNomDir"),
+            errorS: 0,
+            errorBD: 0,
         };
     },
     methods: {
@@ -106,6 +111,9 @@ export default {
             this.restaurante.descripcion = "";
             this.restaurante.imagen = "";
             this.restaurante.precio = "Medio";
+            this.existe = 0;
+            this.errorS = 0;
+            this.errorBD = 0;
         },
         altaRestaurante() {
             var array = JSON.parse(this.arrayNomDir);
@@ -130,34 +138,18 @@ export default {
                         if (respuesta.data.status == "OK") {
                             console.info(respuesta.data.message);
 
-                            this.$router
-                                .push(
-                                    "/ver-restaurante/" + respuesta.data.data.id
-                                )
-                                .catch((error) => {
-                                    console.error(
-                                        "Ha ocurrido un error al redirigir a la página: ",
-                                        error
-                                    );
-                                });
-                        } else {
-                            console.error(
-                                "Ha ocurrido un error: ",
-                                respuesta.data.message
+                            this.$router.push(
+                                "/ver-restaurante/" + respuesta.data.data.id
                             );
-                            this.$router
-                                .push("/get-restaurantes/")
-                                .catch((error) => {
-                                    console.error(
-                                        "Ha ocurrido un error al redirigir a la página: ",
-                                        error
-                                    );
-                                });
+                        } else {
+                            console.error(ERRORES.ERROR_BD);
+                            this.errorBD = 1;
                         }
                     })
-                    .catch((error) =>
-                        console.error("Ha ocurrido un error: ", error)
-                    );
+                    .catch((error) => {
+                        console.error(ERRORES.ERROR_SERVER, error);
+                        this.errorS = 1;
+                    });
             }
         },
     },

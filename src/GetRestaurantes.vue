@@ -59,7 +59,7 @@
             <p v-else>Cargando restaurantes...</p>
             <button
                 class="arriba"
-                v-show="this.scrollpx > 300"
+                v-show="this.scrollpx > 400"
                 @click="irArriba()"
             >
                 <a class="fa fa-arrow-circle-up"></a>
@@ -71,6 +71,7 @@
 <script>
 //TODO que se pueda ordenar por nombre, número o puntuación
 import axios from "axios";
+import error from "./main.js"
 
 export default {
     name: "getRestaurantes",

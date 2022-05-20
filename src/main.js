@@ -32,6 +32,12 @@ const router = new VueRouter({
     mode: 'history'
 });
 
+//Constantes para los mensajes de error
+export const ERRORES = {
+    ERROR_SERVER: "Error del servidor.",
+    ERROR_BD: "Error de base de datos."
+}
+
 //Instancia Vue
 new Vue({
     el: '#app',
