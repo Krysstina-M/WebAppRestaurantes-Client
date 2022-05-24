@@ -23,7 +23,7 @@
             <button class="refresh">
                 <a @click="refrescar()"><i class="fa fa-refresh"></i></a>
             </button>
-            <div class="divRestImg" v-if="restaurante != ''">
+            <div class="divRestImg">
                 <div class="divRest">
                     <h3 class="nomRest" v-text="restaurante.nombre"></h3>
                     <p v-text="restaurante.descripcion"></p>

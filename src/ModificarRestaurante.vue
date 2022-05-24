@@ -34,7 +34,7 @@
                 </tr>
                 <tr>
                     <td class="etq">Dirección</td>
-                    <td>
+                    <td class="dir">
                         <input
                             type="text"
                             v-model="restaurante.direccion"
@@ -42,10 +42,10 @@
                         />
                     </td>
                 </tr>
-                <errorNomDir v-if="this.existe"></errorNomDir>
+                <errorNomDir v-show="this.existe"></errorNomDir>
                 <tr>
                     <td class="etq">Descripción</td>
-                    <td class="dir">
+                    <td>
                         <textarea v-model="restaurante.descripcion"></textarea>
                     </td>
                 </tr>
