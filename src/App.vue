@@ -33,7 +33,9 @@
 //TODO Probar a meter imagen desde Desktop con BLOB
 //FIXME No funciona en git
 //FIXME A veces no refresca la web con los nuevos cambios
-//TODO convertir todos los mensajes de error en variables globales. Si una imagen no carga en el alt poner que ha habido un error
+//TODO poner timer para que el mensaje de cuando la bd esté vacía cambie a "No hay restaurantes"
+//TODO juntar en un component lo de alta y modificacion
+//TODO juntar en un component lo de ver restaurante, random y destacado
 import Vue from "vue";
 
 Vue.component("errorNomDir", {
@@ -218,30 +220,6 @@ textarea {
     border-radius: 20px;
 }
 
-/*input[type="file"] {
-    padding: 5px;
-    width: 50%;
-    margin: 0px 20px;
-}
-
-input[type="file"]::file-selector-button {
-    background: #42b983;
-    border: 1px solid #2c3e50;
-    padding: 5px;
-    color: #2c3e50;
-}
-
-input[type="file"]::file-selector-button:hover {
-    background-color: #2c3e50;
-    color: #42b983;
-    cursor: pointer;
-}
-
-input[type="text"]:disabled,
-input[type="file"]:disabled {
-    background-color: silver;
-}*/
-
 /*Botón guardar*/
 input[type="submit"] {
     background: #42b983;
@@ -260,21 +238,17 @@ input[type="submit"]:hover {
 }
 
 /*VerRestaurante + RestauranteDestacado + RestauranteRandom*/
-/*Flecha derecha*/
-.right {
-    width: 20px;
-    height: 20px;
-    border-top: 5px solid #2c3e50;
-    border-right: 5px solid #2c3e50;
-    margin: 1% 30%;
-    right: 0;
-    left: 100;
-    transform: translate3d(0, -50%, 0) rotate(45deg);
-}
-
-.right:hover {
-    border-color: #2c3e50;
-    box-shadow: 5px -5px 0 #42b983;
+/*Mensaje error servidor + BD*/
+.pError {
+    color: firebrick;
+    background-color: #ffcccc;
+    font-size: 30px;
+    border-radius: 5px;
+    width: 40%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /*Nombre restaurante*/

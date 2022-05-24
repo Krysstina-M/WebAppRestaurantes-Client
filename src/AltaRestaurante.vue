@@ -118,6 +118,8 @@ export default {
         altaRestaurante() {
             var array = JSON.parse(this.arrayNomDir);
             this.existe = 0;
+            this.errorS = 0;
+            this.errorBD = 0;
 
             for (var i in array) {
                 if (
@@ -138,16 +140,20 @@ export default {
                         if (respuesta.data.status == "OK") {
                             console.info(respuesta.data.message);
 
-                            this.$router.push(
-                                "/ver-restaurante/" + respuesta.data.data.id
-                            );
+                            this.$router
+                                .push(
+                                    "/ver-restaurante/" + respuesta.data.data.id
+                                )
+                                .catch((error) =>
+                                    console.error(ERRORES.ERROR_REDIRIGIR)
+                                );
                         } else {
                             console.error(ERRORES.ERROR_BD);
                             this.errorBD = 1;
                         }
                     })
                     .catch((error) => {
-                        console.error(ERRORES.ERROR_SERVER, error);
+                        console.error(ERRORES.ERROR_SERVER);
                         this.errorS = 1;
                     });
             }

@@ -1,50 +1,63 @@
 <template>
-    <div v-if="restaurante != null">
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-        />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-        />
-        <h2>
-            Hoy podrás comer o cenar en el restaurante nº
-            {{ restaurante.id }}
-        </h2>
-        <button class="refresh">
-            <a @click="refrescar()"><i class="fa fa-refresh"></i></a>
-        </button>
-        <div class="divRestImg" v-if="restaurante != null">
-            <div class="divRest">
-                <h3 class="nomRest" v-text="restaurante.nombre"></h3>
-                <p v-text="restaurante.descripcion"></p>
-                <h5 v-text="restaurante.direccion"></h5>
-                <h6>Precio: {{ restaurante.precio }}</h6>
-                <puntuacion :punt="restaurante.puntuacion"></puntuacion>
-            </div>
-            <div class="divImg" v-if="restaurante.imagen != null">
-                <img
-                    class="img"
-                    :alt="restaurante.imagen.split('/').pop()"
-                    :src="restaurante.imagen"
-                />
+    <div>
+        <p class="pError" v-if="this.errorS">
+            No se ha podido conectar con el servidor. Inténtelo de nuevo más
+            tarde.
+        </p>
+        <p class="pError" v-else-if="this.errorBD">
+            No se ha podido conectar con la base de datos.
+        </p>
+        <div v-else-if="restaurante != ''">
+            <link
+                rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+            />
+            <link
+                rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+            />
+            <h2>
+                Hoy podrás comer o cenar en el restaurante nº
+                {{ restaurante.id }}
+            </h2>
+            <button class="refresh">
+                <a @click="refrescar()"><i class="fa fa-refresh"></i></a>
+            </button>
+            <div class="divRestImg" v-if="restaurante != ''">
+                <div class="divRest">
+                    <h3 class="nomRest" v-text="restaurante.nombre"></h3>
+                    <p v-text="restaurante.descripcion"></p>
+                    <h5 v-text="restaurante.direccion"></h5>
+                    <h6>Precio: {{ restaurante.precio }}</h6>
+                    <puntuacion :punt="restaurante.puntuacion"></puntuacion>
+                </div>
+                <div class="divImg" v-if="restaurante.imagen != null">
+                    <img
+                        class="img"
+                        :alt="this.errorImg"
+                        :src="restaurante.imagen"
+                    />
+                </div>
             </div>
         </div>
+        <p v-else>Cargando restaurante...</p>
     </div>
-    <p v-else>No hay restaurantes</p>
 </template>
 
 <script>
 import axios from "axios";
 import Puntuacion from "./Puntuacion.vue";
+import { ERRORES } from "./main";
 
 export default {
     name: "restauranteRandom",
     data() {
         return {
             id: "",
-            restaurante: null,
+            restaurante: "",
+            errorS: 0,
+            errorBD: 0,
+            errorImg: ERRORES.ERROR_IMG,
         };
     },
     methods: {
@@ -61,20 +74,23 @@ export default {
                             this.$router.currentRoute.params.id !==
                             this.restaurante.id
                         ) {
-                            this.$router.push(
-                                "/restaurante-random/" + this.restaurante.id
-                            );
+                            this.$router
+                                .push(
+                                    "/restaurante-random/" + this.restaurante.id
+                                )
+                                .catch((error) =>
+                                    console.error(ERRORES.ERROR_REDIRIGIR)
+                                );
                         }
-                    } else {
-                        console.error(
-                            "Ha ocurrido un error: ",
-                            respuesta.data.message
-                        );
+                    } else if (respuesta.data.status != "error") {
+                        console.error(ERRORES.ERROR_BD);
+                        this.errorBD = 1;
                     }
                 })
-                .catch((error) =>
-                    console.error("Ha ocurrido un error: ", error)
-                );
+                .catch((error) => {
+                    console.error(ERRORES.ERROR_SERVER);
+                    this.errorS = 1;
+                });
         },
         refrescar() {
             this.funcionAxios();

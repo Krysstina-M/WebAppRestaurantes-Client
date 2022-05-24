@@ -70,6 +70,8 @@
                         </select>
                     </td>
                 </tr>
+                <errorS v-show="this.errorS"></errorS>
+                <errorBD v-show="this.errorBD"></errorBD>
                 <tr>
                     <td colspan="3">
                         <input
@@ -88,7 +90,7 @@
                             ></a>
                         </button>
                         <span class="eliminar" v-else>
-                            <!--Si se le ha dado click a "Eliminar", desaparece"-->
+                            <!--Si se le ha dado click a "Eliminar", desaparece-->
                             <p>¿Estás seguro de que quieres borrarlo?</p>
                             <button @click.prevent="siBorrar(restaurante.id)">
                                 Sí
@@ -104,6 +106,7 @@
 
 <script>
 import axios from "axios";
+import { ERRORES } from "./main";
 
 export default {
     name: "modificarRestaurante",
@@ -121,6 +124,8 @@ export default {
             existe: 0,
             arrayNomDir: localStorage.getItem("arrayNomDir"),
             idEliminar: "",
+            errorS: 0,
+            errorBD: 0,
         };
     },
     mounted() {
@@ -138,19 +143,17 @@ export default {
                     this.nomAnterior = this.restaurante.nombre;
                     this.dirAnterior = this.restaurante.direccion;
                 } else {
-                    console.error(
-                        "Ha ocurrido un error: ",
-                        respuesta.data.message
-                    );
-                    this.$router.push("/get-restaurantes/").catch((error) => {
-                        console.error(
-                            "Ha ocurrido un error al redirigir a la página: ",
-                            error
+                    this.$router
+                        .push("/get-restaurantes/")
+                        .catch((error) =>
+                            console.error(ERRORES.ERROR_REDIRIGIR)
                         );
-                    });
                 }
             })
-            .catch((error) => console.error("Ha ocurrido un error: ", error));
+            .catch((error) => {
+                console.error(ERRORES.ERROR_SERVER);
+                this.errorS = 1;
+            });
     },
     methods: {
         limpiar() {
@@ -159,6 +162,9 @@ export default {
             this.restaurante.descripcion = "";
             this.restaurante.imagen = "";
             this.restaurante.precio = "Medio";
+            this.existe = 0;
+            this.errorS = 0;
+            this.errorBD = 0;
         },
         guardarRestaurante() {
             var datos = JSON.stringify(this.restaurante);
@@ -192,29 +198,28 @@ export default {
 
                             this.$router
                                 .push("/ver-restaurante/" + this.id)
-                                .catch((error) => {
-                                    console.error(
-                                        "Ha ocurrido un error al redirigir a la página: ",
-                                        error
-                                    );
-                                });
+                                .catch((error) =>
+                                    console.error(ERRORES.ERROR_REDIRIGIR)
+                                );
                         } else {
-                            console.error(
-                                "Ha ocurrido un error: ",
-                                respuesta.data.message
-                            );
+                            console.error(ERRORES.ERROR_BD);
+                            this.errorBD = 1;
                         }
                     })
-                    .catch((error) =>
-                        console.error("Ha ocurrido un error: ", error)
-                    );
+                    .catch((error) => {
+                        console.error(ERRORES.ERROR_SERVER);
+                        this.errorS = 1;
+                    });
             }
         },
         eliminarRestaurante(id) {
             this.idEliminar = id;
         },
         noBorrar() {
-            this.idEliminar = null;
+            this.errorS = 0;
+            this.errorBD = 0;
+
+            this.idEliminar = "";
         },
         siBorrar(id) {
             axios
@@ -226,26 +231,22 @@ export default {
                     if (respuesta.data.status == "OK") {
                         console.info(respuesta.data.message);
 
-                        this.idEliminar = null;
+                        this.idEliminar = "";
 
                         this.$router
                             .push({ path: "/get-restaurantes" })
-                            .catch((error) => {
-                                console.error(
-                                    "Ha ocurrido un error al redirigir a la página: ",
-                                    error
-                                );
-                            });
+                            .catch((error) =>
+                                console.error(ERRORES.ERROR_REDIRIGIR)
+                            );
                     } else {
-                        console.error(
-                            "Ha ocurrido un error: ",
-                            respuesta.data.message
-                        );
+                        console.error(ERRORES.ERROR_BD);
+                        this.errorBD = 1;
                     }
                 })
-                .catch((error) =>
-                    console.error("Ha ocurrido un error: ", error)
-                );
+                .catch((error) => {
+                    console.error(ERRORES.ERROR_SERVER);
+                    this.errorS = 1;
+                });
         },
     },
 };

@@ -34,8 +34,10 @@ const router = new VueRouter({
 
 //Constantes para los mensajes de error
 export const ERRORES = {
-    ERROR_SERVER: "Error del servidor.",
-    ERROR_BD: "Error de base de datos."
+    ERROR_SERVER: "Error del servidor",
+    ERROR_BD: "Error de base de datos",
+    ERROR_REDIRIGIR: "Error al redirigir a la página",
+    ERROR_IMG: "No se ha podido cargar la imagen",
 }
 
 //Instancia Vue

@@ -1,39 +1,48 @@
 <template>
     <div>
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-        />
-        <h2>Estás viendo el restaurante nº {{ restaurante.id }}</h2>
-        <button class="anterior">
-            <a
-                v-if="restaurante.id > Number(this.idPrimero)"
-                @click="anterior()"
-                class="fa fa-chevron-left"
-            ></a>
-        </button>
-        <button class="siguiente">
-            <a
-                v-if="restaurante.id < Number(this.idUltimo)"
-                @click="siguiente()"
-                class="fa fa-chevron-right"
-            ></a>
-        </button>
-        <div class="divRestImg ver" v-if="restaurante != null">
-            <div class="divRest">
-                <h3 class="nomRest" v-text="restaurante.nombre"></h3>
-                <p v-text="restaurante.descripcion"></p>
-                <h5 v-text="restaurante.direccion"></h5>
-                <h6>Precio: {{ restaurante.precio }}</h6>
-                <puntuacion :punt="restaurante.puntuacion"></puntuacion>
-            </div>
+        <p class="pError" v-if="this.errorS">
+            No se ha podido conectar con el servidor. Inténtelo de nuevo más
+            tarde.
+        </p>
+        <p class="pError" v-else-if="this.errorBD">
+            No se ha podido conectar con la base de datos.
+        </p>
+        <div v-else-if="restaurante != ''">
+            <link
+                rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+            />
+            <h2>Estás viendo el restaurante nº {{ restaurante.id }}</h2>
+            <button class="anterior">
+                <a
+                    v-if="restaurante.id > Number(this.idPrimero)"
+                    @click="anterior()"
+                    class="fa fa-chevron-left"
+                ></a>
+            </button>
+            <button class="siguiente">
+                <a
+                    v-if="restaurante.id < Number(this.idUltimo)"
+                    @click="siguiente()"
+                    class="fa fa-chevron-right"
+                ></a>
+            </button>
+            <div class="divRestImg ver">
+                <div class="divRest">
+                    <h3 class="nomRest" v-text="restaurante.nombre"></h3>
+                    <p v-text="restaurante.descripcion"></p>
+                    <h5 v-text="restaurante.direccion"></h5>
+                    <h6>Precio: {{ restaurante.precio }}</h6>
+                    <puntuacion :punt="restaurante.puntuacion"></puntuacion>
+                </div>
 
-            <div class="divImg" v-if="restaurante.imagen != null">
-                <img
-                    class="img"
-                    :alt="restaurante.imagen.split('/').pop()"
-                    :src="restaurante.imagen"
-                />
+                <div class="divImg" v-if="restaurante.imagen != null">
+                    <img
+                        class="img"
+                        :alt="this.errorImg"
+                        :src="restaurante.imagen"
+                    />
+                </div>
             </div>
         </div>
         <p v-else>Cargando restaurante...</p>
@@ -43,6 +52,7 @@
 <script>
 import axios from "axios";
 import Puntuacion from "./Puntuacion.vue";
+import { ERRORES } from "./main";
 
 export default {
     name: "datosRestaurante",
@@ -55,6 +65,9 @@ export default {
             idUltimo: "",
             idSiguiente: "",
             arrayId: localStorage.getItem("arrayId").split(","),
+            errorS: 0,
+            errorBD: 0,
+            errorImg: ERRORES.ERROR_IMG,
         };
     },
     methods: {
@@ -74,34 +87,29 @@ export default {
                             this.arrayId[this.arrayId.indexOf(this.id) - 1];
                         this.idSiguiente =
                             this.arrayId[this.arrayId.indexOf(this.id) + 1];
-                    } else {
-                        console.error(
-                            "Ha ocurrido un error: ",
-                            respuesta.data.message
-                        );
-                        this.$router
-                            .push("/get-restaurantes/")
-                            .catch((error) => {
-                                console.error(
-                                    "Ha ocurrido un error al redirigir a la página: ",
-                                    error
-                                );
-                            });
+                    } else if (respuesta.data.status != "error") {
+                        console.error(ERRORES.ERROR_BD);
+                        this.errorBD = 1;
                     }
                 })
-                .catch((error) =>
-                    console.error("Ha ocurrido un error: ", error)
-                );
+                .catch((error) => {
+                    console.error(ERRORES.ERROR_SERVER);
+                    this.errorS = 1;
+                });
         },
         anterior() {
-            this.$router.push("/ver-restaurante/" + this.idAnterior);
+            this.$router
+                .push("/ver-restaurante/" + this.idAnterior)
+                .catch((error) => console.error(ERRORES.ERROR_REDIRIGIR));
 
             this.id = this.idAnterior;
 
             this.funcionAxios();
         },
         siguiente() {
-            this.$router.push("/ver-restaurante/" + this.idSiguiente);
+            this.$router
+                .push("/ver-restaurante/" + this.idSiguiente)
+                .catch((error) => console.error(ERRORES.ERROR_REDIRIGIR));
 
             this.id = this.idSiguiente;
 

@@ -13,7 +13,14 @@
             </button>
         </div>
         <div class="lista">
-            <ul id="GetRestaurantes" v-if="restaurantes != null">
+            <p class="pError" v-if="this.errorS">
+                No se ha podido conectar con el servidor. Inténtelo de nuevo más
+                tarde.
+            </p>
+            <p class="pError" v-else-if="this.errorBD">
+                No se ha podido conectar con la base de datos.
+            </p>
+            <ul id="GetRestaurantes" v-else-if="restaurantes != ''">
                 <li
                     class="cajas"
                     v-for="restaurante in restaurantes"
@@ -56,8 +63,7 @@
                     </p>
                 </li>
             </ul>
-            <p v-else-if="this.errorS">No se ha podido conectar con el servidor. Inténtelo de nuevo más tarde.</p>            
-            <p v-else>No hay restaurantes</p>
+            <p v-else>Cargando restaurantes...</p>
             <button
                 class="arriba"
                 v-show="this.scrollpx > 400"
@@ -78,10 +84,11 @@ export default {
     name: "getRestaurantes",
     data() {
         return {
-            restaurantes: null,
+            restaurantes: "",
             idEliminar: "",
             scrollpx: 0,
-            errorS: 0
+            errorS: 0,
+            errorBD: 0,
         };
     },
     mounted() {
@@ -127,10 +134,13 @@ export default {
                             "arrayNomDir",
                             JSON.stringify(arrayNomDir)
                         );
+                    } else {
+                        console.error(ERRORES.ERROR_BD);
+                        this.errorBD = 1;
                     }
                 })
                 .catch((error) => {
-                    console.error(ERRORES.ERROR_SERVER, error);
+                    console.error(ERRORES.ERROR_SERVER);
                     this.errorS = 1;
                 });
         },
@@ -138,7 +148,7 @@ export default {
             this.idEliminar = id;
         },
         noBorrar() {
-            this.idEliminar = null;
+            this.idEliminar = "";
         },
         siBorrar(id) {
             axios
@@ -150,13 +160,17 @@ export default {
                     if (respuesta.data.status == "OK") {
                         console.info(respuesta.data.message);
 
-                        this.idEliminar = null;
+                        this.idEliminar = "";
                         this.getRestaurantes();
+                    } else {
+                        console.error(ERRORES.ERROR_BD);
+                        this.errorBD = 1;
                     }
                 })
-                .catch((error) =>
-                    console.error("z ", error.data.message, " - ", error)
-                );
+                .catch((error) => {
+                    console.error(ERRORES.ERROR_SERVER);
+                    this.errorS = 1;
+                });
         },
         irArriba() {
             document
