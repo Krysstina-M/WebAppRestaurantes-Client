@@ -40,6 +40,7 @@
                 </div>
             </div>
         </div>
+        <p v-else-if="noHay">No hay restaurantes</p>
         <p v-else>Cargando restaurante...</p>
     </div>
 </template>
@@ -58,6 +59,8 @@ export default {
             errorS: 0,
             errorBD: 0,
             errorImg: ERRORES.ERROR_IMG,
+            timerCount: 5,
+            noHay: 0,
         };
     },
     methods: {
@@ -101,6 +104,20 @@ export default {
     },
     components: {
         Puntuacion,
+    },
+    watch: {
+        timerCount: {
+            handler(value) {
+                if (value > 0) {
+                    setTimeout(() => {
+                        this.timerCount--;
+
+                        if (this.timerCount == 0) this.noHay = 1;
+                    }, 1000);
+                }
+            },
+            immediate: true, // This ensures the watcher is triggered upon creation
+        },
     },
 };
 </script>

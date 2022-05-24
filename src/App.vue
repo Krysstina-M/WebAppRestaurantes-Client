@@ -33,7 +33,6 @@
 //TODO Probar a meter imagen desde Desktop con BLOB
 //FIXME No funciona en git
 //FIXME A veces no refresca la web con los nuevos cambios
-//TODO poner timer para que el mensaje de cuando la bd esté vacía cambie a "No hay restaurantes"
 //TODO juntar en un component lo de alta y modificacion
 //TODO juntar en un component lo de ver restaurante, random y destacado
 import Vue from "vue";

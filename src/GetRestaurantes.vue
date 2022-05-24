@@ -63,6 +63,7 @@
                     </p>
                 </li>
             </ul>
+            <p v-else-if="noHay">No hay restaurantes</p>
             <p v-else>Cargando restaurantes...</p>
             <button
                 class="arriba"
@@ -89,6 +90,8 @@ export default {
             scrollpx: 0,
             errorS: 0,
             errorBD: 0,
+            timerCount: 5,
+            noHay: 0,
         };
     },
     mounted() {
@@ -179,6 +182,20 @@ export default {
         },
         handleScroll() {
             this.scrollpx = window.scrollY;
+        },
+    },
+    watch: {
+        timerCount: {
+            handler(value) {
+                if (value > 0) {
+                    setTimeout(() => {
+                        this.timerCount--;
+
+                        if (this.timerCount == 0) this.noHay = 1;
+                    }, 1000);
+                }
+            },
+            immediate: true, // This ensures the watcher is triggered upon creation
         },
     },
 };
