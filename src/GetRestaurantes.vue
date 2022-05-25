@@ -4,14 +4,25 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
         />
-        <div>
-            <button class="alta">
-                <router-link :to="{ name: 'alta-restaurante' }">
-                    <i class="fa fa-plus"></i> Añadir nuevo
-                    restaurante</router-link
-                >
-            </button>
-        </div>
+        <button class="alta">
+            <router-link :to="{ name: 'alta-restaurante' }">
+                <i class="fa fa-plus"></i> Añadir nuevo restaurante</router-link
+            >
+        </button>
+        <button
+            class="ordenar"
+            @click="ordenarPorCodigo()"
+            :disabled="this.ordenarCod == 1"
+        >
+            Ordenar por código
+        </button>
+        <button
+            class="ordenar"
+            @click="getRestaurantes()"
+            :disabled="this.ordenarNom == 1"
+        >
+            Ordenar por nombre
+        </button>
         <div class="lista">
             <p class="pError" v-if="this.errorS">
                 No se ha podido conectar con el servidor. Inténtelo de nuevo más
@@ -92,6 +103,8 @@ export default {
             errorBD: 0,
             timerCount: 5,
             noHay: 0,
+            ordenarCod: 0,
+            ordenarNom: 1,
         };
     },
     mounted() {
@@ -146,6 +159,9 @@ export default {
                     console.error(ERRORES.ERROR_SERVER);
                     this.errorS = 1;
                 });
+
+            this.ordenarCod = 0;
+            this.ordenarNom = 1;
         },
         eliminarRestaurante(id) {
             this.idEliminar = id;
@@ -183,6 +199,27 @@ export default {
         handleScroll() {
             this.scrollpx = window.scrollY;
         },
+        ordenarPorCodigo() {
+            axios
+                .get(
+                    "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes-codigo"
+                )
+                .then((respuesta) => {
+                    if (respuesta.data.status == "OK") {
+                        this.restaurantes = respuesta.data.data;
+                    } else {
+                        console.error(ERRORES.ERROR_BD);
+                        this.errorBD = 1;
+                    }
+                })
+                .catch((error) => {
+                    console.error(ERRORES.ERROR_SERVER);
+                    this.errorS = 1;
+                });
+
+            this.ordenarCod = 1;
+            this.ordenarNom = 0;
+        },
     },
     watch: {
         timerCount: {
@@ -207,6 +244,7 @@ export default {
     background: #42b983;
     border: 1px solid #2c3e50;
     margin-top: 20px;
+    margin-right: -20%;
 }
 
 .alta a {
@@ -227,6 +265,34 @@ export default {
     background-color: #2c3e50;
 }
 
+/*Botones ordenar restaurantes*/
+.ordenar {
+    background: #42b983;
+    border: 1px solid #2c3e50;
+    margin-top: 20px;
+    margin-right: 20px;
+    float: right;
+    display: block;
+    color: #2c3e50;
+    text-align: center;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.ordenar:hover {
+    background-color: #2c3e50;
+    color: #42b983;
+    cursor: pointer;
+}
+
+.ordenar:disabled {
+    background: #2c3e50;
+    color: #42b983;
+    cursor: default;
+}
+
 /*Lista de restaurantes*/
 .lista ul {
     display: flex;
@@ -237,14 +303,14 @@ export default {
 
 /*ID de arriba a la izquierda*/
 .id {
-    margin: -20px 0px 10px 0px;
+    margin: -10px 0px 10px 0px;
     text-align: left;
 }
 
 /*Cajas de restaurantes (li)*/
 .cajas {
-    margin: 20px;
-    width: 20%;
+    margin: 15px;
+    width: 15%;
     border: 1px solid #2c3e50;
     border-radius: 25px;
     background: whitesmoke;

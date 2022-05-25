@@ -33,6 +33,7 @@
 //TODO Probar a meter imagen desde Desktop con BLOB
 //FIXME No funciona en git
 //FIXME A veces no refresca la web con los nuevos cambios
+//TODO repasar los mensajes salientes del php
 import Vue from "vue";
 
 Vue.component("errorNomDir", {
