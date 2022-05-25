@@ -94,7 +94,6 @@
 </template>
 
 <script>
-//TODO que se pueda ordenar por nombre, número o puntuación
 import axios from "axios";
 import { ERRORES } from "./main";
 
