@@ -9,18 +9,24 @@
                 <i class="fa fa-plus"></i> Añadir nuevo restaurante</router-link
             >
         </button>
-        <button
-            class="ordenar"
-            @click="ordenarPorCodigo()"
-            :disabled="this.ordenarCod == 1"
-        >
+        <button class="ordenar" @click="ordenarPorCodigo()">
+            <i
+                :class="[
+                    this.ordenarCodAsc
+                        ? 'fa fa-sort-numeric-desc'
+                        : 'fa fa-sort-numeric-asc',
+                ]"
+            ></i>
             Ordenar por código
         </button>
-        <button
-            class="ordenar"
-            @click="getRestaurantes()"
-            :disabled="this.ordenarNom == 1"
-        >
+        <button class="ordenar" @click="ordenarPorNombre()">
+            <i
+                :class="[
+                    this.ordenarNomAsc
+                        ? 'fa fa-sort-alpha-desc'
+                        : 'fa fa-sort-alpha-asc',
+                ]"
+            ></i>
             Ordenar por nombre
         </button>
         <div class="lista">
@@ -103,8 +109,10 @@ export default {
             errorBD: 0,
             timerCount: 5,
             noHay: 0,
-            ordenarCod: 0,
-            ordenarNom: 1,
+            ordenarNomAsc: 1,
+            ordenarNomDesc: 0,
+            ordenarCodAsc: 0,
+            ordenarCodDesc: 1,
         };
     },
     mounted() {
@@ -160,8 +168,8 @@ export default {
                     this.errorS = 1;
                 });
 
-            this.ordenarCod = 0;
-            this.ordenarNom = 1;
+            this.ordenarNomAsc = 1;
+            this.ordenarNomDesc = 0;
         },
         eliminarRestaurante(id) {
             this.idEliminar = id;
@@ -199,26 +207,97 @@ export default {
         handleScroll() {
             this.scrollpx = window.scrollY;
         },
-        ordenarPorCodigo() {
-            axios
-                .get(
-                    "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes-codigo"
-                )
-                .then((respuesta) => {
-                    if (respuesta.data.status == "OK") {
-                        this.restaurantes = respuesta.data.data;
-                    } else {
-                        console.error(ERRORES.ERROR_BD);
-                        this.errorBD = 1;
-                    }
-                })
-                .catch((error) => {
-                    console.error(ERRORES.ERROR_SERVER);
-                    this.errorS = 1;
-                });
+        ordenarPorNombre() {
+            this.ordenarCodAsc = 0;
+            this.ordenarCodDesc = 1;
 
-            this.ordenarCod = 1;
-            this.ordenarNom = 0;
+            if (this.ordenarNomAsc) {
+                axios
+                    .get(
+                        "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes-nom-desc"
+                    )
+                    .then((respuesta) => {
+                        if (respuesta.data.status == "OK") {
+                            this.restaurantes = respuesta.data.data;
+                        } else {
+                            console.error(ERRORES.ERROR_BD);
+                            this.errorBD = 1;
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(ERRORES.ERROR_SERVER);
+                        this.errorS = 1;
+                    });
+
+                this.ordenarNomAsc = 0;
+                this.ordenarNomDesc = 1;
+            } else if (this.ordenarNomDesc) {
+                axios
+                    .get(
+                        "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes"
+                    )
+                    .then((respuesta) => {
+                        if (respuesta.data.status == "OK") {
+                            this.restaurantes = respuesta.data.data;
+                        } else {
+                            console.error(ERRORES.ERROR_BD);
+                            this.errorBD = 1;
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(ERRORES.ERROR_SERVER);
+                        this.errorS = 1;
+                    });
+
+                this.ordenarNomAsc = 1;
+                this.ordenarNomDesc = 0;
+            }
+        },
+        ordenarPorCodigo() {
+            this.ordenarNomAsc = 0;
+            this.ordenarNomDesc = 1;
+
+            if (this.ordenarCodAsc) {
+                axios
+                    .get(
+                        "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes-cod-desc"
+                    )
+                    .then((respuesta) => {
+                        if (respuesta.data.status == "OK") {
+                            this.restaurantes = respuesta.data.data;
+                        } else {
+                            console.error(ERRORES.ERROR_BD);
+                            this.errorBD = 1;
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(ERRORES.ERROR_SERVER);
+                        this.errorS = 1;
+                    });
+
+                this.ordenarCodAsc = 0;
+                this.ordenarCodDesc = 1;
+            } else if (this.ordenarCodDesc) {
+                axios
+                    .get(
+                        "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes-cod-asc"
+                    )
+                    .then((respuesta) => {
+                        if (respuesta.data.status == "OK") {
+                            this.restaurantes = respuesta.data.data;
+                        } else {
+                            console.error(ERRORES.ERROR_BD);
+                            this.errorBD = 1;
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(ERRORES.ERROR_SERVER);
+                        this.errorS = 1;
+                    });
+
+                this.ordenarCodAsc = 1;
+                this.ordenarCodDesc = 0;
+            }
         },
     },
     watch: {
