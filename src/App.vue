@@ -31,8 +31,7 @@
 <script>
 //TODO Probar a meter más de una imagen (habría que hacer otra BD)
 //TODO Probar a meter imagen desde Desktop con BLOB
-//FIXME No funciona en git (puede ser por el axios?)
-//FIXME A veces no refresca la web con los nuevos cambios
+//FIXME No funciona en git
 import Vue from "vue";
 
 Vue.component("errorNomDir", {
