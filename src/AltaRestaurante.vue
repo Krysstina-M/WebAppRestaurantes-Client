@@ -52,7 +52,13 @@
                 <tr>
                     <td class="etq">Imagen</td>
                     <td>
-                        <input type="text" v-model="restaurante.imagen" />
+                        <input
+                            type="file"
+                            name="imagen"
+                            accept="image/*"
+                            ref="file"
+                            @change="imagen()"
+                        />
                     </td>
                 </tr>
                 <tr>
@@ -91,15 +97,16 @@ export default {
     data() {
         return {
             restaurante: {
-                nombre: "",
-                direccion: "",
+                nombre: "a",
+                direccion: "a",
                 descripcion: "",
                 imagen: "",
                 precio: "Medio",
                 puntuacion: 0,
             },
-            existe: 0,
+            img: "",
             arrayNomDir: localStorage.getItem("arrayNomDir"),
+            existe: 0,
             errorS: 0,
             errorBD: 0,
         };
@@ -117,6 +124,10 @@ export default {
         },
         altaRestaurante() {
             var array = JSON.parse(this.arrayNomDir);
+            /*this.restaurante.imagen = URL.createObjectURL(
+                new Blob([this.img], { type: "image/png" })
+            );*/
+
             this.existe = 0;
             this.errorS = 0;
             this.errorBD = 0;
@@ -153,10 +164,13 @@ export default {
                         }
                     })
                     .catch((error) => {
-                        console.error(ERRORES.ERROR_SERVER);
+                        console.error(ERRORES.ERROR_SERVER, error);
                         this.errorS = 1;
                     });
             }
+        },
+        imagen() {
+            this.img = this.$refs.file.files[0];
         },
     },
 };
