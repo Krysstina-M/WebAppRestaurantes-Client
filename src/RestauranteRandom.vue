@@ -4,7 +4,7 @@
             No se ha podido conectar con el servidor. Inténtelo de nuevo más
             tarde.
         </p>
-        <p class="pError" v-else-if="this.errorBD">
+        <p class="pError" v-else-if="this.errorDB">
             No se ha podido conectar con la base de datos.
         </p>
         <div v-else-if="restaurante != ''">
@@ -57,7 +57,7 @@ export default {
             id: "",
             restaurante: "",
             errorS: 0,
-            errorBD: 0,
+            errorDB: 0,
             errorImg: ERRORES.ERROR_IMG,
             timerCount: 5,
             noHay: 0,
@@ -86,12 +86,12 @@ export default {
                                 );
                         }
                     } else if (respuesta.data.status != "error") {
-                        console.error(ERRORES.ERROR_BD);
-                        this.errorBD = 1;
+                        console.error(ERRORES.ERROR_DB);
+                        this.errorDB = 1;
                     }
                 })
                 .catch((error) => {
-                    console.error(ERRORES.ERROR_SERVER);
+                    console.error(ERRORES.ERROR_SERVER, error);
                     this.errorS = 1;
                 });
         },

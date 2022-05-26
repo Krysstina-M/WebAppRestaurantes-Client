@@ -77,7 +77,7 @@
                     </td>
                 </tr>
                 <errorS v-show="this.errorS"></errorS>
-                <errorBD v-show="this.errorBD"></errorBD>
+                <errorDB v-show="this.errorDB"></errorDB>
                 <tr>
                     <td colspan="3">
                         <input type="submit" value="Guardar restaurante" />
@@ -97,18 +97,18 @@ export default {
     data() {
         return {
             restaurante: {
-                nombre: "a",
-                direccion: "a",
+                nombre: "",
+                direccion: "",
                 descripcion: "",
                 imagen: "",
                 precio: "Medio",
                 puntuacion: 0,
             },
-            img: "",
             arrayNomDir: localStorage.getItem("arrayNomDir"),
+            img: "",
             existe: 0,
             errorS: 0,
-            errorBD: 0,
+            errorDB: 0,
         };
     },
     methods: {
@@ -120,17 +120,18 @@ export default {
             this.restaurante.precio = "Medio";
             this.existe = 0;
             this.errorS = 0;
-            this.errorBD = 0;
+            this.errorDB = 0;
         },
         altaRestaurante() {
             var array = JSON.parse(this.arrayNomDir);
-            /*this.restaurante.imagen = URL.createObjectURL(
-                new Blob([this.img], { type: "image/png" })
-            );*/
-
             this.existe = 0;
             this.errorS = 0;
-            this.errorBD = 0;
+            this.errorDB = 0;
+
+            if (this.img != "")
+                this.restaurante.imagen = URL.createObjectURL(
+                    new Blob([this.img], { type: "image/png" })
+                );
 
             for (var i in array) {
                 if (
@@ -159,8 +160,8 @@ export default {
                                     console.error(ERRORES.ERROR_REDIRIGIR)
                                 );
                         } else {
-                            console.error(ERRORES.ERROR_BD);
-                            this.errorBD = 1;
+                            console.error(ERRORES.ERROR_DB);
+                            this.errorDB = 1;
                         }
                     })
                     .catch((error) => {

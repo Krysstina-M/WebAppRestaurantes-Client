@@ -52,7 +52,13 @@
                 <tr>
                     <td class="etq">Imagen</td>
                     <td>
-                        <input type="text" v-model="restaurante.imagen" />
+                        <input
+                            type="file"
+                            name="imagen"
+                            accept="image/*"
+                            ref="file"
+                            @change="imagen()"
+                        />
                     </td>
                 </tr>
                 <tr>
@@ -71,7 +77,7 @@
                     </td>
                 </tr>
                 <errorS v-show="this.errorS"></errorS>
-                <errorBD v-show="this.errorBD"></errorBD>
+                <errorDB v-show="this.errorDB"></errorDB>
                 <tr>
                     <td colspan="3">
                         <input
@@ -119,13 +125,14 @@ export default {
                 descripcion: "",
                 imagen: "",
             },
+            arrayNomDir: localStorage.getItem("arrayNomDir"),
             nomAnterior: "",
             dirAnterior: "",
-            existe: 0,
-            arrayNomDir: localStorage.getItem("arrayNomDir"),
             idEliminar: "",
+            img: "",
+            existe: 0,
             errorS: 0,
-            errorBD: 0,
+            errorDB: 0,
         };
     },
     mounted() {
@@ -151,7 +158,7 @@ export default {
                 }
             })
             .catch((error) => {
-                console.error(ERRORES.ERROR_SERVER);
+                console.error(ERRORES.ERROR_SERVER, error);
                 this.errorS = 1;
             });
     },
@@ -164,12 +171,16 @@ export default {
             this.restaurante.precio = "Medio";
             this.existe = 0;
             this.errorS = 0;
-            this.errorBD = 0;
+            this.errorDB = 0;
         },
         guardarRestaurante() {
-            var datos = JSON.stringify(this.restaurante);
             var array = JSON.parse(this.arrayNomDir);
             this.existe = 0;
+
+            if (this.img != "")
+                this.restaurante.imagen = URL.createObjectURL(
+                    new Blob([this.img], { type: "image/png" })
+                );
 
             if (
                 (this.nomAnterior != this.restaurante.nombre) |
@@ -190,7 +201,7 @@ export default {
                     .post(
                         "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/update-restaurante/" +
                             this.id,
-                        datos
+                        JSON.stringify(this.restaurante)
                     )
                     .then((respuesta) => {
                         if (respuesta.data.status == "OK") {
@@ -202,12 +213,12 @@ export default {
                                     console.error(ERRORES.ERROR_REDIRIGIR)
                                 );
                         } else {
-                            console.error(ERRORES.ERROR_BD);
-                            this.errorBD = 1;
+                            console.error(ERRORES.ERROR_DB);
+                            this.errorDB = 1;
                         }
                     })
                     .catch((error) => {
-                        console.error(ERRORES.ERROR_SERVER);
+                        console.error(ERRORES.ERROR_SERVER, error);
                         this.errorS = 1;
                     });
             }
@@ -217,7 +228,7 @@ export default {
         },
         noBorrar() {
             this.errorS = 0;
-            this.errorBD = 0;
+            this.errorDB = 0;
 
             this.idEliminar = "";
         },
@@ -239,14 +250,17 @@ export default {
                                 console.error(ERRORES.ERROR_REDIRIGIR)
                             );
                     } else {
-                        console.error(ERRORES.ERROR_BD);
-                        this.errorBD = 1;
+                        console.error(ERRORES.ERROR_DB);
+                        this.errorDB = 1;
                     }
                 })
                 .catch((error) => {
-                    console.error(ERRORES.ERROR_SERVER);
+                    console.error(ERRORES.ERROR_SERVER, error);
                     this.errorS = 1;
                 });
+        },
+        imagen() {
+            this.img = this.$refs.file.files[0];
         },
     },
 };

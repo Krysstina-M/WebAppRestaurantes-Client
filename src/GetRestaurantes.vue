@@ -34,7 +34,7 @@
                 No se ha podido conectar con el servidor. Inténtelo de nuevo más
                 tarde.
             </p>
-            <p class="pError" v-else-if="this.errorBD">
+            <p class="pError" v-else-if="this.errorDB">
                 No se ha podido conectar con la base de datos.
             </p>
             <ul id="GetRestaurantes" v-else-if="restaurantes != ''">
@@ -105,7 +105,7 @@ export default {
             idEliminar: "",
             scrollpx: 0,
             errorS: 0,
-            errorBD: 0,
+            errorDB: 0,
             timerCount: 5,
             noHay: 0,
             ordenarNomAsc: 1,
@@ -158,12 +158,12 @@ export default {
                             JSON.stringify(arrayNomDir)
                         );
                     } else {
-                        console.error(ERRORES.ERROR_BD);
-                        this.errorBD = 1;
+                        console.error(ERRORES.ERROR_DB);
+                        this.errorDB = 1;
                     }
                 })
                 .catch((error) => {
-                    console.error(ERRORES.ERROR_SERVER);
+                    console.error(ERRORES.ERROR_SERVER, error);
                     this.errorS = 1;
                 });
 
@@ -189,12 +189,12 @@ export default {
                         this.idEliminar = "";
                         this.getRestaurantes();
                     } else {
-                        console.error(ERRORES.ERROR_BD);
-                        this.errorBD = 1;
+                        console.error(ERRORES.ERROR_DB);
+                        this.errorDB = 1;
                     }
                 })
                 .catch((error) => {
-                    console.error(ERRORES.ERROR_SERVER);
+                    console.error(ERRORES.ERROR_SERVER, error);
                     this.errorS = 1;
                 });
         },
@@ -219,12 +219,12 @@ export default {
                         if (respuesta.data.status == "OK") {
                             this.restaurantes = respuesta.data.data;
                         } else {
-                            console.error(ERRORES.ERROR_BD);
-                            this.errorBD = 1;
+                            console.error(ERRORES.ERROR_DB);
+                            this.errorDB = 1;
                         }
                     })
                     .catch((error) => {
-                        console.error(ERRORES.ERROR_SERVER);
+                        console.error(ERRORES.ERROR_SERVER, error);
                         this.errorS = 1;
                     });
 
@@ -239,12 +239,12 @@ export default {
                         if (respuesta.data.status == "OK") {
                             this.restaurantes = respuesta.data.data;
                         } else {
-                            console.error(ERRORES.ERROR_BD);
-                            this.errorBD = 1;
+                            console.error(ERRORES.ERROR_DB);
+                            this.errorDB = 1;
                         }
                     })
                     .catch((error) => {
-                        console.error(ERRORES.ERROR_SERVER);
+                        console.error(ERRORES.ERROR_SERVER, error);
                         this.errorS = 1;
                     });
 
@@ -265,12 +265,12 @@ export default {
                         if (respuesta.data.status == "OK") {
                             this.restaurantes = respuesta.data.data;
                         } else {
-                            console.error(ERRORES.ERROR_BD);
-                            this.errorBD = 1;
+                            console.error(ERRORES.ERROR_DB);
+                            this.errorDB = 1;
                         }
                     })
                     .catch((error) => {
-                        console.error(ERRORES.ERROR_SERVER);
+                        console.error(ERRORES.ERROR_SERVER, error);
                         this.errorS = 1;
                     });
 
@@ -285,12 +285,12 @@ export default {
                         if (respuesta.data.status == "OK") {
                             this.restaurantes = respuesta.data.data;
                         } else {
-                            console.error(ERRORES.ERROR_BD);
-                            this.errorBD = 1;
+                            console.error(ERRORES.ERROR_DB);
+                            this.errorDB = 1;
                         }
                     })
                     .catch((error) => {
-                        console.error(ERRORES.ERROR_SERVER);
+                        console.error(ERRORES.ERROR_SERVER, error);
                         this.errorS = 1;
                     });
 

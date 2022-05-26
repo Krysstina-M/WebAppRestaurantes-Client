@@ -30,7 +30,7 @@
 
 <script>
 //TODO Probar a meter más de una imagen (habría que hacer otra BD)
-//TODO Probar a meter imagen desde Desktop con BLOB
+//TODO meter bootstrap?
 //FIXME No funciona en git
 import Vue from "vue";
 
@@ -56,7 +56,7 @@ Vue.component("errorS", {
 `,
 });
 
-Vue.component("errorBD", {
+Vue.component("errorDB", {
     template: `
     <tr>
         <td></td>

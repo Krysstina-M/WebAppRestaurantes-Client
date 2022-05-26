@@ -4,7 +4,7 @@
             No se ha podido conectar con el servidor. Inténtelo de nuevo más
             tarde.
         </p>
-        <p class="pError" v-else-if="this.errorBD">
+        <p class="pError" v-else-if="this.errorDB">
             No se ha podido conectar con la base de datos.
         </p>
         <div v-else-if="restaurante != ''">
@@ -54,7 +54,6 @@
 import axios from "axios";
 import Puntuacion from "./Puntuacion.vue";
 import { ERRORES } from "./main";
-
 export default {
     name: "datosRestaurante",
     data() {
@@ -66,9 +65,9 @@ export default {
             idUltimo: "",
             idSiguiente: "",
             arrayId: localStorage.getItem("arrayId").split(","),
-            errorS: 0,
-            errorBD: 0,
             errorImg: ERRORES.ERROR_IMG,
+            errorS: 0,
+            errorDB: 0,
             timerCount: 5,
             noHay: 0,
         };
@@ -88,15 +87,19 @@ export default {
                         this.idUltimo = this.arrayId[this.arrayId.length - 1];
                         this.idAnterior =
                             this.arrayId[this.arrayId.indexOf(this.id) - 1];
+
+                        if (this.idAnterior == null)
+                            this.idAnterior = this.idUltimo;
+
                         this.idSiguiente =
                             this.arrayId[this.arrayId.indexOf(this.id) + 1];
                     } else if (respuesta.data.status != "error") {
-                        console.error(ERRORES.ERROR_BD);
-                        this.errorBD = 1;
+                        console.error(ERRORES.ERROR_DB);
+                        this.errorDB = 1;
                     }
                 })
                 .catch((error) => {
-                    console.error(ERRORES.ERROR_SERVER);
+                    console.error(ERRORES.ERROR_SERVER, error);
                     this.errorS = 1;
                 });
         },
@@ -151,31 +154,26 @@ export default {
     font-size: 35px;
     margin-right: 10%;
 }
-
 .anterior a {
     text-decoration: none;
     color: #2c3e50;
     transition: all 200ms ease;
 }
-
 .anterior a:hover {
     color: #42b983;
     cursor: pointer;
 }
-
 .siguiente {
     border: none;
     background-color: inherit;
     font-size: 35px;
     margin-left: 10%;
 }
-
 .siguiente a {
     text-decoration: none;
     color: #2c3e50;
     transition: all 200ms ease;
 }
-
 .siguiente a:hover {
     color: #42b983;
     cursor: pointer;
