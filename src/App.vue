@@ -29,8 +29,11 @@
 </template>
 
 <script>
-//TODO Probar a meter más de una imagen (habría que hacer otra BD)
+//TODO organizar las variables de los .vue
+//TODO poner más comentarios
+//TODO controlar tamaño del nombre y descripción de los restaurantes
 //TODO meter bootstrap?
+//TODO Probar a meter más de una imagen (habría que hacer otra BD)
 //FIXME No funciona en git
 import Vue from "vue";
 

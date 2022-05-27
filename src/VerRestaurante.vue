@@ -4,7 +4,7 @@
             No se ha podido conectar con el servidor. Inténtelo de nuevo más
             tarde.
         </p>
-        <p class="pError" v-else-if="this.errorDB">
+        <p class="pError" v-else-if="this.errorBD">
             No se ha podido conectar con la base de datos.
         </p>
         <div v-else-if="restaurante != ''">
@@ -65,15 +65,15 @@ export default {
             idUltimo: "",
             idSiguiente: "",
             arrayId: localStorage.getItem("arrayId").split(","),
-            errorImg: ERRORES.ERROR_IMG,
             errorS: 0,
-            errorDB: 0,
+            errorBD: 0,
+            errorImg: ERRORES.ERROR_IMG,
             timerCount: 5,
             noHay: 0,
         };
     },
     methods: {
-        funcionAxios() {
+        getRestaurante() {
             axios
                 .get(
                     "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurante/" +
@@ -83,23 +83,35 @@ export default {
                     if (respuesta.data.status == "OK") {
                         this.restaurante = respuesta.data.data;
 
+                        if (this.restaurante.imagen != null) {
+                            this.imagen =
+                                "data:image/png;base64," +
+                                btoa(this.restaurante.imagen);
+                            console.log(
+                                "this.imagen",
+                                typeof this.imagen,
+                                this.imagen
+                            );
+                        }
+
                         this.idPrimero = this.arrayId[0];
                         this.idUltimo = this.arrayId[this.arrayId.length - 1];
-                        this.idAnterior =
-                            this.arrayId[this.arrayId.indexOf(this.id) - 1];
 
                         if (this.idAnterior == null)
                             this.idAnterior = this.idUltimo;
+                        else
+                            this.idAnterior =
+                                this.arrayId[this.arrayId.indexOf(this.id) - 1];
 
                         this.idSiguiente =
                             this.arrayId[this.arrayId.indexOf(this.id) + 1];
                     } else if (respuesta.data.status != "error") {
-                        console.error(ERRORES.ERROR_DB);
-                        this.errorDB = 1;
+                        console.error(ERRORES.ERROR_BD);
+                        this.errorBD = 1;
                     }
                 })
                 .catch((error) => {
-                    console.error(ERRORES.ERROR_SERVER, error);
+                    console.error(ERRORES.ERROR_SERVER);
                     this.errorS = 1;
                 });
         },
@@ -107,25 +119,20 @@ export default {
             this.$router
                 .push("/ver-restaurante/" + this.idAnterior)
                 .catch((error) => console.error(ERRORES.ERROR_REDIRIGIR));
-
             this.id = this.idAnterior;
-
-            this.funcionAxios();
+            this.getRestaurante();
         },
         siguiente() {
             this.$router
                 .push("/ver-restaurante/" + this.idSiguiente)
                 .catch((error) => console.error(ERRORES.ERROR_REDIRIGIR));
-
             this.id = this.idSiguiente;
-
-            this.funcionAxios();
+            this.getRestaurante();
         },
     },
     mounted() {
         this.id = this.$route.params.id;
-
-        this.funcionAxios();
+        this.getRestaurante();
     },
     components: {
         Puntuacion,
@@ -136,7 +143,6 @@ export default {
                 if (value > 0) {
                     setTimeout(() => {
                         this.timerCount--;
-
                         if (this.timerCount == 0) this.noHay = 1;
                     }, 1000);
                 }
