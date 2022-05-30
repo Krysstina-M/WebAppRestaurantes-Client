@@ -66,7 +66,6 @@ export default {
             errorImg: ERRORES.ERROR_IMG,
             timerCount: 5,
             noHay: 0,
-            blobUrl: null,
         };
     },
     methods: {
