@@ -128,10 +128,18 @@ export default {
             this.errorS = 0;
             this.errorDB = 0;
 
+            //-----------------------------------------------------------------
             if (this.img != "")
                 this.restaurante.imagen = URL.createObjectURL(
                     new Blob([this.img], { type: "image/png" })
                 );
+
+            console.log("Blob 1", this.restaurante.imagen);
+
+            var imagen =
+                "data:image/png;base64," + btoa(this.restaurante.imagen);
+            console.log("Base64 1", imagen);
+            //-----------------------------------------------------------------
 
             for (var i in array) {
                 if (

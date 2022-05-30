@@ -37,11 +37,7 @@
                 </div>
 
                 <div class="divImg" v-if="restaurante.imagen != null">
-                    <img
-                        class="img"
-                        :alt="this.errorImg"
-                        :src="restaurante.imagen"
-                    />
+                    <img class="img" :alt="this.errorImg" :src="this.imagen" />
                 </div>
             </div>
         </div>
@@ -70,6 +66,7 @@ export default {
             errorImg: ERRORES.ERROR_IMG,
             timerCount: 5,
             noHay: 0,
+            blobUrl: null,
         };
     },
     methods: {
@@ -83,16 +80,16 @@ export default {
                     if (respuesta.data.status == "OK") {
                         this.restaurante = respuesta.data.data;
 
+                        //-----------------------------------------------------------------
+                        console.log("Blob 2:", this.restaurante.imagen);
+
                         if (this.restaurante.imagen != null) {
                             this.imagen =
                                 "data:image/png;base64," +
                                 btoa(this.restaurante.imagen);
-                            console.log(
-                                "this.imagen",
-                                typeof this.imagen,
-                                this.imagen
-                            );
+                            console.log("Base64 2:", this.imagen);
                         }
+                        //-----------------------------------------------------------------
 
                         this.idPrimero = this.arrayId[0];
                         this.idUltimo = this.arrayId[this.arrayId.length - 1];
@@ -111,7 +108,7 @@ export default {
                     }
                 })
                 .catch((error) => {
-                    console.error(ERRORES.ERROR_SERVER);
+                    console.error(ERRORES.ERROR_SERVER, error);
                     this.errorS = 1;
                 });
         },
@@ -120,6 +117,7 @@ export default {
                 .push("/ver-restaurante/" + this.idAnterior)
                 .catch((error) => console.error(ERRORES.ERROR_REDIRIGIR));
             this.id = this.idAnterior;
+
             this.getRestaurante();
         },
         siguiente() {
@@ -127,6 +125,7 @@ export default {
                 .push("/ver-restaurante/" + this.idSiguiente)
                 .catch((error) => console.error(ERRORES.ERROR_REDIRIGIR));
             this.id = this.idSiguiente;
+            
             this.getRestaurante();
         },
     },
