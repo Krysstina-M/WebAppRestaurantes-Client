@@ -57,7 +57,7 @@
                             name="imagen"
                             accept="image/*"
                             ref="file"
-                            @change="imagen()"
+                            @change="getImagen()"
                         />
                     </td>
                 </tr>
@@ -97,15 +97,14 @@ export default {
     data() {
         return {
             restaurante: {
-                nombre: "",
-                direccion: "",
+                nombre: "a",
+                direccion: "a",
                 descripcion: "",
                 imagen: "",
                 precio: "Medio",
                 puntuacion: 0,
             },
             arrayNomDir: localStorage.getItem("arrayNomDir"),
-            img: "",
             existe: 0,
             errorS: 0,
             errorDB: 0,
@@ -129,26 +128,41 @@ export default {
             this.errorDB = 0;
 
             //-----------------------------------------------------------------
-            if (this.img != "")
-                this.restaurante.imagen = URL.createObjectURL(
-                    new Blob([this.img], { type: "image/png" })
-                );
+            if (this.img != "") {
+                console.log(this.img);
 
-            console.log("Blob 1", this.restaurante.imagen);
+                //De Base64 a Blob
+                var data = this.img.split("base64,")[1];
+                var byteCharacters = atob(data);
+                var byteNumbers = new Array(byteCharacters.length);
 
-            var imagen =
-                "data:image/png;base64," + btoa(this.restaurante.imagen);
-            console.log("Base64 1", imagen);
+                for (let i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+
+                var byteArray = new Uint8Array(byteNumbers);
+                var blob = new Blob([byteArray], {
+                    type: "image/png",
+                });
+
+                console.log("Blob", blob);
+                this.restaurante.imagen = blob;
+
+                ///De Blob a String
+                //this.restaurante.imagen = URL.createObjectURL(blob);
+
+                console.log("Blob 2", this.restaurante.imagen);
+            }
             //-----------------------------------------------------------------
 
-            for (var i in array) {
-                if (
-                    (this.restaurante.nombre == array[i].nombre) &
-                    (this.restaurante.direccion == array[i].direccion)
-                ) {
-                    this.existe = 1;
-                }
-            }
+            // for (var i in array) {
+            //     if (
+            //         (this.restaurante.nombre == array[i].nombre) &
+            //         (this.restaurante.direccion == array[i].direccion)
+            //     ) {
+            //         this.existe = 1;
+            //     }
+            // }
 
             if (!this.existe) {
                 axios
@@ -160,13 +174,13 @@ export default {
                         if (respuesta.data.status == "OK") {
                             console.info(respuesta.data.message);
 
-                            this.$router
+                            /*this.$router
                                 .push(
                                     "/ver-restaurante/" + respuesta.data.data.id
                                 )
                                 .catch((error) =>
                                     console.error(ERRORES.ERROR_REDIRIGIR)
-                                );
+                                );*/
                         } else {
                             console.error(ERRORES.ERROR_DB);
                             this.errorDB = 1;
@@ -178,8 +192,11 @@ export default {
                     });
             }
         },
-        imagen() {
-            this.img = this.$refs.file.files[0];
+        getImagen() {
+            var reader = new FileReader();
+
+            reader.readAsDataURL(this.$refs.file.files[0]);
+            reader.onload = () => (this.img = reader.result);
         },
     },
 };

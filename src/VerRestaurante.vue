@@ -66,6 +66,7 @@ export default {
             errorImg: ERRORES.ERROR_IMG,
             timerCount: 5,
             noHay: 0,
+            imagen: "",
         };
     },
     methods: {
@@ -80,14 +81,29 @@ export default {
                         this.restaurante = respuesta.data.data;
 
                         //-----------------------------------------------------------------
-                        console.log("Blob 2:", this.restaurante.imagen);
+                        // console.log("Blob 2:", this.restaurante.imagen);
 
-                        if (this.restaurante.imagen != null) {
-                            this.imagen =
-                                "data:image/png;base64," +
-                                btoa(this.restaurante.imagen);
-                            console.log("Base64 2:", this.imagen);
-                        }
+                        // if (this.restaurante.imagen != null) {
+                        //     this.imagen =
+                        //         "data:image/png;base64," +
+                        //         btoa(this.restaurante.imagen);
+                        //     console.log("Base64 2:", this.imagen);
+                        // }
+
+                        console.log("Blob string", this.restaurante.imagen);
+
+                        const blob = new Blob([this.restaurante.imagen], {
+                            type: "image/png", // or whatever your Content-Type is
+                        });
+                        console.log("Blob object", blob);
+
+                        var reader = new FileReader();
+
+                        reader.readAsDataURL(blob);
+                        reader.onloadend = function () {
+                            var base64data = reader.result;
+                            console.log(base64data);
+                        };
                         //-----------------------------------------------------------------
 
                         this.idPrimero = this.arrayId[0];
@@ -124,12 +140,13 @@ export default {
                 .push("/ver-restaurante/" + this.idSiguiente)
                 .catch((error) => console.error(ERRORES.ERROR_REDIRIGIR));
             this.id = this.idSiguiente;
-            
+
             this.getRestaurante();
         },
     },
     mounted() {
         this.id = this.$route.params.id;
+
         this.getRestaurante();
     },
     components: {

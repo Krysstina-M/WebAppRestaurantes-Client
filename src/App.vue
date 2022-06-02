@@ -29,6 +29,7 @@
 </template>
 
 <script>
+//TODO mirar lo de que envio el array de datos de una página a otra
 //TODO organizar las variables de los .vue
 //TODO poner más comentarios
 //TODO controlar tamaño del nombre y descripción de los restaurantes
