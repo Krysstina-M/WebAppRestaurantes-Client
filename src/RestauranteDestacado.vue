@@ -64,16 +64,14 @@ export default {
 
                     this.$router
                         .push("/restaurante-destacado/" + this.restaurante.id)
-                        .catch((error) =>
-                            console.error(ERRORES.ERROR_REDIRIGIR)
-                        );
+                        .catch(() => console.error(ERRORES.ERROR_REDIRIGIR));
                 } else if (respuesta.data.status != "error") {
                     console.error(ERRORES.ERROR_BD);
                     this.errorBD = 1;
                 }
             })
             .catch((error) => {
-                console.error(ERRORES.ERROR_SERVER);
+                console.error(ERRORES.ERROR_SERVER, error);
                 this.errorS = 1;
             });
     },

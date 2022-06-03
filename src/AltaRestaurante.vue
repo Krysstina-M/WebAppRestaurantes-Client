@@ -99,7 +99,6 @@ export default {
                 puntuacion: 0,
             },
             existe: 0,
-            arrayNomDir: localStorage.getItem("arrayNomDir"),
             errorS: 0,
             errorBD: 0,
         };
@@ -116,47 +115,64 @@ export default {
             this.errorBD = 0;
         },
         altaRestaurante() {
-            var array = JSON.parse(this.arrayNomDir);
             this.existe = 0;
             this.errorS = 0;
             this.errorBD = 0;
 
-            for (var i in array) {
-                if (
-                    (this.restaurante.nombre == array[i].nombre) &
-                    (this.restaurante.direccion == array[i].direccion)
-                ) {
-                    this.existe = 1;
-                }
-            }
+            axios
+                .get(
+                    "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes-nom-dir"
+                )
+                .then((respuesta) => {
+                    if (respuesta.data.status == "OK") {
+                        for (var i in respuesta.data.data)
+                            if (
+                                (this.restaurante.nombre ==
+                                    respuesta.data.data[i].nombre) &
+                                (this.restaurante.direccion ==
+                                    respuesta.data.data[i].direccion)
+                            )
+                                this.existe = 1;
 
-            if (!this.existe) {
-                axios
-                    .post(
-                        "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/create-restaurante",
-                        JSON.stringify(this.restaurante)
-                    )
-                    .then((respuesta) => {
-                        if (respuesta.data.status == "OK") {
-                            console.info(respuesta.data.message);
-
-                            this.$router
-                                .push(
-                                    "/ver-restaurante/" + respuesta.data.data.id
+                        if (!this.existe) {
+                            axios
+                                .post(
+                                    "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/create-restaurante",
+                                    JSON.stringify(this.restaurante)
                                 )
-                                .catch((error) =>
-                                    console.error(ERRORES.ERROR_REDIRIGIR)
-                                );
-                        } else {
-                            console.error(ERRORES.ERROR_BD);
-                            this.errorBD = 1;
+                                .then((respuesta) => {
+                                    if (respuesta.data.status == "OK") {
+                                        console.info(respuesta.data.message);
+
+                                        this.$router
+                                            .push(
+                                                "/ver-restaurante/" +
+                                                    respuesta.data.data.id
+                                            )
+                                            .catch(() =>
+                                                console.error(
+                                                    ERRORES.ERROR_REDIRIGIR
+                                                )
+                                            );
+                                    } else {
+                                        console.error(ERRORES.ERROR_BD);
+                                        this.errorBD = 1;
+                                    }
+                                })
+                                .catch((error) => {
+                                    console.error(ERRORES.ERROR_SERVER, error);
+                                    this.errorS = 1;
+                                });
                         }
-                    })
-                    .catch((error) => {
-                        console.error(ERRORES.ERROR_SERVER);
-                        this.errorS = 1;
-                    });
-            }
+                    } else {
+                        console.error(ERRORES.ERROR_BD);
+                        this.errorBD = 1;
+                    }
+                })
+                .catch((error) => {
+                    console.error(ERRORES.ERROR_SERVER, error);
+                    this.errorS = 1;
+                });
         },
     },
 };

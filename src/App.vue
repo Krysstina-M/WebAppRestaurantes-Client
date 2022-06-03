@@ -29,8 +29,13 @@
 </template>
 
 <script>
-//TODO Probar a meter más de una imagen (habría que hacer otra BD)
-//TODO Probar a meter imagen desde Desktop con BLOB
+//TODO separar los churros en funciones
+//TODO organizar las variables de los .vue
+//TODO poner más comentarios
+//TODO controlar tamaño del nombre y descripción de los restaurantes
+//TODO meter bootstrap?
+//TODO Añadir columna de página web
+//TODO probar filepond para meter la ruta de la imagen en la bd
 //FIXME No funciona en git
 import Vue from "vue";
 

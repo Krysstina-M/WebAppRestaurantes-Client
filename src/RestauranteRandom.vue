@@ -81,7 +81,7 @@ export default {
                                 .push(
                                     "/restaurante-random/" + this.restaurante.id
                                 )
-                                .catch((error) =>
+                                .catch(() =>
                                     console.error(ERRORES.ERROR_REDIRIGIR)
                                 );
                         }
@@ -91,7 +91,7 @@ export default {
                     }
                 })
                 .catch((error) => {
-                    console.error(ERRORES.ERROR_SERVER);
+                    console.error(ERRORES.ERROR_SERVER, error);
                     this.errorS = 1;
                 });
         },

@@ -121,10 +121,6 @@ export default {
     },
     methods: {
         getRestaurantes() {
-            var arrayId = [];
-            var arrayNomDir = [];
-            var nomDir = {};
-
             axios
                 .get(
                     "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes"
@@ -132,31 +128,6 @@ export default {
                 .then((respuesta) => {
                     if (respuesta.data.status == "OK") {
                         this.restaurantes = respuesta.data.data;
-
-                        for (var i in this.restaurantes) {
-                            arrayId[i] = Object.values(this.restaurantes)[i].id;
-
-                            nomDir.nombre = Object.values(this.restaurantes)[
-                                i
-                            ].nombre;
-                            nomDir.direccion = Object.values(this.restaurantes)[
-                                i
-                            ].direccion;
-
-                            arrayNomDir.push(
-                                JSON.parse(JSON.stringify(nomDir))
-                            );
-                        }
-
-                        this.arrayId = arrayId.sort(function (a, b) {
-                            return a - b;
-                        });
-
-                        localStorage.setItem("arrayId", arrayId);
-                        localStorage.setItem(
-                            "arrayNomDir",
-                            JSON.stringify(arrayNomDir)
-                        );
                     } else {
                         console.error(ERRORES.ERROR_BD);
                         this.errorBD = 1;
