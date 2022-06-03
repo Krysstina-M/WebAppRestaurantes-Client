@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="divImg" v-if="restaurante.imagen != null">
-                    <img class="img" :alt="this.errorImg" :src="this.imagen" />
+                    <img class="img" :alt="this.errorImg" :src="imagen" />
                 </div>
             </div>
         </div>
@@ -81,29 +81,22 @@ export default {
                         this.restaurante = respuesta.data.data;
 
                         //-----------------------------------------------------------------
-                        // console.log("Blob 2:", this.restaurante.imagen);
+                        console.log("Blob string 2", this.restaurante.imagen);
 
-                        // if (this.restaurante.imagen != null) {
-                        //     this.imagen =
-                        //         "data:image/png;base64," +
-                        //         btoa(this.restaurante.imagen);
-                        //     console.log("Base64 2:", this.imagen);
-                        // }
-
-                        console.log("Blob string", this.restaurante.imagen);
-
-                        const blob = new Blob([this.restaurante.imagen], {
-                            type: "image/png", // or whatever your Content-Type is
-                        });
-                        console.log("Blob object", blob);
-
-                        var reader = new FileReader();
-
-                        reader.readAsDataURL(blob);
-                        reader.onloadend = function () {
-                            var base64data = reader.result;
-                            console.log(base64data);
+                        //De String a Base64
+                        var request = new XMLHttpRequest();
+                        request.open("GET", this.restaurante.imagen, true);
+                        request.responseType = "blob";
+                        
+                        request.onload = function () {
+                            var reader = new FileReader();
+                            reader.readAsDataURL(request.response);
+                            reader.onload = function (e) {
+                                console.log(e.target.result);
+                                this.imagen=e.target.result;
+                            };
                         };
+                        request.send();
                         //-----------------------------------------------------------------
 
                         this.idPrimero = this.arrayId[0];

@@ -108,6 +108,7 @@ export default {
             existe: 0,
             errorS: 0,
             errorDB: 0,
+            img: "",
         };
     },
     methods: {
@@ -127,7 +128,7 @@ export default {
             this.errorS = 0;
             this.errorDB = 0;
 
-            //-----------------------------------------------------------------
+            //-----------------------------------------------------------
             if (this.img != "") {
                 console.log(this.img);
 
@@ -136,7 +137,7 @@ export default {
                 var byteCharacters = atob(data);
                 var byteNumbers = new Array(byteCharacters.length);
 
-                for (let i = 0; i < byteCharacters.length; i++) {
+                for (var i = 0; i < byteCharacters.length; i++) {
                     byteNumbers[i] = byteCharacters.charCodeAt(i);
                 }
 
@@ -145,15 +146,14 @@ export default {
                     type: "image/png",
                 });
 
-                console.log("Blob", blob);
-                this.restaurante.imagen = blob;
+                console.log("Blob object", blob);
 
                 ///De Blob a String
-                //this.restaurante.imagen = URL.createObjectURL(blob);
-
-                console.log("Blob 2", this.restaurante.imagen);
+                this.restaurante.imagen = URL.createObjectURL(blob);
+                
+                console.log("Blob string", this.restaurante.imagen);
             }
-            //-----------------------------------------------------------------
+            //-----------------------------------------------------------
 
             // for (var i in array) {
             //     if (
@@ -182,7 +182,7 @@ export default {
                                     console.error(ERRORES.ERROR_REDIRIGIR)
                                 );*/
                         } else {
-                            console.error(ERRORES.ERROR_DB);
+                            console.error(respuesta.data);
                             this.errorDB = 1;
                         }
                     })
@@ -193,9 +193,11 @@ export default {
             }
         },
         getImagen() {
+            //De PNG a Base64
             var reader = new FileReader();
 
             reader.readAsDataURL(this.$refs.file.files[0]);
+
             reader.onload = () => (this.img = reader.result);
         },
     },
