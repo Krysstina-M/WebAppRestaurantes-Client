@@ -46,6 +46,7 @@
                         />
                     </td>
                 </tr>
+                <errorNomDir v-show="existe"></errorNomDir>
                 <tr>
                     <td class="etq">Descripción</td>
                     <td>
@@ -79,7 +80,6 @@
                         </select>
                     </td>
                 </tr>
-                <errorNomDir v-show="existe"></errorNomDir>
                 <errorDB v-show="errorDB"></errorDB>
                 <errorS v-show="errorS"></errorS>
                 <tr>
@@ -132,12 +132,12 @@ export default {
                                     respuesta.data.data[i].direccion)
                             )
                                 this.existe = 1;
+
+                        if (!this.existe) this.altaRestaurante();
                     } else {
                         console.error(ERRORES.ERROR_DB);
                         this.errorDB = 1;
                     }
-
-                    if (!this.existe) this.altaRestaurante();
                 })
                 .catch((error) => {
                     console.error(ERRORES.ERROR_SERVER, error);

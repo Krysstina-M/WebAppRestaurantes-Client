@@ -178,7 +178,7 @@ export default {
                         if (
                             (this.nomAnterior != this.restaurante.nombre) |
                             (this.dirAnterior != this.restaurante.direccion)
-                        ) {
+                        )
                             for (var i in restaurante)
                                 if (
                                     (this.restaurante.nombre ==
@@ -187,7 +187,6 @@ export default {
                                         restaurante[i].direccion)
                                 )
                                     this.existe = 1;
-                        }
 
                         if (!this.existe) this.guardarRestaurante();
                     } else {
