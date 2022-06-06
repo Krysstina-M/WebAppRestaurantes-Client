@@ -29,9 +29,6 @@
 </template>
 
 <script>
-//TODO separar los churros en funciones
-//TODO organizar las variables de los .vue
-//TODO poner más comentarios
 //TODO controlar tamaño del nombre y descripción de los restaurantes
 //TODO meter bootstrap?
 //TODO Añadir columna de página web
@@ -39,6 +36,7 @@
 //FIXME No funciona en git
 import Vue from "vue";
 
+//Componente de error de restaurante existente
 Vue.component("errorNomDir", {
     template: `
     <tr>
@@ -50,6 +48,7 @@ Vue.component("errorNomDir", {
 `,
 });
 
+//Componente de error del servidor
 Vue.component("errorS", {
     template: `
     <tr>
@@ -61,7 +60,8 @@ Vue.component("errorS", {
 `,
 });
 
-Vue.component("errorBD", {
+//Componente de error de base de datos
+Vue.component("errorDB", {
     template: `
     <tr>
         <td></td>
@@ -187,18 +187,11 @@ td {
     padding-bottom: 0px;
 }
 
-/*Columna del mensaje de error*/
-.tdError {
-    padding-top: 0px;
-}
-
-/*Input del mensaje de error*/
-.error {
-    color: firebrick;
-    background-color: #ffcccc;
-    border: none;
-    border-radius: 5px;
-    width: 80%;
+/*Textarea de descripción*/
+textarea {
+    font-family: "Avenir", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    border-radius: 20px;
 }
 
 /*Resto de campos*/
@@ -214,11 +207,18 @@ select {
     max-height: 130px;
 }
 
-/*Textarea de descripción*/
-textarea {
-    font-family: "Avenir", Helvetica, Arial, sans-serif;
-    font-size: 13px;
-    border-radius: 20px;
+/*Columna del mensaje de error*/
+.tdError {
+    padding-top: 0px;
+}
+
+/*Mensaje de error*/
+.error {
+    color: firebrick;
+    background-color: #ffcccc;
+    border: none;
+    border-radius: 5px;
+    width: 80%;
 }
 
 /*Botón guardar*/
@@ -252,6 +252,19 @@ input[type="submit"]:hover {
     margin-right: auto;
 }
 
+/*Div grande del restaurante e imagen*/
+.divRestImg {
+    display: flex;
+    justify-content: center;
+}
+
+/*Div individuales del restaurante y de la imagen*/
+.divRest,
+.divImg {
+    width: 40%;
+    padding: 40px 0px;
+}
+
 /*Nombre restaurante*/
 .nomRest {
     border: solid #2c3e50 1px;
@@ -259,24 +272,6 @@ input[type="submit"]:hover {
     padding: 10px;
     width: 50%;
     margin: auto;
-}
-
-/*Estrellas puntuación*/
-.checked {
-    color: gold;
-}
-
-/*Div grande del restaurante e imagen*/
-.divRestImg {
-    display: flex;
-    justify-content: center;
-}
-
-/*Div del restaurante y de la imagen*/
-.divRest,
-.divImg {
-    width: 40%;
-    padding: 40px 0px;
 }
 
 /*Imagen*/
@@ -292,8 +287,13 @@ input[type="submit"]:hover {
     transform: scale(2);
 }
 
+/*Estrellas puntuación*/
+.checked {
+    color: gold;
+}
+
 /*GetRestaurantes + ModificarRestaurante*/
-/*Botón eliminar*/
+/*Pregunta de si se quiere elimianr o no*/
 .eliminar button {
     background: #42b983;
     border: 1px solid #2c3e50;

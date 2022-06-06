@@ -5,7 +5,7 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
         />
-        <form @submit.prevent="altaRestaurante">
+        <form @submit.prevent="comprobarNomDir">
             <table class="form">
                 <tr>
                     <td class="tdIconos">
@@ -42,7 +42,7 @@
                         />
                     </td>
                 </tr>
-                <errorNomDir v-show="this.existe"></errorNomDir>
+                <errorNomDir v-show="existe"></errorNomDir>
                 <tr>
                     <td class="etq">Descripción</td>
                     <td>
@@ -70,8 +70,8 @@
                         </select>
                     </td>
                 </tr>
-                <errorS v-show="this.errorS"></errorS>
-                <errorBD v-show="this.errorBD"></errorBD>
+                <errorDB v-show="errorDB"></errorDB>
+                <errorS v-show="errorS"></errorS>
                 <tr>
                     <td colspan="3">
                         <input type="submit" value="Guardar restaurante" />
@@ -98,26 +98,14 @@ export default {
                 precio: "Medio",
                 puntuacion: 0,
             },
-            existe: 0,
+            errorDB: 0,
             errorS: 0,
-            errorBD: 0,
+            existe: 0,
         };
     },
     methods: {
-        limpiar() {
-            this.restaurante.nombre = "";
-            this.restaurante.direccion = "";
-            this.restaurante.descripcion = "";
-            this.restaurante.imagen = "";
-            this.restaurante.precio = "Medio";
+        comprobarNomDir() {
             this.existe = 0;
-            this.errorS = 0;
-            this.errorBD = 0;
-        },
-        altaRestaurante() {
-            this.existe = 0;
-            this.errorS = 0;
-            this.errorBD = 0;
 
             axios
                 .get(
@@ -133,46 +121,52 @@ export default {
                                     respuesta.data.data[i].direccion)
                             )
                                 this.existe = 1;
-
-                        if (!this.existe) {
-                            axios
-                                .post(
-                                    "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/create-restaurante",
-                                    JSON.stringify(this.restaurante)
-                                )
-                                .then((respuesta) => {
-                                    if (respuesta.data.status == "OK") {
-                                        console.info(respuesta.data.message);
-
-                                        this.$router
-                                            .push(
-                                                "/ver-restaurante/" +
-                                                    respuesta.data.data.id
-                                            )
-                                            .catch(() =>
-                                                console.error(
-                                                    ERRORES.ERROR_REDIRIGIR
-                                                )
-                                            );
-                                    } else {
-                                        console.error(ERRORES.ERROR_BD);
-                                        this.errorBD = 1;
-                                    }
-                                })
-                                .catch((error) => {
-                                    console.error(ERRORES.ERROR_SERVER, error);
-                                    this.errorS = 1;
-                                });
-                        }
                     } else {
-                        console.error(ERRORES.ERROR_BD);
-                        this.errorBD = 1;
+                        console.error(ERRORES.ERROR_DB);
+                        this.errorDB = 1;
+                    }
+
+                    if (!this.existe) this.altaRestaurante();
+                })
+                .catch((error) => {
+                    console.error(ERRORES.ERROR_SERVER, error);
+                    this.errorS = 1;
+                });
+        },
+        altaRestaurante() {
+            axios
+                .post(
+                    "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/create-restaurante",
+                    JSON.stringify(this.restaurante)
+                )
+                .then((respuesta) => {
+                    if (respuesta.data.status == "OK") {
+                        console.info(respuesta.data.message);
+
+                        this.$router
+                            .push("/ver-restaurante/" + respuesta.data.data.id)
+                            .catch(() =>
+                                console.error(ERRORES.ERROR_REDIRIGIR)
+                            );
+                    } else {
+                        console.error(ERRORES.ERROR_DB);
+                        this.errorDB = 1;
                     }
                 })
                 .catch((error) => {
                     console.error(ERRORES.ERROR_SERVER, error);
                     this.errorS = 1;
                 });
+        },
+        limpiar() {
+            this.restaurante.nombre = "";
+            this.restaurante.direccion = "";
+            this.restaurante.descripcion = "";
+            this.restaurante.imagen = "";
+            this.restaurante.precio = "Medio";
+            this.existe = 0;
+            this.errorDB = 0;
+            this.errorS = 0;
         },
     },
 };

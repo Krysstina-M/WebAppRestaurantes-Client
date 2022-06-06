@@ -1,10 +1,10 @@
 <template>
     <div>
-        <p class="pError" v-if="this.errorS">
+        <p class="pError" v-if="errorS">
             No se ha podido conectar con el servidor. Inténtelo de nuevo más
             tarde.
         </p>
-        <p class="pError" v-else-if="this.errorBD">
+        <p class="pError" v-else-if="errorDB">
             No se ha podido conectar con la base de datos.
         </p>
         <div v-else-if="restaurante != ''">
@@ -15,14 +15,14 @@
             <h2>Estás viendo el restaurante nº {{ restaurante.id }}</h2>
             <button class="anterior">
                 <a
-                    v-if="restaurante.id > Number(this.idPrimero)"
+                    v-if="restaurante.id > Number(idPrimero)"
                     @click="anterior()"
                     class="fa fa-chevron-left"
                 ></a>
             </button>
             <button class="siguiente">
                 <a
-                    v-if="restaurante.id < Number(this.idUltimo)"
+                    v-if="restaurante.id < Number(idUltimo)"
                     @click="siguiente()"
                     class="fa fa-chevron-right"
                 ></a>
@@ -39,7 +39,7 @@
                 <div class="divImg" v-if="restaurante.imagen != null">
                     <img
                         class="img"
-                        :alt="this.errorImg"
+                        :alt="errorImg"
                         :src="restaurante.imagen"
                     />
                 </div>
@@ -61,19 +61,24 @@ export default {
         return {
             id: "",
             restaurante: "",
+            errorS: 0,
+            errorDB: 0,
+            errorImg: ERRORES.ERROR_IMG,
+            noHay: 0,
             idPrimero: "",
             idAnterior: "",
             idUltimo: "",
             idSiguiente: "",
-            errorS: 0,
-            errorBD: 0,
-            errorImg: ERRORES.ERROR_IMG,
             timerCount: 5,
-            noHay: 0,
         };
     },
+    mounted() {
+        this.id = this.$route.params.id;
+
+        this.getRestaurante();
+    },
     methods: {
-        funcionAxios() {
+        getRestaurante() {
             axios
                 .get(
                     "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurante/" +
@@ -83,48 +88,48 @@ export default {
                     if (respuesta.data.status == "OK") {
                         this.restaurante = respuesta.data.data;
 
-                        axios
-                            .get(
-                                "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes-id"
-                            )
-                            .then((respuesta) => {
-                                if (respuesta.data.status == "OK") {
-                                    var arrayId = respuesta.data.data;
+                        this.getIds();
+                    } else {
+                        console.error(ERRORES.ERROR_DB);
+                        this.errorDB = 1;
+                    }
+                })
+                .catch((error) => {
+                    console.error(ERRORES.ERROR_SERVER, error);
+                    this.errorS = 1;
+                });
+        },
+        getIds() {
+            axios
+                .get(
+                    "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes-id"
+                )
+                .then((respuesta) => {
+                    if (respuesta.data.status == "OK") {
+                        var arrayId = respuesta.data.data;
 
-                                    var indexAnterior =
-                                        arrayId
-                                            .map((object) => object.id)
-                                            .indexOf(this.id) - 1;
-                                    var indexSiguiente =
-                                        arrayId
-                                            .map((object) => object.id)
-                                            .indexOf(this.id) + 1;
+                        var indexAnterior =
+                            arrayId
+                                .map((object) => object.id)
+                                .indexOf(this.id) - 1;
+                        var indexSiguiente =
+                            arrayId
+                                .map((object) => object.id)
+                                .indexOf(this.id) + 1;
 
-                                    this.idPrimero = arrayId[0].id;
-                                    this.idUltimo =
-                                        arrayId[arrayId.length - 1].id;
+                        this.idPrimero = arrayId[0].id;
+                        this.idUltimo = arrayId[arrayId.length - 1].id;
 
-                                    if (this.id != this.idPrimero)
-                                        this.idAnterior =
-                                            arrayId[indexAnterior].id;
-                                    else this.idAnterior = 0;
+                        this.id != this.idPrimero
+                            ? (this.idAnterior = arrayId[indexAnterior].id)
+                            : (this.idAnterior = 0);
 
-                                    if (this.id != this.idUltimo)
-                                        this.idSiguiente =
-                                            arrayId[indexSiguiente].id;
-                                    else this.idSiguiente = 0;
-                                } else {
-                                    console.error(ERRORES.ERROR_BD);
-                                    this.errorBD = 1;
-                                }
-                            })
-                            .catch((error) => {
-                                console.error(ERRORES.ERROR_SERVER, error);
-                                this.errorS = 1;
-                            });
-                    } else if (respuesta.data.status != "error") {
-                        console.error(ERRORES.ERROR_BD);
-                        this.errorBD = 1;
+                        this.id != this.idUltimo
+                            ? (this.idSiguiente = arrayId[indexSiguiente].id)
+                            : (this.idSiguiente = 0);
+                    } else {
+                        console.error(ERRORES.ERROR_DB);
+                        this.errorDB = 1;
                     }
                 })
                 .catch((error) => {
@@ -139,7 +144,7 @@ export default {
 
             this.id = this.idAnterior;
 
-            this.funcionAxios();
+            this.getRestaurante();
         },
         siguiente() {
             this.$router
@@ -148,16 +153,8 @@ export default {
 
             this.id = this.idSiguiente;
 
-            this.funcionAxios();
+            this.getRestaurante();
         },
-    },
-    mounted() {
-        this.id = this.$route.params.id;
-
-        this.funcionAxios();
-    },
-    components: {
-        Puntuacion,
     },
     watch: {
         timerCount: {
@@ -173,10 +170,14 @@ export default {
             immediate: true, // This ensures the watcher is triggered upon creation
         },
     },
+    components: {
+        Puntuacion,
+    },
 };
 </script>
 
 <style>
+/*Flecha para ir al restaurante anterior*/
 .anterior {
     border: none;
     background-color: inherit;
@@ -195,6 +196,7 @@ export default {
     cursor: pointer;
 }
 
+/*Flecha para ir al restaurante sguiente*/
 .siguiente {
     border: none;
     background-color: inherit;

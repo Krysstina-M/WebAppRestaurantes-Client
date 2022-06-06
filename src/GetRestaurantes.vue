@@ -12,7 +12,7 @@
         <button class="ordenar" @click="ordenarPorCodigo()">
             <i
                 :class="[
-                    this.ordenarCodAsc
+                    ordenarCodAsc
                         ? 'fa fa-sort-numeric-desc'
                         : 'fa fa-sort-numeric-asc',
                 ]"
@@ -22,7 +22,7 @@
         <button class="ordenar" @click="ordenarPorNombre()">
             <i
                 :class="[
-                    this.ordenarNomAsc
+                    ordenarNomAsc
                         ? 'fa fa-sort-alpha-desc'
                         : 'fa fa-sort-alpha-asc',
                 ]"
@@ -30,12 +30,12 @@
             Ordenar por nombre
         </button>
         <div class="lista">
-            <p class="pError" v-if="this.errorS">
+            <p class="pError" v-if="errorDB">
+                No se ha podido conectar con la base de datos.
+            </p>
+            <p class="pError" v-else-if="errorS">
                 No se ha podido conectar con el servidor. Inténtelo de nuevo más
                 tarde.
-            </p>
-            <p class="pError" v-else-if="this.errorBD">
-                No se ha podido conectar con la base de datos.
             </p>
             <ul id="GetRestaurantes" v-else-if="restaurantes != ''">
                 <li
@@ -82,11 +82,7 @@
             </ul>
             <p v-else-if="noHay">No hay restaurantes</p>
             <p v-else>Cargando restaurantes...</p>
-            <button
-                class="arriba"
-                v-show="this.scrollpx > 400"
-                @click="irArriba()"
-            >
+            <button class="arriba" v-show="scrollpx > 400" @click="irArriba()">
                 <a class="fa fa-arrow-circle-up"></a>
             </button>
         </div>
@@ -102,16 +98,15 @@ export default {
     data() {
         return {
             restaurantes: "",
-            idEliminar: "",
-            scrollpx: 0,
+            errorDB: 0,
             errorS: 0,
-            errorBD: 0,
-            timerCount: 5,
             noHay: 0,
             ordenarNomAsc: 1,
             ordenarNomDesc: 0,
             ordenarCodAsc: 0,
             ordenarCodDesc: 1,
+            scrollpx: 0,
+            idEliminar: "",
         };
     },
     mounted() {
@@ -128,18 +123,118 @@ export default {
                 .then((respuesta) => {
                     if (respuesta.data.status == "OK") {
                         this.restaurantes = respuesta.data.data;
+
+                        this.ordenarNomAsc = 1;
+                        this.ordenarNomDesc = 0;
                     } else {
-                        console.error(ERRORES.ERROR_BD);
-                        this.errorBD = 1;
+                        console.error(ERRORES.ERROR_DB);
+                        this.errorDB = 1;
                     }
                 })
                 .catch((error) => {
-                    console.error(ERRORES.ERROR_SERVER);
+                    console.error(ERRORES.ERROR_SERVER, error);
                     this.errorS = 1;
                 });
+        },
+        ordenarPorNombre() {
+            this.ordenarCodAsc = 0;
+            this.ordenarCodDesc = 1;
 
-            this.ordenarNomAsc = 1;
-            this.ordenarNomDesc = 0;
+            if (this.ordenarNomAsc) {
+                axios
+                    .get(
+                        "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes-nom-desc"
+                    )
+                    .then((respuesta) => {
+                        if (respuesta.data.status == "OK") {
+                            this.restaurantes = respuesta.data.data;
+
+                            this.ordenarNomAsc = 0;
+                            this.ordenarNomDesc = 1;
+                        } else {
+                            console.error(ERRORES.ERROR_DB);
+                            this.errorDB = 1;
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(ERRORES.ERROR_SERVER, error);
+                        this.errorS = 1;
+                    });
+            } else if (this.ordenarNomDesc) {
+                axios
+                    .get(
+                        "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes"
+                    )
+                    .then((respuesta) => {
+                        if (respuesta.data.status == "OK") {
+                            this.restaurantes = respuesta.data.data;
+
+                            this.ordenarNomAsc = 1;
+                            this.ordenarNomDesc = 0;
+                        } else {
+                            console.error(ERRORES.ERROR_DB);
+                            this.errorDB = 1;
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(ERRORES.ERROR_SERVER, error);
+                        this.errorS = 1;
+                    });
+            }
+        },
+        ordenarPorCodigo() {
+            this.ordenarNomAsc = 0;
+            this.ordenarNomDesc = 1;
+
+            if (this.ordenarCodAsc) {
+                axios
+                    .get(
+                        "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes-cod-desc"
+                    )
+                    .then((respuesta) => {
+                        if (respuesta.data.status == "OK") {
+                            this.restaurantes = respuesta.data.data;
+
+                            this.ordenarCodAsc = 0;
+                            this.ordenarCodDesc = 1;
+                        } else {
+                            console.error(ERRORES.ERROR_DB);
+                            this.errorDB = 1;
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(ERRORES.ERROR_SERVER, error);
+                        this.errorS = 1;
+                    });
+            } else if (this.ordenarCodDesc) {
+                axios
+                    .get(
+                        "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes-cod-asc"
+                    )
+                    .then((respuesta) => {
+                        if (respuesta.data.status == "OK") {
+                            this.restaurantes = respuesta.data.data;
+
+                            this.ordenarCodAsc = 1;
+                            this.ordenarCodDesc = 0;
+                        } else {
+                            console.error(ERRORES.ERROR_DB);
+                            this.errorDB = 1;
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(ERRORES.ERROR_SERVER, error);
+                        this.errorS = 1;
+                    });
+            }
+        },
+        handleScroll() {
+            this.scrollpx = window.scrollY;
+        },
+        irArriba() {
+            document
+                .getElementById("div")
+                .scrollIntoView({ behavior: "smooth" });
         },
         eliminarRestaurante(id) {
             this.idEliminar = id;
@@ -160,114 +255,14 @@ export default {
                         this.idEliminar = "";
                         this.getRestaurantes();
                     } else {
-                        console.error(ERRORES.ERROR_BD);
-                        this.errorBD = 1;
+                        console.error(ERRORES.ERROR_DB);
+                        this.errorDB = 1;
                     }
                 })
                 .catch((error) => {
-                    console.error(ERRORES.ERROR_SERVER);
+                    console.error(ERRORES.ERROR_SERVER, error);
                     this.errorS = 1;
                 });
-        },
-        irArriba() {
-            document
-                .getElementById("div")
-                .scrollIntoView({ behavior: "smooth" });
-        },
-        handleScroll() {
-            this.scrollpx = window.scrollY;
-        },
-        ordenarPorNombre() {
-            this.ordenarCodAsc = 0;
-            this.ordenarCodDesc = 1;
-
-            if (this.ordenarNomAsc) {
-                axios
-                    .get(
-                        "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes-nom-desc"
-                    )
-                    .then((respuesta) => {
-                        if (respuesta.data.status == "OK") {
-                            this.restaurantes = respuesta.data.data;
-                        } else {
-                            console.error(ERRORES.ERROR_BD);
-                            this.errorBD = 1;
-                        }
-                    })
-                    .catch((error) => {
-                        console.error(ERRORES.ERROR_SERVER);
-                        this.errorS = 1;
-                    });
-
-                this.ordenarNomAsc = 0;
-                this.ordenarNomDesc = 1;
-            } else if (this.ordenarNomDesc) {
-                axios
-                    .get(
-                        "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes"
-                    )
-                    .then((respuesta) => {
-                        if (respuesta.data.status == "OK") {
-                            this.restaurantes = respuesta.data.data;
-                        } else {
-                            console.error(ERRORES.ERROR_BD);
-                            this.errorBD = 1;
-                        }
-                    })
-                    .catch((error) => {
-                        console.error(ERRORES.ERROR_SERVER);
-                        this.errorS = 1;
-                    });
-
-                this.ordenarNomAsc = 1;
-                this.ordenarNomDesc = 0;
-            }
-        },
-        ordenarPorCodigo() {
-            this.ordenarNomAsc = 0;
-            this.ordenarNomDesc = 1;
-
-            if (this.ordenarCodAsc) {
-                axios
-                    .get(
-                        "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes-cod-desc"
-                    )
-                    .then((respuesta) => {
-                        if (respuesta.data.status == "OK") {
-                            this.restaurantes = respuesta.data.data;
-                        } else {
-                            console.error(ERRORES.ERROR_BD);
-                            this.errorBD = 1;
-                        }
-                    })
-                    .catch((error) => {
-                        console.error(ERRORES.ERROR_SERVER);
-                        this.errorS = 1;
-                    });
-
-                this.ordenarCodAsc = 0;
-                this.ordenarCodDesc = 1;
-            } else if (this.ordenarCodDesc) {
-                axios
-                    .get(
-                        "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes-cod-asc"
-                    )
-                    .then((respuesta) => {
-                        if (respuesta.data.status == "OK") {
-                            this.restaurantes = respuesta.data.data;
-                        } else {
-                            console.error(ERRORES.ERROR_BD);
-                            this.errorBD = 1;
-                        }
-                    })
-                    .catch((error) => {
-                        console.error(ERRORES.ERROR_SERVER);
-                        this.errorS = 1;
-                    });
-
-                this.ordenarCodAsc = 1;
-                this.ordenarCodDesc = 0;
-            }
         },
     },
     watch: {
@@ -275,9 +270,10 @@ export default {
             handler(value) {
                 if (value > 0) {
                     setTimeout(() => {
-                        this.timerCount--;
+                        var timerCount = 5;
+                        timerCount--;
 
-                        if (this.timerCount == 0) this.noHay = 1;
+                        if (timerCount == 0) this.noHay = 1;
                     }, 1000);
                 }
             },

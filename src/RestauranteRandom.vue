@@ -1,10 +1,10 @@
 <template>
     <div>
-        <p class="pError" v-if="this.errorS">
+        <p class="pError" v-if="errorS">
             No se ha podido conectar con el servidor. Inténtelo de nuevo más
             tarde.
         </p>
-        <p class="pError" v-else-if="this.errorBD">
+        <p class="pError" v-else-if="errorDB">
             No se ha podido conectar con la base de datos.
         </p>
         <div v-else-if="restaurante != ''">
@@ -34,7 +34,7 @@
                 <div class="divImg" v-if="restaurante.imagen != null">
                     <img
                         class="img"
-                        :alt="this.errorImg"
+                        :alt="errorImg"
                         :src="restaurante.imagen"
                     />
                 </div>
@@ -57,14 +57,17 @@ export default {
             id: "",
             restaurante: "",
             errorS: 0,
-            errorBD: 0,
+            errorDB: 0,
             errorImg: ERRORES.ERROR_IMG,
-            timerCount: 5,
             noHay: 0,
+            timerCount: 5,
         };
     },
+    mounted() {
+        this.getRestaurante();
+    },
     methods: {
-        funcionAxios() {
+        getRestaurante() {
             axios
                 .get(
                     "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurante-random"
@@ -85,9 +88,9 @@ export default {
                                     console.error(ERRORES.ERROR_REDIRIGIR)
                                 );
                         }
-                    } else if (respuesta.data.status != "error") {
-                        console.error(ERRORES.ERROR_BD);
-                        this.errorBD = 1;
+                    } else {
+                        console.error(ERRORES.ERROR_DB);
+                        this.errorDB = 1;
                     }
                 })
                 .catch((error) => {
@@ -96,14 +99,8 @@ export default {
                 });
         },
         refrescar() {
-            this.funcionAxios();
+            this.getRestaurante();
         },
-    },
-    mounted() {
-        this.funcionAxios();
-    },
-    components: {
-        Puntuacion,
     },
     watch: {
         timerCount: {
@@ -119,10 +116,14 @@ export default {
             immediate: true, // This ensures the watcher is triggered upon creation
         },
     },
+    components: {
+        Puntuacion,
+    },
 };
 </script>
 
 <style>
+/*Botón refrescar*/
 .refresh {
     border: none;
     background-color: inherit;
