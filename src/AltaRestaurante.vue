@@ -59,7 +59,13 @@
                 <tr>
                     <td class="etq">Imagen</td>
                     <td>
-                        <input type="text" v-model="restaurante.imagen" />
+                        <input
+                            type="file"
+                            name="imagen"
+                            accept="image/*"
+                            ref="file"
+                            @change="getImagen()"
+                        />
                     </td>
                 </tr>
                 <tr>
@@ -112,9 +118,13 @@ export default {
             errorDB: 0,
             errorS: 0,
             existe: 0,
+            img: "",
         };
     },
     methods: {
+        getImagen() {
+            this.img = this.$refs.file.files[0];
+        },
         comprobarNomDir() {
             this.existe = 0;
 
@@ -132,12 +142,39 @@ export default {
                                     respuesta.data.data[i].direccion)
                             )
                                 this.existe = 1;
+
+                        this.uploadImagen();
                     } else {
                         console.error(ERRORES.ERROR_DB);
                         this.errorDB = 1;
                     }
+                })
+                .catch((error) => {
+                    console.error(ERRORES.ERROR_SERVER, error);
+                    this.errorS = 1;
+                });
+        },
+        uploadImagen() {
+            console.log("entra");
 
-                    if (!this.existe) this.altaRestaurante();
+            let formData = new FormData();
+            formData.append('file', this.img);
+            console.log("1", formData)
+            console.log("2", this.img)
+
+            axios
+                .post(
+                    "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/upload-imagen/" + formData
+                )
+                .then((respuesta) => {
+                    if (respuesta.data.status == "OK") {
+                        console.info(respuesta.data.message);
+
+                        this.altaRestaurante();
+                    } else {
+                        console.error(ERRORES.ERROR_DB);
+                        this.errorDB = 1;
+                    }
                 })
                 .catch((error) => {
                     console.error(ERRORES.ERROR_SERVER, error);
@@ -154,11 +191,11 @@ export default {
                     if (respuesta.data.status == "OK") {
                         console.info(respuesta.data.message);
 
-                        this.$router
+                        /*this.$router
                             .push("/ver-restaurante/" + respuesta.data.data.id)
                             .catch(() =>
                                 console.error(ERRORES.ERROR_REDIRIGIR)
-                            );
+                            );*/
                     } else {
                         console.error(ERRORES.ERROR_DB);
                         this.errorDB = 1;
