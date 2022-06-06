@@ -29,24 +29,11 @@
 </template>
 
 <script>
-//TODO controlar tamaño del nombre y descripción de los restaurantes
 //TODO meter bootstrap?
 //TODO Añadir columna de página web
 //TODO probar filepond para meter la ruta de la imagen en la bd
 //FIXME No funciona en git
 import Vue from "vue";
-
-//Componente de error de restaurante existente
-Vue.component("errorNomDir", {
-    template: `
-    <tr>
-        <td></td>
-        <td class="tdError">
-            <input class="error" value="Este restaurante ya existe" disabled/>
-        </td>
-    </tr>
-`,
-});
 
 //Componente de error del servidor
 Vue.component("errorS", {
@@ -67,6 +54,18 @@ Vue.component("errorDB", {
         <td></td>
         <td class="tdError">
             <input class="error" value="No se ha podido conectar con la base de datos." disabled/>
+        </td>
+    </tr>
+`,
+});
+
+//Componente de error de restaurante existente
+Vue.component("errorNomDir", {
+    template: `
+    <tr>
+        <td></td>
+        <td class="tdError">
+            <input class="error" value="Este restaurante ya existe" disabled/>
         </td>
     </tr>
 `,
@@ -272,6 +271,7 @@ input[type="submit"]:hover {
     padding: 10px;
     width: 50%;
     margin: auto;
+    display: inline;
 }
 
 /*Imagen*/

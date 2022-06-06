@@ -28,6 +28,8 @@
                         <input
                             type="text"
                             v-model="restaurante.nombre"
+                            minlength="1"
+                            maxlength="50"
                             required
                         />
                     </td>
@@ -38,15 +40,20 @@
                         <input
                             type="text"
                             v-model="restaurante.direccion"
+                            minlength="1"
+                            maxlength="50"
                             required
                         />
                     </td>
                 </tr>
-                <errorNomDir v-show="existe"></errorNomDir>
                 <tr>
                     <td class="etq">Descripción</td>
                     <td>
-                        <textarea v-model="restaurante.descripcion"></textarea>
+                        <textarea
+                            v-model="restaurante.descripcion"
+                            minlength="1"
+                            maxlength="200"
+                        ></textarea>
                     </td>
                 </tr>
                 <tr>
@@ -70,6 +77,7 @@
                         </select>
                     </td>
                 </tr>
+                <errorNomDir v-show="existe"></errorNomDir>
                 <errorDB v-show="errorDB"></errorDB>
                 <errorS v-show="errorS"></errorS>
                 <tr>
