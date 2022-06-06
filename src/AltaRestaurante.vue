@@ -63,12 +63,15 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="etq">Web</td>
+                    <td>
+                        <input type="text" v-model="restaurante.web" />
+                    </td>
+                </tr>
+                <tr>
                     <td class="etq">Precio</td>
                     <td>
-                        <select
-                            name="precio"
-                            v-model="restaurante.precio"
-                        >
+                        <select name="precio" v-model="restaurante.precio">
                             <option value=""></option>
                             <option value="Bajo">Bajo</option>
                             <option value="Medio">Medio</option>
@@ -102,6 +105,7 @@ export default {
                 direccion: "",
                 descripcion: "",
                 imagen: "",
+                web: "",
                 precio: "",
                 puntuacion: 0,
             },
