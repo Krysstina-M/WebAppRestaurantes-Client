@@ -32,16 +32,19 @@
                     <h3 class="nomRest" v-text="restaurante.nombre"></h3>
                     <p v-text="restaurante.descripcion"></p>
                     <h5 v-text="restaurante.direccion"></h5>
-                    <h6>Precio: {{ restaurante.precio }}</h6>
+                    <h6 v-show="restaurante.precio">
+                        Precio: {{ restaurante.precio }}
+                    </h6>
                     <puntuacion :punt="restaurante.puntuacion"></puntuacion>
                 </div>
 
                 <div class="divImg" v-if="restaurante.imagen != null">
-                    <img
-                        class="img"
-                        :alt="errorImg"
-                        :src="restaurante.imagen"
-                    />
+                    <a :href="restaurante.web" target="_blank"
+                        ><img
+                            class="img"
+                            :alt="errorImg"
+                            :src="restaurante.imagen"
+                    /></a>
                 </div>
             </div>
         </div>

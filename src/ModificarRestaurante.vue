@@ -69,7 +69,6 @@
                         <select
                             name="precio"
                             v-model="restaurante.precio"
-                            required
                         >
                             <option value=""></option>
                             <option value="Bajo">Bajo</option>
@@ -125,6 +124,7 @@ export default {
                 direccion: "",
                 descripcion: "",
                 imagen: "",
+                precio: "",
             },
             existe: 0,
             errorDB: 0,

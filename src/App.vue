@@ -30,7 +30,6 @@
 
 <script>
 //TODO meter bootstrap?
-//TODO Añadir columna de página web
 //TODO probar filepond para meter la ruta de la imagen en la bd
 //FIXME No funciona en git
 import Vue from "vue";
