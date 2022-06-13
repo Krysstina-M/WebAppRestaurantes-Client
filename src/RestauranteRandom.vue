@@ -8,20 +8,14 @@
             No se ha podido conectar con la base de datos.
         </p>
         <div v-else-if="restaurante != ''">
-            <link
-                rel="stylesheet"
-                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-            />
-            <link
-                rel="stylesheet"
-                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-            />
             <h2>
                 Hoy podrás comer o cenar en el restaurante nº
                 {{ restaurante.id }}
             </h2>
             <button class="refresh">
-                <a @click="refrescar()"><i class="fa fa-refresh"></i></a>
+                <a @click="refrescar()"
+                    ><i class="fa-solid fa-arrows-rotate"></i
+                ></a>
             </button>
             <div class="divRestImg">
                 <div class="divRest">

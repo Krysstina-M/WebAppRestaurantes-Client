@@ -1,20 +1,17 @@
 <template>
     <div id="div">
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-        />
         <button class="alta">
             <router-link :to="{ name: 'alta-restaurante' }">
-                <i class="fa fa-plus"></i> Añadir nuevo restaurante</router-link
+                <i class="fa-solid fa-plus"></i> Añadir nuevo
+                restaurante</router-link
             >
         </button>
         <button class="ordenar" @click="ordenarPorCodigo()">
             <i
                 :class="[
                     ordenarCodAsc
-                        ? 'fa fa-sort-numeric-desc'
-                        : 'fa fa-sort-numeric-asc',
+                        ? 'fa-solid fa-arrow-down-1-9'
+                        : 'fa-solid fa-arrow-down-9-1',
                 ]"
             ></i>
             Ordenar por código
@@ -23,8 +20,8 @@
             <i
                 :class="[
                     ordenarNomAsc
-                        ? 'fa fa-sort-alpha-desc'
-                        : 'fa fa-sort-alpha-asc',
+                        ? 'fa-solid fa-arrow-down-a-z'
+                        : 'fa-solid fa-arrow-down-z-a',
                 ]"
             ></i>
             Ordenar por nombre
@@ -53,7 +50,7 @@
                                     id: restaurante.id,
                                 },
                             }"
-                            ><i class="fa fa-eye"></i> Ver</router-link
+                            ><i class="fa-solid fa-eye"></i> Ver</router-link
                         >
                         <router-link
                             :to="{
@@ -61,12 +58,14 @@
                                 params: { id: restaurante.id },
                             }"
                         >
-                            <i class="fa fa-pencil"></i> Modificar</router-link
+                            <i class="fa-solid fa-pencil"></i>
+                            Modificar</router-link
                         >
                         <span v-if="idEliminar != restaurante.id">
                             <!--Si NO se le ha dado click a "Eliminar", el botón NO desaparece"-->
                             <a @click="eliminarRestaurante(restaurante.id)"
-                                ><i class="fa fa-trash-o"></i> Eliminar</a
+                                ><i class="fa-solid fa-trash-can"></i>
+                                Eliminar</a
                             >
                         </span>
                         <span class="eliminar" v-else>
@@ -83,7 +82,7 @@
             <p v-else-if="noHay">No hay restaurantes</p>
             <p v-else>Cargando restaurantes...</p>
             <button class="arriba" v-show="scrollpx > 400" @click="irArriba()">
-                <a class="fa fa-arrow-circle-up"></a>
+                <a class="fa-solid fa-circle-arrow-up"></a>
             </button>
         </div>
     </div>

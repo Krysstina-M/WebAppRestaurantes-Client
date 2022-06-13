@@ -1,7 +1,5 @@
 <template>
     <div id="app">
-        <img src="../dist/logo.png" />
-        <h1>{{ msg }}</h1>
         <!--Menú de arriba-->
         <ul class="top">
             <li><router-link to="/">Home</router-link></li>
@@ -22,6 +20,8 @@
             </li>
             <li><router-link to="/contacto">Contacto</router-link></li>
         </ul>
+        <img src="../dist/logo.png" />
+        <h1>{{ msg }}</h1>
 
         <!--Router-->
         <router-view></router-view>
@@ -29,8 +29,7 @@
 </template>
 
 <script>
-//TODO meter bootstrap?
-//TODO probar filepond para meter la ruta de la imagen en la bd
+//TODO Meter imagen en la BD
 //FIXME No funciona en git
 import Vue from "vue";
 
@@ -91,6 +90,10 @@ export default {
 
 /*Barra menú*/
 .top {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
     list-style-type: none;
     margin: auto;
     overflow: hidden;

@@ -10,10 +10,6 @@
         <div v-else-if="restaurante != ''">
             <h2>El restaurante destacado es el nº {{ restaurante.id }}</h2>
             <div class="divRestImg">
-                <link
-                    rel="stylesheet"
-                    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-                />
                 <div class="divRest">
                     <h3 class="nomRest" v-text="restaurante.nombre"></h3>
                     <p v-text="restaurante.descripcion"></p>

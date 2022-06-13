@@ -8,23 +8,19 @@
             No se ha podido conectar con la base de datos.
         </p>
         <div v-else-if="restaurante != ''">
-            <link
-                rel="stylesheet"
-                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-            />
             <h2>Estás viendo el restaurante nº {{ restaurante.id }}</h2>
             <button class="anterior">
                 <a
                     v-if="restaurante.id > Number(idPrimero)"
                     @click="anterior()"
-                    class="fa fa-chevron-left"
+                    class="fa-solid fa-chevron-left"
                 ></a>
             </button>
             <button class="siguiente">
                 <a
                     v-if="restaurante.id < Number(idUltimo)"
                     @click="siguiente()"
-                    class="fa fa-chevron-right"
+                    class="fa-solid fa-chevron-right"
                 ></a>
             </button>
             <div class="divRestImg ver">

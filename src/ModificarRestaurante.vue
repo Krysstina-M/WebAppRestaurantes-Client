@@ -1,24 +1,20 @@
 <template>
     <div>
         <h2>Introduce los datos del restaurante</h2>
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-        />
         <form @submit.prevent="comprobarNomDir">
             <table class="form">
                 <tr>
                     <td class="tdIconos">
                         <button class="atras">
                             <a
-                                class="fa fa-chevron-left"
+                                class="fa-solid fa-chevron-left"
                                 href="/get-restaurantes"
                             ></a>
                         </button>
                     </td>
                     <td class="tdIconos">
                         <button class="limpiar" @click.prevent="limpiar">
-                            <a class="fa fa-eraser"></a>
+                            <a class="fa-solid fa-eraser"></a>
                         </button>
                     </td>
                 </tr>
