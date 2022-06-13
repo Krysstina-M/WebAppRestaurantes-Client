@@ -1,35 +1,50 @@
 <template>
     <div id="div">
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-        />
-        <button class="alta">
-            <router-link :to="{ name: 'alta-restaurante' }">
-                <i class="fa fa-plus"></i> Añadir nuevo restaurante</router-link
-            >
-        </button>
-        <button class="ordenar" @click="ordenarPorCodigo()">
-            <i
-                :class="[
-                    ordenarCodAsc
-                        ? 'fa fa-sort-numeric-desc'
-                        : 'fa fa-sort-numeric-asc',
-                ]"
-            ></i>
-            Ordenar por código
-        </button>
-        <button class="ordenar" @click="ordenarPorNombre()">
-            <i
-                :class="[
-                    ordenarNomAsc
-                        ? 'fa fa-sort-alpha-desc'
-                        : 'fa fa-sort-alpha-asc',
-                ]"
-            ></i>
-            Ordenar por nombre
-        </button>
-        <div class="lista">
+        <div
+            class="btn-toolbar justify-content-between"
+            role="toolbar"
+            aria-label="Toolbar with button groups"
+        >
+            <div class="btn-group ms-5" role="group" aria-label="First group">
+                <button class="btn btn-primary" type="button">
+                    <router-link :to="{ name: 'alta-restaurante' }">
+                        <i class="bi bi-plus-lg"></i> Añadir nuevo restaurante
+                    </router-link>
+                </button>
+            </div>
+            <div class="btn-group me-5" role="group" aria-label="Second group">
+                <button
+                    class="btn-primary me-2"
+                    type="button"
+                    @click="ordenarPorNombre()"
+                >
+                    <i
+                        :class="[
+                            ordenarNomAsc
+                                ? 'bi bi-sort-alpha-down'
+                                : 'bi bi-sort-alpha-up',
+                        ]"
+                    ></i>
+                    Ordenar por nombre
+                </button>
+                <button
+                    class="btn-primary ms-2"
+                    type="button"
+                    @click="ordenarPorCodigo()"
+                >
+                    <i
+                        :class="[
+                            ordenarCodAsc
+                                ? 'bi bi-sort-numeric-down'
+                                : 'bi bi-sort-numeric-up',
+                        ]"
+                    ></i>
+                    Ordenar por código
+                </button>
+            </div>
+        </div>
+
+        <div class="container-fluid">
             <p class="pError" v-if="errorDB">
                 No se ha podido conectar con la base de datos.
             </p>
@@ -37,53 +52,79 @@
                 No se ha podido conectar con el servidor. Inténtelo de nuevo más
                 tarde.
             </p>
-            <ul id="GetRestaurantes" v-else-if="restaurantes != ''">
-                <li
-                    class="cajas"
+            <div
+                class="row row-cols-6 justify-content-center"
+                id="GetRestaurantes"
+                v-else-if="restaurantes != ''"
+            >
+                <div
+                    class="col p-4 mt-4 m-2"
                     v-for="restaurante in restaurantes"
                     :key="restaurante.id"
                 >
                     <h6 class="id">{{ restaurante.id }}</h6>
-                    <b>{{ restaurante.nombre }}</b>
-                    <p>
-                        <router-link
-                            :to="{
-                                name: 'ver-restaurante',
-                                params: {
-                                    id: restaurante.id,
-                                },
-                            }"
-                            ><i class="fa fa-eye"></i> Ver</router-link
-                        >
-                        <router-link
-                            :to="{
-                                name: 'modificar-restaurante',
-                                params: { id: restaurante.id },
-                            }"
-                        >
-                            <i class="fa fa-pencil"></i> Modificar</router-link
-                        >
-                        <span v-if="idEliminar != restaurante.id">
-                            <!--Si NO se le ha dado click a "Eliminar", el botón NO desaparece"-->
-                            <a @click="eliminarRestaurante(restaurante.id)"
-                                ><i class="fa fa-trash-o"></i> Eliminar</a
+                    <h5>{{ restaurante.nombre }}</h5>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" type="button">
+                            <router-link
+                                :to="{
+                                    name: 'ver-restaurante',
+                                    params: {
+                                        id: restaurante.id,
+                                    },
+                                }"
                             >
-                        </span>
-                        <span class="eliminar" v-else>
+                                <i class="bi bi-eye-fill"></i> Ver
+                            </router-link>
+                        </button>
+                        <button class="btn btn-primary" type="button">
+                            <router-link
+                                :to="{
+                                    name: 'modificar-restaurante',
+                                    params: { id: restaurante.id },
+                                }"
+                            >
+                                <i class="bi bi-pencil-fill"></i> Modificar
+                            </router-link>
+                        </button>
+                        <button
+                            class="btn btn-primary"
+                            type="button"
+                            v-if="idEliminar != restaurante.id"
+                            @click="eliminarRestaurante(restaurante.id)"
+                        >
+                            <i class="bi bi-trash-fill"></i> Eliminar
+                        </button>
+                        <div class="container-fluid" v-else>
                             <!--Si se le ha dado click a "Eliminar", el botón desaparece"-->
                             <p>¿Estás seguro de que quieres borrarlo?</p>
-                            <button @click="siBorrar(restaurante.id)">
+                            <button
+                                class="btn btn-primary"
+                                type="button"
+                                @click="siBorrar(restaurante.id)"
+                            >
                                 Sí
                             </button>
-                            <button @click="noBorrar()">No</button>
-                        </span>
-                    </p>
-                </li>
-            </ul>
+                            <button
+                                class="btn btn-primary"
+                                type="button"
+                                @click="noBorrar()"
+                            >
+                                No
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <p v-else-if="noHay">No hay restaurantes</p>
             <p v-else>Cargando restaurantes...</p>
-            <button class="arriba" v-show="scrollpx > 400" @click="irArriba()">
-                <a class="fa fa-arrow-circle-up"></a>
+            <button
+                class="btn-secondary fixed-bottom ms-auto me-5"
+                type="button"
+                v-show="scrollpx > 400"
+                @click="irArriba()"
+            >
+                <a class="bi bi-arrow-up-circle-fill"></a>
             </button>
         </div>
     </div>
@@ -284,125 +325,59 @@ export default {
 </script>
 
 <style>
-/*Botón añadir restaurante*/
-.alta {
-    background: #42b983;
-    border: 1px solid #2c3e50;
-    margin-top: 20px;
-    margin-right: -20%;
+/*Botones añadir restaurante y ordenar*/
+.btn {
+    outline: none;
 }
 
-.alta a {
-    display: block;
-    color: #2c3e50;
-    text-align: center;
-    padding: 10px;
+.btn-primary:not(:disabled) {
+    background-color: var(--main-verde);
+    color: var(--main-gris);
+    border: var(--main-border);
+    border-radius: 0;
+}
+
+.btn-primary > a {
+    color: var(--main-gris);
     text-decoration: none;
-    font-size: 15px;
-    font-weight: bold;
 }
 
-.alta a:hover {
-    color: #42b983;
+.btn-primary:hover {
+    background-color: var(--main-gris);
+    color: var(--bs-white);
 }
 
-.alta:hover {
-    background-color: #2c3e50;
-}
-
-/*Botones ordenar restaurantes*/
-.ordenar {
-    background: #42b983;
-    border: 1px solid #2c3e50;
-    margin-top: 20px;
-    margin-right: 20px;
-    float: right;
-    display: block;
-    color: #2c3e50;
-    text-align: center;
-    padding: 10px;
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: bold;
-}
-
-.ordenar:hover {
-    background-color: #2c3e50;
-    color: #42b983;
-    cursor: pointer;
-}
-
-.ordenar:disabled {
-    background: #2c3e50;
-    color: #42b983;
-    cursor: default;
+.btn-primary:hover > a {
+    color: var(--bs-white);
 }
 
 /*Lista de restaurantes*/
-.lista ul {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+.col {
+    border: var(--main-border);
+    border-radius: var(--main-border-radius);
+    background-color: var(--bs-light);
 }
 
-/*ID de arriba a la izquierda*/
+/*ID de arriba a la izquierda------*/
 .id {
     margin: -10px 0px 10px 0px;
     text-align: left;
 }
 
-/*Cajas de restaurantes (li)*/
-.cajas {
-    margin: 15px;
-    width: 15%;
-    border: 1px solid #2c3e50;
-    border-radius: 25px;
-    background: whitesmoke;
-    padding: 30px;
-    text-align: center;
-    list-style-type: none;
-    font-size: 20px;
-}
-
-.cajas a {
-    display: block;
-    cursor: pointer;
-    font-size: 15px;
-    text-decoration: none;
-    color: #2c3e50;
-    background: #42b983;
-    text-align: center;
-    border: 1px solid #2c3e50;
-    margin: 10px 20px;
-    padding: 5px;
-    font-weight: bold;
-}
-
-.cajas a:hover {
-    background-color: #2c3e50;
-    color: white;
-}
-
 /*Botón para ir arriba del todo*/
-.arriba {
-    border: none;
+.btn-secondary {
     background-color: inherit;
+    border: none;
     font-size: 50px;
-    float: right;
-    position: fixed;
-    bottom: 0px;
-    right: 0px;
 }
 
-.arriba a {
+.btn-secondary > a {
+    color: var(--main-verde);
     text-decoration: none;
-    color: #42b983;
-    transition: all 200ms ease;
 }
 
-.arriba a:hover {
-    color: #2c3e50;
+.btn-secondary > a:hover {
+    color: var(--main-gris);
     cursor: pointer;
 }
 </style>

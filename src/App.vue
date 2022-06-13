@@ -32,7 +32,9 @@
                 >
                     <ul class="navbar-nav mx-auto">
                         <li class="nav-item">
-                            <router-link class="nav-link" to="/">Home</router-link>
+                            <router-link class="nav-link" to="/"
+                                >Home</router-link
+                            >
                         </li>
                         <li class="nav-item">
                             <router-link class="nav-link" to="/get-restaurantes"
@@ -65,18 +67,6 @@
                             >
                         </li>
                     </ul>
-                    <ul class="navbar-nav navbar-right">
-                        <li class="nav-item">
-                            <router-link class="nav-link" to="/contacto"
-                                >Registrarse</router-link
-                            >
-                        </li>
-                        <li class="nav-item">
-                            <router-link class="nav-link" to="/contacto"
-                                >Iniciar sesión</router-link
-                            >
-                        </li>
-                    </ul>
                 </div>
             </div>
         </nav>
@@ -88,9 +78,12 @@
 </template>
 
 <script>
+//TODO validar css y html
+//TODO quitar el link del fa fa awesome
 //TODO meter bootstrap?
 //TODO lo de active en el navbar
 //TODO mirar lo del fa fa font
+//TODO hacer login y registro
 //TODO probar filepond para meter la ruta de la imagen en la bd
 //FIXME No funciona en git
 import Vue from "vue";
@@ -237,19 +230,19 @@ export default {
     --main-verde: #42b983;
     --main-gris: #2c3e50;
     --main-border: 1px solid black;
+    --main-border-radius: 25px;
 }
 
 #app {
     font-family: "Avenir", Helvetica, Arial, sans-serif;
-    text-align: center;
     color: #2c3e50;
+    text-align: center;
     margin-top: 50px;
 }
 
 .navbar {
     background-color: var(--main-verde);
     border: var(--main-border);
-    color: var(--main-gris);
 }
 
 .nav-item > a:hover,
