@@ -1,94 +1,137 @@
 <template>
-    <div>
+    <div id="div" class="container-fluid">
         <h2>Introduce los datos del restaurante</h2>
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-        />
-        <form @submit.prevent="comprobarNomDir">
-            <table class="form">
-                <tr>
-                    <td class="tdIconos">
-                        <button class="atras">
-                            <a
-                                class="fa fa-chevron-left"
-                                href="/get-restaurantes"
-                            ></a>
-                        </button>
-                    </td>
-                    <td class="tdIconos">
-                        <button class="limpiar" @click.prevent="limpiar">
-                            <a class="fa fa-eraser"></a>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="etq">Nombre</td>
-                    <td>
+        <div class="container-fluid caja-form w-50">
+            <div class="row justify-content-between">
+                <div class="col-2">
+                    <button class="btn btn-form" type="button">
+                        <a
+                            class="bi bi-arrow-left"
+                            href="/get-restaurantes"
+                        ></a>
+                    </button>
+                </div>
+                <div class="col-2">
+                    <button
+                        class="btn btn-form"
+                        type="button"
+                        @click.prevent="limpiar"
+                    >
+                        <a class="bi bi-eraser-fill"></a>
+                    </button>
+                </div>
+            </div>
+            <form @submit.prevent="comprobarNomDir">
+                <div class="row justify-content-center mb-4">
+                    <label class="col-md-2 col-form-label" for="nombre"
+                        >Nombre</label
+                    >
+                    <div class="col-md-8">
                         <input
+                            class="form-control"
+                            id="nombre"
                             type="text"
+                            minlength="1"
+                            maxlength="50"
+                            required
                             v-model="restaurante.nombre"
-                            minlength="1"
-                            maxlength="50"
-                            required
                         />
-                    </td>
-                </tr>
-                <tr>
-                    <td class="etq">Dirección</td>
-                    <td class="dir">
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <label class="col-md-2 col-form-label" for="direccion"
+                        >Dirección</label
+                    >
+                    <div class="col-md-8">
                         <input
+                            class="form-control"
+                            id="direccion"
                             type="text"
-                            v-model="restaurante.direccion"
                             minlength="1"
                             maxlength="50"
                             required
+                            v-model="restaurante.direccion"
                         />
-                    </td>
-                </tr>
+                    </div>
+                </div>
                 <errorNomDir v-show="existe"></errorNomDir>
-                <tr>
-                    <td class="etq">Descripción</td>
-                    <td>
+                <div class="row justify-content-center my-4">
+                    <label class="col-md-2 col-form-label" for="descripción"
+                        >Descripción</label
+                    >
+                    <div class="col-md-8">
                         <textarea
-                            v-model="restaurante.descripcion"
+                            class="form-control"
+                            id="descripción"
+                            type="text"
                             minlength="1"
-                            maxlength="200"
-                        ></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="etq">Imagen</td>
-                    <td>
-                        <input type="text" v-model="restaurante.imagen" />
-                    </td>
-                </tr>
-                <tr>
-                    <td class="etq">Web</td>
-                    <td>
-                        <input type="text" v-model="restaurante.web" />
-                    </td>
-                </tr>
-                <tr>
-                    <td class="etq">Precio</td>
-                    <td>
-                        <select name="precio" v-model="restaurante.precio">
-                            <option value=""></option>
-                            <option value="Bajo">Bajo</option>
-                            <option value="Medio">Medio</option>
-                            <option value="Alto">Alto</option>
+                            maxlength="150"
+                            rows="3"
+                            v-model="restaurante.descripcion"
+                        />
+                    </div>
+                </div>
+                <div class="row justify-content-center mb-4">
+                    <label class="col-md-2 col-form-label" for="imagen"
+                        >Imagen</label
+                    >
+                    <div class="col-md-8">
+                        <input
+                            class="form-control"
+                            id="imagen"
+                            type="text"
+                            minlength="1"
+                            maxlength="250"
+                            v-model="restaurante.imagen"
+                        />
+                    </div>
+                </div>
+                <div class="row justify-content-center mb-4">
+                    <label class="col-md-2 col-form-label" for="web">Web</label>
+                    <div class="col-md-8">
+                        <input
+                            class="form-control"
+                            id="web"
+                            type="text"
+                            minlength="1"
+                            maxlength="250"
+                            v-model="restaurante.web"
+                        />
+                    </div>
+                </div>
+                <div class="row justify-content-center mb-4">
+                    <label class="col-md-2 col-form-label" for="precio"
+                        >Precio</label
+                    >
+                    <div class="col-md-8">
+                        <select
+                            class="form-select"
+                            aria-label="Select"
+                            v-model="restaurante.precio"
+                        >
+                            <option selected></option>
+                            <option value="bajo">Bajo</option>
+                            <option value="medio">Medio</option>
+                            <option value="alto">Alto</option>
                         </select>
-                    </td>
-                </tr>
-                <errorDB v-show="errorDB"></errorDB>
-                <errorS v-show="errorS"></errorS>
-                <tr>
-                    <td colspan="3">
-                        <input type="submit" value="Guardar restaurante" />
-                    </td>
-                </tr>
-            </table>
-        </form>
+                    </div>
+                </div>
+                <div
+                    class="row justify-content-center mb-4"
+                    v-show="errorDB | errorS"
+                >
+                    <errorDB v-show="errorDB"></errorDB>
+                    <errorS v-show="errorS"></errorS>
+                </div>
+                <div class="row justify-content-center mb-4">
+                    <div class="col-md-12">
+                        <button class="btn btn-primary" type="submit">
+                            Guardar restaurante
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </template>
 
@@ -174,7 +217,7 @@ export default {
             this.restaurante.direccion = "";
             this.restaurante.descripcion = "";
             this.restaurante.imagen = "";
-            this.restaurante.precio = "Medio";
+            this.restaurante.precio = "";
             this.existe = 0;
             this.errorDB = 0;
             this.errorS = 0;

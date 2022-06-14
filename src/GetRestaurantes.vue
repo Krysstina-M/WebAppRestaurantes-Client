@@ -106,20 +106,22 @@
                         <div class="container-fluid" v-else>
                             <!--Si se le ha dado click a "Eliminar", el botón desaparece"-->
                             <p>¿Estás seguro de que quieres borrarlo?</p>
-                            <button
-                                class="btn btn-primary"
-                                type="button"
-                                @click="siBorrar(restaurante.id)"
-                            >
-                                Sí
-                            </button>
-                            <button
-                                class="btn btn-primary"
-                                type="button"
-                                @click="noBorrar()"
-                            >
-                                No
-                            </button>
+                            <div class="btn-group gap-2 mb-4">
+                                <button
+                                    class="btn btn-primary"
+                                    type="button"
+                                    @click="siBorrar(restaurante.id)"
+                                >
+                                    Sí
+                                </button>
+                                <button
+                                    class="btn btn-primary"
+                                    type="button"
+                                    @click="noBorrar()"
+                                >
+                                    No
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -127,7 +129,7 @@
             <p v-else-if="noHay">No hay restaurantes</p>
             <p v-else>Cargando restaurantes...</p>
             <button
-                class="btn btn-secondary fixed-bottom ms-auto me-5"
+                class="btn btn-link fixed-bottom ms-auto me-5"
                 type="button"
                 v-show="scrollpx > 400"
                 @click="irArriba()"
@@ -346,23 +348,23 @@ export default {
 }
 
 /*Botón para ir arriba del todo*/
-.btn-secondary {
+.btn-link {
     background-color: inherit;
     border: none;
     font-size: 50px;
 }
 
-.btn-secondary > a {
+.btn-link > a {
     color: var(--main-verde);
 }
 
-.btn-secondary:hover,
-.btn-secondary:focus {
+.btn-link:hover,
+.btn-link:focus {
     background-color: inherit;
 }
 
-.btn-secondary:hover > a,
-.btn-secondary:focus > a {
+.btn-link:hover > a,
+.btn-link:focus > a {
     color: var(--main-gris);
 }
 </style>

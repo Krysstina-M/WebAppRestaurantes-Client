@@ -9,8 +9,8 @@
         </p>
         <div class="container-fluid" v-else-if="restaurante != ''">
             <h2>Estás viendo el restaurante nº {{ restaurante.id }}</h2>
-            <div class="btn-group d-flex" role="group" aria-label="First group">
-                <button class="btn btn-link" type="button">
+            <div class="btn-group d-flex" role="group" aria-label="Group">
+                <button class="btn btn-secondary" type="button">
                     <a class="bi bi-arrow-clockwise" @click="refrescar()"></a>
                 </button>
             </div>

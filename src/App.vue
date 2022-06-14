@@ -79,6 +79,9 @@
 </template>
 
 <script>
+//FIXME el precio en modificar no sale
+//TODO quitar aria label?
+//TODO mirar si está bien lo de tabular
 //TODO revisar mensajes de error
 //TODO quitar lo de i en los iconos y route link y poner directamente el nombre de la clase
 //TODO hacer que el título del restaurante lleve a su página web
@@ -94,36 +97,36 @@ import Vue from "vue";
 //Componente de error del servidor
 Vue.component("errorS", {
     template: `
-    <tr>
-        <td></td>
-        <td class="tdError">
-            <input class="error" value="No se ha podido conectar con el servidor." disabled/>
-        </td>
-    </tr>
+    <div class="row justify-content-center">
+        <label class="col-md-2"></label>
+        <div class="col-md-8">
+            <input class="form-control text-center error" value="No se ha podido conectar con el servidor" />
+        </div>
+    </div>
 `,
 });
 
 //Componente de error de base de datos
 Vue.component("errorDB", {
     template: `
-    <tr>
-        <td></td>
-        <td class="tdError">
-            <input class="error" value="No se ha podido conectar con la base de datos." disabled/>
-        </td>
-    </tr>
+    <div class="row justify-content-center">
+        <label class="col-md-2"></label>
+        <div class="col-md-8">
+            <input class="form-control text-center error" value="No se ha podido conectar con la base de datos" />
+        </div>
+    </div>
 `,
 });
 
 //Componente de error de restaurante existente
 Vue.component("errorNomDir", {
     template: `
-    <tr>
-        <td></td>
-        <td class="tdError">
-            <input class="error" value="Este restaurante ya existe" disabled/>
-        </td>
-    </tr>
+    <div class="row justify-content-center">
+        <label class="col-md-2"></label>
+        <div class="col-md-8">
+            <input class="form-control text-center error" value="Este restaurante ya existe" />
+        </div>
+    </div>
 `,
 });
 
@@ -233,7 +236,6 @@ export default {
     --main-verde: #42b983;
     --main-gris: #2c3e50;
     --main-border: 1px solid black;
-    --main-border-radius: 25px;
 }
 
 /*Todo*/
@@ -245,6 +247,12 @@ export default {
 *:focus {
     outline: none !important;
     box-shadow: none !important;
+}
+
+/*Mensajes de error*/
+.error {
+    color: var(--bs-danger);
+    border: none;
 }
 
 /*Barra de navegación*/
@@ -263,8 +271,8 @@ export default {
     color: var(--bs-white);
 }
 
-/*Botones principales*/
-.btn-primary:not(:disabled) {
+/*Botones principales (los verdes)*/
+.btn-primary {
     background-color: var(--main-verde);
     color: var(--main-gris);
     border: var(--main-border);
@@ -287,160 +295,41 @@ export default {
     color: var(--bs-white);
 }
 
-/*AltaRestaurante + ModificarRestaurante*/
-/*Flecha izquierda*/
-.atras {
-    border: none;
-    background-color: inherit;
-    font-size: 35px;
-    float: left;
-    margin-right: 10px;
-}
-
-.atras a {
-    text-decoration: none;
-    color: #2c3e50;
-    transition: all 200ms ease;
-}
-
-.atras a:hover {
-    color: #42b983;
-    cursor: pointer;
-}
-
-/*Columna del botón limpiar*/
-.tdIconos {
-    padding: 0px;
-}
-
-/*Botón limpiar*/
-.limpiar {
-    border: none;
-    background-color: inherit;
-    font-size: 30px;
-    float: right;
-    margin-right: 10px;
-}
-
-.limpiar a {
-    text-decoration: none;
-    color: #2c3e50;
-    transition: all 200ms ease;
-}
-
-.limpiar a:hover {
-    color: #42b983;
-    cursor: pointer;
-}
-
-/*Caja formulario*/
-.form {
-    border: 5px solid #42b983;
-    margin: auto;
-    margin-top: -10px;
-    width: 40%;
-}
-
-/*Formulario, filas y columnas*/
-.form tr,
-td {
-    padding: 10px 0px 10px 0px;
-}
-
-/*Etiquetas*/
-.etq {
-    text-align: right;
-}
-
-/*Input de dirección*/
-.dir {
-    padding-bottom: 0px;
-}
-
-/*Textarea de descripción*/
-textarea {
-    font-family: "Avenir", Helvetica, Arial, sans-serif;
-    font-size: 13px;
-    border-radius: 20px;
-}
-
-/*Resto de campos*/
-input[type="text"],
-textarea,
-select {
-    border: solid #2c3e50 1px;
-    border-radius: 25px;
-    padding: 5px;
-    width: 80%;
-    background-color: white;
-    max-width: 730px;
-    max-height: 130px;
-}
-
-/*Columna del mensaje de error*/
-.tdError {
-    padding-top: 0px;
-}
-
-/*Mensaje de error*/
-.error {
-    color: firebrick;
-    background-color: #ffcccc;
-    border: none;
-    border-radius: 5px;
-    width: 80%;
-}
-
-/*Botón guardar*/
-input[type="submit"] {
-    background: #42b983;
-    border: 1px solid #2c3e50;
-    margin: 10px;
-    padding: 10px;
-    color: #2c3e50;
-    font-size: 15px;
-    font-weight: bold;
-}
-
-input[type="submit"]:hover {
-    background-color: #2c3e50;
-    color: #42b983;
-    cursor: pointer;
-}
-
-/*VerRestaurante + RestauranteDestacado + RestauranteRandom*/
-/*Mensaje error servidor + BD*/
-.pError {
-    color: firebrick;
-    background-color: #ffcccc;
-    font-size: 30px;
-    border-radius: 5px;
-    width: 40%;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/*Botones ir atrás y adelante y refrescar*/
-.btn-link {
+/*Botones que tienen iconos*/
+.btn-secondary {
     background-color: inherit;
     border: none;
     font-size: 50px;
 }
 
-.btn-link > a {
+.btn-form {
+    background-color: inherit;
+    border: none;
+    font-size: 30px;
+}
+
+.btn-secondary > a,
+.btn-form > a {
     color: var(--main-gris);
 }
 
-.btn-link:hover,
-.btn-link:focus {
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-form:hover,
+.btn-form:focus {
     background-color: inherit;
 }
 
-.btn-link:hover > a,
-.btn-link:focus > a {
+.btn-secondary > a:hover,
+.btn-secondary:focus > a,
+.btn-form > a:hover,
+.btn-form:focus > a {
     color: var(--main-verde);
+}
+
+/*Formulario*/
+.caja-form {
+    border: 5px solid var(--main-verde);
 }
 
 /*Estrellas puntuación*/

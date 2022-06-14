@@ -1,115 +1,164 @@
 <template>
-    <div>
+    <div id="div" class="container-fluid">
         <h2>Introduce los datos del restaurante</h2>
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-        />
-        <form @submit.prevent="comprobarNomDir">
-            <table class="form">
-                <tr>
-                    <td class="tdIconos">
-                        <button class="atras">
-                            <a
-                                class="fa fa-chevron-left"
-                                href="/get-restaurantes"
-                            ></a>
-                        </button>
-                    </td>
-                    <td class="tdIconos">
-                        <button class="limpiar" @click.prevent="limpiar">
-                            <a class="fa fa-eraser"></a>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="etq">Nombre</td>
-                    <td>
+        <div class="container-fluid caja-form w-50">
+            <div class="row justify-content-between">
+                <div class="col-2">
+                    <button class="btn btn-form" type="button">
+                        <a
+                            class="bi bi-arrow-left"
+                            href="/get-restaurantes"
+                        ></a>
+                    </button>
+                </div>
+                <div class="col-2">
+                    <button
+                        class="btn btn-form"
+                        type="button"
+                        @click.prevent="limpiar"
+                    >
+                        <a class="bi bi-eraser-fill"></a>
+                    </button>
+                </div>
+            </div>
+            <form @submit.prevent="comprobarNomDir">
+                <div class="row justify-content-center mb-4">
+                    <label class="col-md-2 col-form-label" for="nombre"
+                        >Nombre</label
+                    >
+                    <div class="col-md-8">
                         <input
+                            class="form-control"
+                            id="nombre"
                             type="text"
+                            minlength="1"
+                            maxlength="50"
+                            required
                             v-model="restaurante.nombre"
-                            minlength="1"
-                            maxlength="50"
-                            required
                         />
-                    </td>
-                </tr>
-                <tr>
-                    <td class="etq">Dirección</td>
-                    <td class="dir">
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <label class="col-md-2 col-form-label" for="direccion"
+                        >Dirección</label
+                    >
+                    <div class="col-md-8">
                         <input
+                            class="form-control"
+                            id="direccion"
                             type="text"
-                            v-model="restaurante.direccion"
                             minlength="1"
                             maxlength="50"
                             required
+                            v-model="restaurante.direccion"
                         />
-                    </td>
-                </tr>
+                    </div>
+                </div>
                 <errorNomDir v-show="existe"></errorNomDir>
-                <tr>
-                    <td class="etq">Descripción</td>
-                    <td>
+                <div class="row justify-content-center my-4">
+                    <label class="col-md-2 col-form-label" for="descripción"
+                        >Descripción</label
+                    >
+                    <div class="col-md-8">
                         <textarea
-                            v-model="restaurante.descripcion"
+                            class="form-control"
+                            id="descripción"
+                            type="text"
                             minlength="1"
-                            maxlength="200"
-                        ></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="etq">Imagen</td>
-                    <td>
-                        <input type="text" v-model="restaurante.imagen" />
-                    </td>
-                </tr>
-                <tr>
-                    <td class="etq">Web</td>
-                    <td>
-                        <input type="text" v-model="restaurante.web" />
-                    </td>
-                </tr>
-                <tr>
-                    <td class="etq">Precio</td>
-                    <td>
-                        <select name="precio" v-model="restaurante.precio">
-                            <option value=""></option>
-                            <option value="Bajo">Bajo</option>
-                            <option value="Medio">Medio</option>
-                            <option value="Alto">Alto</option>
+                            maxlength="150"
+                            rows="3"
+                            v-model="restaurante.descripcion"
+                        />
+                    </div>
+                </div>
+                <div class="row justify-content-center mb-4">
+                    <label class="col-md-2 col-form-label" for="imagen"
+                        >Imagen</label
+                    >
+                    <div class="col-md-8">
+                        <input
+                            class="form-control"
+                            id="imagen"
+                            type="text"
+                            minlength="1"
+                            maxlength="250"
+                            v-model="restaurante.imagen"
+                        />
+                    </div>
+                </div>
+                <div class="row justify-content-center mb-4">
+                    <label class="col-md-2 col-form-label" for="web">Web</label>
+                    <div class="col-md-8">
+                        <input
+                            class="form-control"
+                            id="web"
+                            type="text"
+                            minlength="1"
+                            maxlength="250"
+                            v-model="restaurante.web"
+                        />
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <label class="col-md-2 col-form-label" for="precio"
+                        >Precio</label
+                    >
+                    <div class="col-md-8">
+                        <select
+                            class="form-select"
+                            aria-label="Select"
+                            v-model="restaurante.precio"
+                        >
+                            <option selected></option>
+                            <option value="bajo">Bajo</option>
+                            <option value="medio">Medio</option>
+                            <option value="alto">Alto</option>
                         </select>
-                    </td>
-                </tr>
+                    </div>
+                </div>
                 <errorDB v-show="errorDB"></errorDB>
                 <errorS v-show="errorS"></errorS>
-                <tr>
-                    <td colspan="3">
-                        <input
-                            v-if="idEliminar != restaurante.id"
-                            type="submit"
-                            value="Guardar restaurante"
-                        />
-                        <button
-                            class="borrar"
-                            v-if="idEliminar != restaurante.id"
-                        >
+                <div
+                    class="row justify-content-end my-4"
+                    v-if="idEliminar != restaurante.id"
+                >
+                    <div class="col-7">
+                        <button class="btn btn-primary mt-2" type="submit">
+                            Guardar restaurante
+                        </button>
+                    </div>
+
+                    <div class="col-2">
+                        <button class="btn btn-form">
                             <a
-                                class="fa fa-trash-o"
+                                class="bi bi-trash-fill"
                                 @click="eliminarRestaurante(restaurante.id)"
                             ></a>
                         </button>
-                        <span class="eliminar" v-else>
-                            <!--Si se le ha dado click a "Eliminar", desaparece-->
-                            <p>¿Estás seguro de que quieres borrarlo?</p>
-                            <button @click.prevent="siBorrar(restaurante.id)">
-                                Sí
-                            </button>
-                            <button @click="noBorrar()">No</button>
-                        </span>
-                    </td>
-                </tr>
-            </table>
-        </form>
+                    </div>
+                </div>
+                <div class="container-fluid" v-else>
+                    <!--Si se le ha dado click a "Eliminar", el botón desaparece"-->
+                    <p>¿Estás seguro de que quieres borrarlo?</p>
+                    <div class="btn-group gap-2 mb-4">
+                        <button
+                            class="btn btn-primary"
+                            type="button"
+                            @click="siBorrar(restaurante.id)"
+                        >
+                            Sí
+                        </button>
+                        <button
+                            class="btn btn-primary"
+                            type="button"
+                            @click="noBorrar()"
+                        >
+                            No
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </template>
 
@@ -274,25 +323,3 @@ export default {
     },
 };
 </script>
-
-<style>
-/*Icono papelera*/
-.borrar {
-    border: none;
-    background-color: inherit;
-    font-size: 30px;
-    float: right;
-    margin: 10px 10px 0px -10px;
-}
-
-.borrar a {
-    text-decoration: none;
-    color: #2c3e50;
-    transition: all 200ms ease;
-}
-
-.borrar a:hover {
-    color: #42b983;
-    cursor: pointer;
-}
-</style>

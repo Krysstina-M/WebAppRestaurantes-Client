@@ -9,15 +9,15 @@
         </p>
         <div class="container-fluid" v-else-if="restaurante != ''">
             <h2>Estás viendo el restaurante nº {{ restaurante.id }}</h2>
-            <div class="btn-group d-flex" role="group" aria-label="First group">
-                <button class="btn btn-link" type="button">
+            <div class="btn-group d-flex">
+                <button class="btn btn-secondary" type="button">
                     <a
                         class="bi bi-arrow-left"
                         v-if="restaurante.id > Number(idPrimero)"
                         @click="anterior()"
                     ></a>
                 </button>
-                <button class="btn btn-link" type="button">
+                <button class="btn btn-secondary" type="button">
                     <a
                         class="bi bi-arrow-right"
                         v-if="restaurante.id < Number(idUltimo)"
