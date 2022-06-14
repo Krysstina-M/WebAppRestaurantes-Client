@@ -79,11 +79,11 @@
 </template>
 
 <script>
+//TODO revisar mensajes de error
 //TODO quitar lo de i en los iconos y route link y poner directamente el nombre de la clase
 //TODO hacer que el título del restaurante lleve a su página web
 //TODO que la imagen se abra en modal
 //FIXME tienes que pulsar un a o un router-link para que te lleve a la página en vez de pulsar en cualquier lado del botón
-//TODO validar css y html
 //TODO meter bootstrap?
 //TODO lo de active en el navbar
 //TODO hacer login y registro
@@ -438,7 +438,8 @@ input[type="submit"]:hover {
     background-color: inherit;
 }
 
-.btn-link:hover > a {
+.btn-link:hover > a,
+.btn-link:focus > a {
     color: var(--main-verde);
 }
 
