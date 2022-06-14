@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="div" class="container-fluid">
         <p class="pError" v-if="errorS">
             No se ha podido conectar con el servidor. Inténtelo de nuevo más
             tarde.
@@ -7,41 +7,38 @@
         <p class="pError" v-else-if="errorDB">
             No se ha podido conectar con la base de datos.
         </p>
-        <div v-else-if="restaurante != ''">
-            <link
-                rel="stylesheet"
-                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-            />
+        <div class="container-fluid" v-else-if="restaurante != ''">
             <h2>Estás viendo el restaurante nº {{ restaurante.id }}</h2>
-            <button class="anterior">
-                <a
-                    v-if="restaurante.id > Number(idPrimero)"
-                    @click="anterior()"
-                    class="fa fa-chevron-left"
-                ></a>
-            </button>
-            <button class="siguiente">
-                <a
-                    v-if="restaurante.id < Number(idUltimo)"
-                    @click="siguiente()"
-                    class="fa fa-chevron-right"
-                ></a>
-            </button>
-            <div class="divRestImg ver">
-                <div class="divRest">
-                    <h3 class="nomRest" v-text="restaurante.nombre"></h3>
+            <div class="btn-group d-flex" role="group" aria-label="First group">
+                <button class="btn btn-link" type="button">
+                    <a
+                        class="bi bi-arrow-left"
+                        v-if="restaurante.id > Number(idPrimero)"
+                        @click="anterior()"
+                    ></a>
+                </button>
+                <button class="btn btn-link" type="button">
+                    <a
+                        class="bi bi-arrow-right"
+                        v-if="restaurante.id < Number(idUltimo)"
+                        @click="siguiente()"
+                    ></a>
+                </button>
+            </div>
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 v-text="restaurante.nombre"></h3>
                     <p v-text="restaurante.descripcion"></p>
-                    <h5 v-text="restaurante.direccion"></h5>
-                    <h6 v-show="restaurante.precio">
+                    <p v-text="restaurante.direccion"></p>
+                    <p v-show="restaurante.precio">
                         Precio: {{ restaurante.precio }}
-                    </h6>
+                    </p>
                     <puntuacion :punt="restaurante.puntuacion"></puntuacion>
                 </div>
-
-                <div class="divImg" v-if="restaurante.imagen != null">
+                <div class="col">
                     <a :href="restaurante.web" target="_blank"
                         ><img
-                            class="img"
+                            class="img-fluid rounded"
                             :alt="errorImg"
                             :src="restaurante.imagen"
                     /></a>
@@ -178,43 +175,3 @@ export default {
     },
 };
 </script>
-
-<style>
-/*Flecha para ir al restaurante anterior*/
-.anterior {
-    border: none;
-    background-color: inherit;
-    font-size: 35px;
-    margin-right: 10%;
-}
-
-.anterior a {
-    text-decoration: none;
-    color: #2c3e50;
-    transition: all 200ms ease;
-}
-
-.anterior a:hover {
-    color: #42b983;
-    cursor: pointer;
-}
-
-/*Flecha para ir al restaurante sguiente*/
-.siguiente {
-    border: none;
-    background-color: inherit;
-    font-size: 35px;
-    margin-left: 10%;
-}
-
-.siguiente a {
-    text-decoration: none;
-    color: #2c3e50;
-    transition: all 200ms ease;
-}
-
-.siguiente a:hover {
-    color: #42b983;
-    cursor: pointer;
-}
-</style>

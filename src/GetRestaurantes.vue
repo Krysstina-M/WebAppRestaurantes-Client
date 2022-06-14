@@ -1,5 +1,5 @@
 <template>
-    <div id="div">
+    <div id="div" class="container-fluid">
         <div
             class="btn-toolbar justify-content-between"
             role="toolbar"
@@ -7,14 +7,18 @@
         >
             <div class="btn-group ms-5" role="group" aria-label="First group">
                 <button class="btn btn-primary" type="button">
-                    <router-link :to="{ name: 'alta-restaurante' }">
-                        <i class="bi bi-plus-lg"></i> Añadir nuevo restaurante
+                    <router-link
+                        class="bi bi-plus-lg"
+                        tabindex="-1"
+                        :to="{ name: 'alta-restaurante' }"
+                    >
+                        Añadir nuevo restaurante
                     </router-link>
                 </button>
             </div>
             <div class="btn-group me-5" role="group" aria-label="Second group">
                 <button
-                    class="btn-primary me-2"
+                    class="btn btn-primary me-2"
                     type="button"
                     @click="ordenarPorNombre()"
                 >
@@ -28,7 +32,7 @@
                     Ordenar por nombre
                 </button>
                 <button
-                    class="btn-primary ms-2"
+                    class="btn btn-primary ms-2"
                     type="button"
                     @click="ordenarPorCodigo()"
                 >
@@ -58,15 +62,17 @@
                 v-else-if="restaurantes != ''"
             >
                 <div
-                    class="col p-4 mt-4 m-2"
+                    class="col caja p-4 mt-4 m-2"
                     v-for="restaurante in restaurantes"
                     :key="restaurante.id"
                 >
-                    <h6 class="id">{{ restaurante.id }}</h6>
+                    <h6 class="text-start id">{{ restaurante.id }}</h6>
                     <h5>{{ restaurante.nombre }}</h5>
                     <div class="d-grid gap-2">
                         <button class="btn btn-primary" type="button">
                             <router-link
+                                class="bi bi-eye-fill"
+                                tabindex="-1"
                                 :to="{
                                     name: 'ver-restaurante',
                                     params: {
@@ -74,17 +80,19 @@
                                     },
                                 }"
                             >
-                                <i class="bi bi-eye-fill"></i> Ver
+                                Ver
                             </router-link>
                         </button>
                         <button class="btn btn-primary" type="button">
                             <router-link
+                                class="bi bi-pencil-fill"
+                                tabindex="-1"
                                 :to="{
                                     name: 'modificar-restaurante',
                                     params: { id: restaurante.id },
                                 }"
                             >
-                                <i class="bi bi-pencil-fill"></i> Modificar
+                                Modificar
                             </router-link>
                         </button>
                         <button
@@ -119,7 +127,7 @@
             <p v-else-if="noHay">No hay restaurantes</p>
             <p v-else>Cargando restaurantes...</p>
             <button
-                class="btn-secondary fixed-bottom ms-auto me-5"
+                class="btn btn-secondary fixed-bottom ms-auto me-5"
                 type="button"
                 v-show="scrollpx > 400"
                 @click="irArriba()"
@@ -325,43 +333,16 @@ export default {
 </script>
 
 <style>
-/*Botones añadir restaurante y ordenar*/
-.btn {
-    outline: none;
-}
-
-.btn-primary:not(:disabled) {
-    background-color: var(--main-verde);
-    color: var(--main-gris);
-    border: var(--main-border);
-    border-radius: 0;
-}
-
-.btn-primary > a {
-    color: var(--main-gris);
-    text-decoration: none;
-}
-
-.btn-primary:hover {
-    background-color: var(--main-gris);
-    color: var(--bs-white);
-}
-
-.btn-primary:hover > a {
-    color: var(--bs-white);
-}
-
 /*Lista de restaurantes*/
-.col {
+.caja {
     border: var(--main-border);
     border-radius: var(--main-border-radius);
     background-color: var(--bs-light);
 }
 
-/*ID de arriba a la izquierda------*/
+/*ID de arriba a la izquierda*/
 .id {
-    margin: -10px 0px 10px 0px;
-    text-align: left;
+    margin-top: -10px;
 }
 
 /*Botón para ir arriba del todo*/
@@ -373,11 +354,15 @@ export default {
 
 .btn-secondary > a {
     color: var(--main-verde);
-    text-decoration: none;
 }
 
-.btn-secondary > a:hover {
+.btn-secondary:hover,
+.btn-secondary:focus {
+    background-color: inherit;
+}
+
+.btn-secondary:hover > a,
+.btn-secondary:focus > a {
     color: var(--main-gris);
-    cursor: pointer;
 }
 </style>

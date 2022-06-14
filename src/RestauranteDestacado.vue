@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="div" class="container-fluid">
         <p class="pError" v-if="errorS">
             No se ha podido conectar con el servidor. Inténtelo de nuevo más
             tarde.
@@ -7,33 +7,29 @@
         <p class="pError" v-else-if="errorDB">
             No se ha podido conectar con la base de datos.
         </p>
-        <div v-else-if="restaurante != ''">
+        <div class="container-fluid" v-else-if="restaurante != ''">
             <h2>El restaurante destacado es el nº {{ restaurante.id }}</h2>
-            <div class="divRestImg">
-                <link
-                    rel="stylesheet"
-                    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-                />
-                <div class="divRest">
-                    <h3 class="nomRest" v-text="restaurante.nombre"></h3>
+            <div class="row align-items-center mt-4">
+                <div class="col">
+                    <h3 v-text="restaurante.nombre"></h3>
                     <p v-text="restaurante.descripcion"></p>
-                    <h5 v-text="restaurante.direccion"></h5>
-                    <h6 v-show="restaurante.precio">
+                    <p v-text="restaurante.direccion"></p>
+                    <p v-show="restaurante.precio">
                         Precio: {{ restaurante.precio }}
-                    </h6>
+                    </p>
                     <puntuacion :punt="restaurante.puntuacion"></puntuacion>
                 </div>
-                <div class="divImg" v-if="restaurante.imagen != null">
+                <div class="col">
                     <a :href="restaurante.web" target="_blank"
                         ><img
-                            class="img"
+                            class="img-fluid rounded"
                             :alt="errorImg"
                             :src="restaurante.imagen"
                     /></a>
                 </div>
             </div>
         </div>
-        <p v-else-if="noHay">No hay restaurantes</p>
+        <p v-else-if="noHay">El restaurante no existe</p>
         <p v-else>Cargando restaurante...</p>
     </div>
 </template>

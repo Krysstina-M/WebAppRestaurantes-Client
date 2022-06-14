@@ -1,11 +1,12 @@
 <template>
-    <div id="app">
+    <div id="app" class="container-fluid mt-5">
         <nav class="navbar navbar-expand-lg fixed-top py-0">
             <div class="container-fluid">
                 <a
                     class="navbar-brand"
                     href="https://vuejs.org/"
                     target="_blank"
+                    tabindex="-1"
                 >
                     <img
                         class="d-inline-block align-text-center me-2"
@@ -78,13 +79,15 @@
 </template>
 
 <script>
+//TODO quitar lo de i en los iconos y route link y poner directamente el nombre de la clase
+//TODO hacer que el título del restaurante lleve a su página web
+//TODO que la imagen se abra en modal
+//FIXME tienes que pulsar un a o un router-link para que te lleve a la página en vez de pulsar en cualquier lado del botón
 //TODO validar css y html
-//TODO quitar el link del fa fa awesome
 //TODO meter bootstrap?
 //TODO lo de active en el navbar
-//TODO mirar lo del fa fa font
 //TODO hacer login y registro
-//TODO probar filepond para meter la ruta de la imagen en la bd
+//TODO Meter imagen en la BD
 //FIXME No funciona en git
 import Vue from "vue";
 
@@ -233,25 +236,56 @@ export default {
     --main-border-radius: 25px;
 }
 
+/*Todo*/
 #app {
     font-family: "Avenir", Helvetica, Arial, sans-serif;
-    color: #2c3e50;
     text-align: center;
-    margin-top: 50px;
 }
 
+*:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/*Barra de navegación*/
 .navbar {
     background-color: var(--main-verde);
     border: var(--main-border);
 }
 
-.nav-item > a:hover,
-.active a {
+.nav-item > a:hover {
     background-color: var(--main-gris);
     color: var(--bs-white);
 }
 
-/*---------------------------------------------------------------------------*/
+.nav-link:focus {
+    background-color: var(--main-gris);
+    color: var(--bs-white);
+}
+
+/*Botones principales*/
+.btn-primary:not(:disabled) {
+    background-color: var(--main-verde);
+    color: var(--main-gris);
+    border: var(--main-border);
+    border-radius: 0;
+}
+
+.btn-primary > a {
+    color: var(--main-gris);
+    text-decoration: none;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: var(--main-gris);
+    color: var(--bs-white);
+}
+
+.btn-primary:hover > a,
+.btn-primary:focus > a {
+    color: var(--bs-white);
+}
 
 /*AltaRestaurante + ModificarRestaurante*/
 /*Flecha izquierda*/
@@ -388,40 +422,24 @@ input[type="submit"]:hover {
     margin-right: auto;
 }
 
-/*Div grande del restaurante e imagen*/
-.divRestImg {
-    display: flex;
-    justify-content: center;
+/*Botones ir atrás y adelante y refrescar*/
+.btn-link {
+    background-color: inherit;
+    border: none;
+    font-size: 50px;
 }
 
-/*Div individuales del restaurante y de la imagen*/
-.divRest,
-.divImg {
-    width: 40%;
-    padding: 40px 0px;
+.btn-link > a {
+    color: var(--main-gris);
 }
 
-/*Nombre restaurante*/
-.nomRest {
-    border: solid #2c3e50 1px;
-    border-radius: 25px;
-    padding: 10px;
-    width: 50%;
-    margin: auto;
-    display: inline;
+.btn-link:hover,
+.btn-link:focus {
+    background-color: inherit;
 }
 
-/*Imagen*/
-.img {
-    height: 100%;
-    width: 50%;
-    border-radius: 15px;
-    transition: transform 0.25s ease;
-}
-
-.img:hover {
-    -webkit-transform: scale(2);
-    transform: scale(2);
+.btn-link:hover > a {
+    color: var(--main-verde);
 }
 
 /*Estrellas puntuación*/
@@ -429,19 +447,15 @@ input[type="submit"]:hover {
     color: gold;
 }
 
-/*GetRestaurantes + ModificarRestaurante*/
-/*Pregunta de si se quiere elimianr o no*/
-.eliminar button {
-    background: #42b983;
-    border: 1px solid #2c3e50;
-    padding: 10px 15px;
-    margin: 0px 10px;
-    color: #2c3e50;
+/*Imagen*/
+.img-fluid {
+    height: 100%;
+    width: 50%;
 }
 
-.eliminar button:hover {
-    background-color: #2c3e50;
-    color: #42b983;
-    cursor: pointer;
+.img-fluid:hover {
+    -webkit-transform: scale(2);
+    transform: scale(2);
+    transition: transform 0.25s ease;
 }
 </style>

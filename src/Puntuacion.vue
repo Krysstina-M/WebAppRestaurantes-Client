@@ -1,45 +1,45 @@
 <template>
     <p v-if="Math.round(punt) == 0">
-        <span class="fa fa-star"></span>
-        <span class="fa fa-star"></span>
-        <span class="fa fa-star"></span>
-        <span class="fa fa-star"></span>
-        <span class="fa fa-star"></span>
+        <i class="bi bi-star-fill"></i>
+        <i class="bi bi-star-fill"></i>
+        <i class="bi bi-star-fill"></i>
+        <i class="bi bi-star-fill"></i>
+        <i class="bi bi-star-fill"></i>
     </p>
     <p v-else-if="Math.round(punt) == 1">
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star"></span>
-        <span class="fa fa-star"></span>
-        <span class="fa fa-star"></span>
-        <span class="fa fa-star"></span>
+        <i class="bi bi-star-fill checked"></i>
+        <i class="bi bi-star-fill"></i>
+        <i class="bi bi-star-fill"></i>
+        <i class="bi bi-star-fill"></i>
+        <i class="bi bi-star-fill"></i>
     </p>
     <p v-else-if="Math.round(punt) == 2">
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star"></span>
-        <span class="fa fa-star"></span>
-        <span class="fa fa-star"></span>
+        <i class="bi bi-star-fill checked"></i>
+        <i class="bi bi-star-fill checked"></i>
+        <i class="bi bi-star-fill"></i>
+        <i class="bi bi-star-fill"></i>
+        <i class="bi bi-star-fill"></i>
     </p>
     <p v-else-if="Math.round(punt) == 3">
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star"></span>
-        <span class="fa fa-star"></span>
+        <i class="bi bi-star-fill checked"></i>
+        <i class="bi bi-star-fill checked"></i>
+        <i class="bi bi-star-fill checked"></i>
+        <i class="bi bi-star-fill"></i>
+        <i class="bi bi-star-fill"></i>
     </p>
     <p v-else-if="Math.round(punt) == 4">
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star"></span>
+        <i class="bi bi-star-fill checked"></i>
+        <i class="bi bi-star-fill checked"></i>
+        <i class="bi bi-star-fill checked"></i>
+        <i class="bi bi-star-fill checked"></i>
+        <i class="bi bi-star-fill"></i>
     </p>
     <p v-else-if="Math.round(punt) == 5">
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
+        <i class="bi bi-star-fill checked"></i>
+        <i class="bi bi-star-fill checked"></i>
+        <i class="bi bi-star-fill checked"></i>
+        <i class="bi bi-star-fill checked"></i>
+        <i class="bi bi-star-fill checked"></i>
     </p>
 </template>
 
