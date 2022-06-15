@@ -27,14 +27,7 @@
             Ordenar por nombre
         </button>
         <div class="lista">
-            <p class="pError" v-if="errorDB">
-                No se ha podido conectar con la base de datos.
-            </p>
-            <p class="pError" v-else-if="errorS">
-                No se ha podido conectar con el servidor. Inténtelo de nuevo más
-                tarde.
-            </p>
-            <ul id="GetRestaurantes" v-else-if="restaurantes != ''">
+            <ul id="GetRestaurantes" v-if="restaurantes != ''">
                 <li
                     class="cajas"
                     v-for="restaurante in restaurantes"
@@ -79,8 +72,15 @@
                     </p>
                 </li>
             </ul>
-            <p v-else-if="noHay">No hay restaurantes</p>
-            <p v-else>Cargando restaurantes...</p>
+            <p v-else-if="hay">Cargando restaurantes...</p>
+            <p v-else-if="!hay">No hay restaurantes</p>
+            <p class="pError" v-else-if="errorDB">
+                No se ha podido conectar con la base de datos.
+            </p>
+            <p class="pError" v-else-if="errorS">
+                No se ha podido conectar con el servidor. Inténtelo de nuevo más
+                tarde.
+            </p>
             <button class="arriba" v-show="scrollpx > 400" @click="irArriba()">
                 <a class="fa-solid fa-circle-arrow-up"></a>
             </button>
@@ -99,7 +99,8 @@ export default {
             restaurantes: "",
             errorDB: 0,
             errorS: 0,
-            noHay: 0,
+            hay: 1,
+            timerCount: 5,
             ordenarNomAsc: 1,
             ordenarNomDesc: 0,
             ordenarCodAsc: 0,
@@ -269,10 +270,9 @@ export default {
             handler(value) {
                 if (value > 0) {
                     setTimeout(() => {
-                        var timerCount = 5;
-                        timerCount--;
+                        this.timerCount--;
 
-                        if (timerCount == 0) this.noHay = 1;
+                        if (this.timerCount == 0) this.hay = 0;
                     }, 1000);
                 }
             },

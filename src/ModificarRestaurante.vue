@@ -226,7 +226,8 @@ export default {
             this.restaurante.direccion = "";
             this.restaurante.descripcion = "";
             this.restaurante.imagen = "";
-            this.restaurante.precio = "Medio";
+            this.restaurante.web = "";
+            this.restaurante.precio = "";
             this.existe = 0;
             this.errorDB = 0;
             this.errorS = 0;

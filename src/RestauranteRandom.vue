@@ -1,13 +1,6 @@
 <template>
     <div>
-        <p class="pError" v-if="errorS">
-            No se ha podido conectar con el servidor. Inténtelo de nuevo más
-            tarde.
-        </p>
-        <p class="pError" v-else-if="errorDB">
-            No se ha podido conectar con la base de datos.
-        </p>
-        <div v-else-if="restaurante != ''">
+        <div v-if="restaurante != ''">
             <h2>
                 Hoy podrás comer o cenar en el restaurante nº
                 {{ restaurante.id }}
@@ -19,7 +12,14 @@
             </button>
             <div class="divRestImg">
                 <div class="divRest">
-                    <h3 class="nomRest" v-text="restaurante.nombre"></h3>
+                    <h3 class="nomRest">
+                        <a
+                            class="web"
+                            :href="restaurante.web"
+                            target="_blank"
+                            >{{ restaurante.nombre }}</a
+                        >
+                    </h3>
                     <p v-text="restaurante.descripcion"></p>
                     <h5 v-text="restaurante.direccion"></h5>
                     <h6 v-show="restaurante.precio">
@@ -28,17 +28,23 @@
                     <puntuacion :punt="restaurante.puntuacion"></puntuacion>
                 </div>
                 <div class="divImg" v-if="restaurante.imagen != null">
-                    <a :href="restaurante.web" target="_blank"
-                        ><img
-                            class="img"
-                            :alt="errorImg"
-                            :src="restaurante.imagen"
-                    /></a>
+                    <img
+                        class="img"
+                        :alt="errorImg"
+                        :src="restaurante.imagen"
+                    />
                 </div>
             </div>
         </div>
-        <p v-else-if="noHay">No hay restaurantes</p>
-        <p v-else>Cargando restaurante...</p>
+        <p v-else-if="hay">Cargando restaurante...</p>
+        <p v-else-if="!hay">No hay restaurantes</p>
+        <p class="pError" v-else-if="errorDB">
+            No se ha podido conectar con la base de datos.
+        </p>
+        <p class="pError" v-else-if="errorS">
+            No se ha podido conectar con el servidor. Inténtelo de nuevo más
+            tarde.
+        </p>
     </div>
 </template>
 
@@ -56,7 +62,7 @@ export default {
             errorS: 0,
             errorDB: 0,
             errorImg: ERRORES.ERROR_IMG,
-            noHay: 0,
+            hay: 1,
             timerCount: 5,
         };
     },
@@ -106,7 +112,7 @@ export default {
                     setTimeout(() => {
                         this.timerCount--;
 
-                        if (this.timerCount == 0) this.noHay = 1;
+                        if (this.timerCount == 0) this.hay = 0;
                     }, 1000);
                 }
             },

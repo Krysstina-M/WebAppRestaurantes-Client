@@ -29,16 +29,13 @@
 </template>
 
 <script>
-//TODO Meter imagen en la BD
-//FIXME No funciona en git
 import Vue from "vue";
 
 //Componente de error del servidor
 Vue.component("errorS", {
     template: `
     <tr>
-        <td></td>
-        <td class="tdError">
+        <td class="tdError" colspan="3">
             <input class="error" value="No se ha podido conectar con el servidor." disabled/>
         </td>
     </tr>
@@ -49,8 +46,7 @@ Vue.component("errorS", {
 Vue.component("errorDB", {
     template: `
     <tr>
-        <td></td>
-        <td class="tdError">
+        <td class="tdError" colspan="3">
             <input class="error" value="No se ha podido conectar con la base de datos." disabled/>
         </td>
     </tr>
@@ -210,7 +206,7 @@ select {
 
 /*Columna del mensaje de error*/
 .tdError {
-    padding-top: 0px;
+    padding-bottom: 0px;
 }
 
 /*Mensaje de error*/
@@ -273,7 +269,14 @@ input[type="submit"]:hover {
     padding: 10px;
     width: 50%;
     margin: auto;
-    display: inline;
+}
+
+.web,
+.web:visited,
+.web:hover,
+.web:active {
+    text-decoration: none;
+    color: #2c3e50;
 }
 
 /*Imagen*/
