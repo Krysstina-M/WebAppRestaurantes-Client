@@ -239,12 +239,6 @@ export default {
     box-shadow: none !important;
 }
 
-/*Mensajes de error*/
-.error {
-    color: var(--bs-danger);
-    border: none;
-}
-
 /*Barra de navegación*/
 .navbar {
     background-color: var(--main-verde);
@@ -315,6 +309,17 @@ export default {
 .btn-form > a:hover,
 .btn-form:focus > a {
     color: var(--main-verde);
+}
+
+/*Mensajes de error*/
+.error {
+    color: var(--bs-danger);
+    border: none;
+}
+
+/*Círculo de loading que gira*/
+.spinner-border {
+    color: var(--main-gris)
 }
 
 /*Formulario*/

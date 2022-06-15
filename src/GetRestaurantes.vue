@@ -115,7 +115,9 @@
                     </div>
                 </div>
             </div>
-            <p v-else-if="hay">Cargando restaurantes...</p>
+            <div class="spinner-border" role="status" v-else-if="hay">
+                <span class="visually-hidden">Cargando restaurantes...</span>
+            </div>
             <p v-else-if="!hay & (!errorS & !errorDB)">No hay restaurantes</p>
             <p class="error" v-else-if="errorS">
                 No se ha podido conectar con el servidor. Inténtelo de nuevo más

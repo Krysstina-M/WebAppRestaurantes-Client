@@ -41,7 +41,9 @@
                 </div>
             </div>
         </div>
-        <p v-else-if="hay">Cargando restaurante...</p>
+        <div class="spinner-border" role="status" v-else-if="hay">
+            <span class="visually-hidden">Cargando restaurantes...</span>
+        </div>
         <p v-else-if="!hay & (!errorS & !errorDB)">El restaurante no existe</p>
         <p class="error" v-else-if="errorS">
             No se ha podido conectar con el servidor. Inténtelo de nuevo más
@@ -110,7 +112,7 @@ export default {
                 .then((respuesta) => {
                     if (respuesta.data.status == "OK") {
                         var arrayId = respuesta.data.data;
-                        
+
                         if (arrayId.length != 0) {
                             var indexAnterior =
                                 arrayId
