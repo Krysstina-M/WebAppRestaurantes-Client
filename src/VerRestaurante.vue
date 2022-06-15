@@ -44,13 +44,13 @@
             </div>
         </div>
         <p v-else-if="hay">Cargando restaurante...</p>
-        <p v-else-if="!hay">El restaurante no existe</p>
-        <p class="pError" v-else-if="errorDB">
-            No se ha podido conectar con la base de datos.
-        </p>
-        <p class="pError" v-else-if="errorS">
+        <p v-else-if="!hay & (!errorS & !errorDB)">El restaurante no existe</p>
+        <p class="error" v-else-if="errorS">
             No se ha podido conectar con el servidor. Inténtelo de nuevo más
             tarde.
+        </p>
+        <p class="error" v-else-if="errorDB">
+            No se ha podido conectar con la base de datos.
         </p>
     </div>
 </template>

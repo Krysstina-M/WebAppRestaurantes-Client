@@ -73,13 +73,13 @@
                 </li>
             </ul>
             <p v-else-if="hay">Cargando restaurantes...</p>
-            <p v-else-if="!hay">No hay restaurantes</p>
-            <p class="pError" v-else-if="errorDB">
-                No se ha podido conectar con la base de datos.
-            </p>
-            <p class="pError" v-else-if="errorS">
+            <p v-else-if="!hay & (!errorS & !errorDB)">No hay restaurantes</p>
+            <p class="error" v-else-if="errorS">
                 No se ha podido conectar con el servidor. Inténtelo de nuevo más
-                tarde.
+                tarde
+            </p>
+            <p class="error" v-else-if="errorDB">
+                No se ha podido conectar con la base de datos
             </p>
             <button class="arriba" v-show="scrollpx > 400" @click="irArriba()">
                 <a class="fa-solid fa-circle-arrow-up"></a>
