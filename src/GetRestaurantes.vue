@@ -45,17 +45,10 @@
         </div>
 
         <div class="container-fluid mt-4">
-            <p class="error" v-if="errorDB">
-                No se ha podido conectar con la base de datos
-            </p>
-            <p class="error" v-else-if="errorS">
-                No se ha podido conectar con el servidor. Inténtelo de nuevo más
-                tarde
-            </p>
             <div
-                class="row row-cols-6 justify-content-center"
                 id="GetRestaurantes"
-                v-else-if="restaurantes != ''"
+                class="row row-cols-6 justify-content-center"
+                v-if="restaurantes != ''"
             >
                 <div
                     class="col caja p-4 m-2"
@@ -122,8 +115,15 @@
                     </div>
                 </div>
             </div>
-            <p v-else-if="noHay">No hay restaurantes</p>
-            <p v-else>Cargando restaurantes...</p>
+            <p v-else-if="hay">Cargando restaurantes...</p>
+            <p v-else-if="!hay">No hay restaurantes</p>
+            <p class="error" v-if="errorS">
+                No se ha podido conectar con el servidor. Inténtelo de nuevo más
+                tarde
+            </p>
+            <p class="error" v-else-if="errorDB">
+                No se ha podido conectar con la base de datos
+            </p>
             <button
                 class="btn btn-link fixed-bottom ms-auto me-5"
                 type="button"
@@ -147,8 +147,8 @@ export default {
             restaurantes: "",
             errorDB: 0,
             errorS: 0,
+            hay: 1,
             timerCount: 5,
-            noHay: 0,
             ordenarNomAsc: 1,
             ordenarNomDesc: 0,
             ordenarCodAsc: 0,
@@ -319,7 +319,8 @@ export default {
                 if (value > 0) {
                     setTimeout(() => {
                         this.timerCount--;
-                        if (this.timerCount == 0) this.noHay = 1;
+
+                        if (this.timerCount == 0) this.hay = 0;
                     }, 1000);
                 }
             },

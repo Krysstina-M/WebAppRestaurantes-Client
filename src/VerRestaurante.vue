@@ -1,13 +1,6 @@
 <template>
     <div id="div" class="container-fluid">
-        <p class="error" v-if="errorS">
-            No se ha podido conectar con el servidor. Inténtelo de nuevo más
-            tarde.
-        </p>
-        <p class="error" v-else-if="errorDB">
-            No se ha podido conectar con la base de datos.
-        </p>
-        <div class="container-fluid" v-else-if="restaurante != ''">
+        <div class="container-fluid" v-if="restaurante != ''">
             <h2>Estás viendo el restaurante nº {{ restaurante.id }}</h2>
             <div class="btn-group d-flex">
                 <button class="btn btn-secondary" type="button">
@@ -45,8 +38,15 @@
                 </div>
             </div>
         </div>
-        <p v-else-if="noHay">El restaurante no existe</p>
-        <p v-else>Cargando restaurante...</p>
+        <p v-else-if="hay">Cargando restaurante...</p>
+        <p v-else-if="!hay">El restaurante no existe</p>
+        <p class="error" v-else-if="errorS">
+            No se ha podido conectar con el servidor. Inténtelo de nuevo más
+            tarde.
+        </p>
+        <p class="error" v-else-if="errorDB">
+            No se ha podido conectar con la base de datos.
+        </p>
     </div>
 </template>
 
@@ -64,12 +64,12 @@ export default {
             errorS: 0,
             errorDB: 0,
             errorImg: ERRORES.ERROR_IMG,
-            noHay: 0,
+            hay: 1,
+            timerCount: 5,
             idPrimero: "",
             idAnterior: "",
             idUltimo: "",
             idSiguiente: "",
-            timerCount: 5,
         };
     },
     mounted() {
@@ -163,7 +163,7 @@ export default {
                     setTimeout(() => {
                         this.timerCount--;
 
-                        if (this.timerCount == 0) this.noHay = 1;
+                        if (this.timerCount == 0) this.hay = 0;
                     }, 1000);
                 }
             },
