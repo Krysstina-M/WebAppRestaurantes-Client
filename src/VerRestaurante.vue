@@ -20,7 +20,11 @@
             </div>
             <div class="row align-items-center">
                 <div class="col">
-                    <h3 v-text="restaurante.nombre"></h3>
+                    <h3>
+                        <a :href="restaurante.web" target="_blank">{{
+                            restaurante.nombre
+                        }}</a>
+                    </h3>
                     <p v-text="restaurante.descripcion"></p>
                     <p v-text="restaurante.direccion"></p>
                     <p v-show="restaurante.precio">
@@ -29,17 +33,16 @@
                     <puntuacion :punt="restaurante.puntuacion"></puntuacion>
                 </div>
                 <div class="col">
-                    <a :href="restaurante.web" target="_blank"
-                        ><img
-                            class="img-fluid rounded"
-                            :alt="errorImg"
-                            :src="restaurante.imagen"
-                    /></a>
+                    <img
+                        class="img-fluid rounded"
+                        :alt="errorImg"
+                        :src="restaurante.imagen"
+                    />
                 </div>
             </div>
         </div>
         <p v-else-if="hay">Cargando restaurante...</p>
-        <p v-else-if="!hay">El restaurante no existe</p>
+        <p v-else-if="!hay & (!errorS & !errorDB)">El restaurante no existe</p>
         <p class="error" v-else-if="errorS">
             No se ha podido conectar con el servidor. Inténtelo de nuevo más
             tarde.
@@ -107,26 +110,29 @@ export default {
                 .then((respuesta) => {
                     if (respuesta.data.status == "OK") {
                         var arrayId = respuesta.data.data;
+                        
+                        if (arrayId.length != 0) {
+                            var indexAnterior =
+                                arrayId
+                                    .map((object) => object.id)
+                                    .indexOf(this.id) - 1;
+                            var indexSiguiente =
+                                arrayId
+                                    .map((object) => object.id)
+                                    .indexOf(this.id) + 1;
 
-                        var indexAnterior =
-                            arrayId
-                                .map((object) => object.id)
-                                .indexOf(this.id) - 1;
-                        var indexSiguiente =
-                            arrayId
-                                .map((object) => object.id)
-                                .indexOf(this.id) + 1;
+                            this.idPrimero = arrayId[0].id;
+                            this.idUltimo = arrayId[arrayId.length - 1].id;
 
-                        this.idPrimero = arrayId[0].id;
-                        this.idUltimo = arrayId[arrayId.length - 1].id;
+                            this.id != this.idPrimero
+                                ? (this.idAnterior = arrayId[indexAnterior].id)
+                                : (this.idAnterior = 0);
 
-                        this.id != this.idPrimero
-                            ? (this.idAnterior = arrayId[indexAnterior].id)
-                            : (this.idAnterior = 0);
-
-                        this.id != this.idUltimo
-                            ? (this.idSiguiente = arrayId[indexSiguiente].id)
-                            : (this.idSiguiente = 0);
+                            this.id != this.idUltimo
+                                ? (this.idSiguiente =
+                                      arrayId[indexSiguiente].id)
+                                : (this.idSiguiente = 0);
+                        }
                     } else {
                         console.error(ERRORES.ERROR_DB);
                         this.errorDB = 1;

@@ -76,9 +76,8 @@
 </template>
 
 <script>
+//FIXME mensajes de error
 //FIXME el precio en modificar no sale
-//TODO revisar mensajes de error
-//TODO hacer que el título del restaurante lleve a su página web
 //TODO que la imagen se abra en modal
 //FIXME tienes que pulsar un a o un router-link para que te lleve a la página en vez de pulsar en cualquier lado del botón
 //TODO lo de active en el navbar
@@ -336,6 +335,15 @@ export default {
 /*Estrellas puntuación*/
 .checked {
     color: gold;
+}
+
+/*Links*/
+a:link,
+a:hover,
+a:visited,
+a:active {
+    color: var(--main-gris);
+    text-decoration: none;
 }
 
 /*Imagen*/

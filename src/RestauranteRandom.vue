@@ -4,12 +4,16 @@
             <h2>Estás viendo el restaurante nº {{ restaurante.id }}</h2>
             <div class="btn-group d-flex">
                 <button class="btn btn-secondary" type="button">
-                    <a class="bi bi-arrow-clockwise" @click="refrescar()"></a>
+                    <a class="bi bi-arrow-clockwise" @click="refrescar()"> </a>
                 </button>
             </div>
             <div class="row align-items-center">
                 <div class="col">
-                    <h3 v-text="restaurante.nombre"></h3>
+                    <h3>
+                        <a :href="restaurante.web" target="_blank">{{
+                            restaurante.nombre
+                        }}</a>
+                    </h3>
                     <p v-text="restaurante.descripcion"></p>
                     <p v-text="restaurante.direccion"></p>
                     <p v-show="restaurante.precio">
@@ -18,17 +22,16 @@
                     <puntuacion :punt="restaurante.puntuacion"></puntuacion>
                 </div>
                 <div class="col">
-                    <a :href="restaurante.web" target="_blank"
-                        ><img
-                            class="img-fluid rounded"
-                            :alt="errorImg"
-                            :src="restaurante.imagen"
-                    /></a>
+                    <img
+                        class="img-fluid rounded"
+                        :alt="errorImg"
+                        :src="restaurante.imagen"
+                    />
                 </div>
             </div>
         </div>
         <p v-else-if="hay">Cargando restaurante...</p>
-        <p v-else-if="!hay">No hay restaurantes</p>
+        <p v-else-if="!hay & (!errorS & !errorDB)">No hay restaurantes</p>
         <p class="error" v-else-if="errorS">
             No se ha podido conectar con el servidor. Inténtelo de nuevo más
             tarde.
