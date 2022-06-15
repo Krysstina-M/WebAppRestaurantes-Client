@@ -79,11 +79,9 @@
 //FIXME mensajes de error
 //FIXME el precio en modificar no sale
 //TODO que la imagen se abra en modal
-//FIXME tienes que pulsar un a o un router-link para que te lleve a la página en vez de pulsar en cualquier lado del botón
-//TODO lo de active en el navbar
+//FIXME lo de active en el navbar
 //TODO hacer login y registro
 //TODO Meter imagen en la BD
-//FIXME No funciona en git
 import Vue from "vue";
 
 //Componente de error del servidor
@@ -237,6 +235,11 @@ export default {
 *:focus {
     outline: none !important;
     box-shadow: none !important;
+}
+
+/*Link de dentro de los botones*/
+a {
+    display: block;
 }
 
 /*Barra de navegación*/
