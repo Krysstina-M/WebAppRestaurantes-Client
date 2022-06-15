@@ -21,9 +21,6 @@
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
                 >
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -80,14 +77,10 @@
 
 <script>
 //FIXME el precio en modificar no sale
-//TODO quitar aria label?
-//TODO mirar si está bien lo de tabular
 //TODO revisar mensajes de error
-//TODO quitar lo de i en los iconos y route link y poner directamente el nombre de la clase
 //TODO hacer que el título del restaurante lleve a su página web
 //TODO que la imagen se abra en modal
 //FIXME tienes que pulsar un a o un router-link para que te lleve a la página en vez de pulsar en cualquier lado del botón
-//TODO meter bootstrap?
 //TODO lo de active en el navbar
 //TODO hacer login y registro
 //TODO Meter imagen en la BD
@@ -98,8 +91,7 @@ import Vue from "vue";
 Vue.component("errorS", {
     template: `
     <div class="row justify-content-center">
-        <label class="col-md-2"></label>
-        <div class="col-md-8">
+        <div class="col-md">
             <input class="form-control text-center error" value="No se ha podido conectar con el servidor" />
         </div>
     </div>
@@ -110,8 +102,7 @@ Vue.component("errorS", {
 Vue.component("errorDB", {
     template: `
     <div class="row justify-content-center">
-        <label class="col-md-2"></label>
-        <div class="col-md-8">
+        <div class="col-md">
             <input class="form-control text-center error" value="No se ha podido conectar con la base de datos" />
         </div>
     </div>
@@ -330,6 +321,16 @@ export default {
 /*Formulario*/
 .caja-form {
     border: 5px solid var(--main-verde);
+}
+
+.form-control,
+.form-select {
+    border-color: var(--main-gris);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--main-verde);
 }
 
 /*Estrellas puntuación*/

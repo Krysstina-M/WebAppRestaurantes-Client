@@ -1,15 +1,15 @@
 <template>
     <div id="div" class="container-fluid">
-        <p class="pError" v-if="errorS">
+        <p class="error" v-if="errorS">
             No se ha podido conectar con el servidor. Inténtelo de nuevo más
             tarde.
         </p>
-        <p class="pError" v-else-if="errorDB">
+        <p class="error" v-else-if="errorDB">
             No se ha podido conectar con la base de datos.
         </p>
         <div class="container-fluid" v-else-if="restaurante != ''">
             <h2>Estás viendo el restaurante nº {{ restaurante.id }}</h2>
-            <div class="btn-group d-flex" role="group" aria-label="Group">
+            <div class="btn-group d-flex">
                 <button class="btn btn-secondary" type="button">
                     <a class="bi bi-arrow-clockwise" @click="refrescar()"></a>
                 </button>

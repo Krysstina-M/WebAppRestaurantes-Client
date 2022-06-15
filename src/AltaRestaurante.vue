@@ -8,6 +8,7 @@
                         <a
                             class="bi bi-arrow-left"
                             href="/get-restaurantes"
+                            tabindex="-1"
                         ></a>
                     </button>
                 </div>
@@ -106,7 +107,6 @@
                     <div class="col-md-8">
                         <select
                             class="form-select"
-                            aria-label="Select"
                             v-model="restaurante.precio"
                         >
                             <option selected></option>
@@ -116,15 +116,10 @@
                         </select>
                     </div>
                 </div>
-                <div
-                    class="row justify-content-center mb-4"
-                    v-show="errorDB | errorS"
-                >
-                    <errorDB v-show="errorDB"></errorDB>
-                    <errorS v-show="errorS"></errorS>
-                </div>
+                <errorDB v-if="errorDB"></errorDB>
+                <errorS v-else-if="errorS"></errorS>
                 <div class="row justify-content-center mb-4">
-                    <div class="col-md-12">
+                    <div class="col-md">
                         <button class="btn btn-primary" type="submit">
                             Guardar restaurante
                         </button>

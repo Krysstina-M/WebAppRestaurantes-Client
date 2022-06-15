@@ -1,11 +1,7 @@
 <template>
     <div id="div" class="container-fluid">
-        <div
-            class="btn-toolbar justify-content-between"
-            role="toolbar"
-            aria-label="Toolbar with button groups"
-        >
-            <div class="btn-group ms-5" role="group" aria-label="First group">
+        <div class="btn-toolbar justify-content-between">
+            <div class="btn-group ms-5" aria-label="First group">
                 <button class="btn btn-primary" type="button">
                     <router-link
                         class="bi bi-plus-lg"
@@ -16,7 +12,7 @@
                     </router-link>
                 </button>
             </div>
-            <div class="btn-group me-5" role="group" aria-label="Second group">
+            <div class="btn-group me-5" aria-label="Second group">
                 <button
                     class="btn btn-primary me-2"
                     type="button"
@@ -48,13 +44,13 @@
             </div>
         </div>
 
-        <div class="container-fluid">
-            <p class="pError" v-if="errorDB">
-                No se ha podido conectar con la base de datos.
+        <div class="container-fluid mt-4">
+            <p class="error" v-if="errorDB">
+                No se ha podido conectar con la base de datos
             </p>
-            <p class="pError" v-else-if="errorS">
+            <p class="error" v-else-if="errorS">
                 No se ha podido conectar con el servidor. Inténtelo de nuevo más
-                tarde.
+                tarde
             </p>
             <div
                 class="row row-cols-6 justify-content-center"
@@ -62,7 +58,7 @@
                 v-else-if="restaurantes != ''"
             >
                 <div
-                    class="col caja p-4 mt-4 m-2"
+                    class="col caja p-4 m-2"
                     v-for="restaurante in restaurantes"
                     :key="restaurante.id"
                 >
@@ -151,6 +147,7 @@ export default {
             restaurantes: "",
             errorDB: 0,
             errorS: 0,
+            timerCount: 5,
             noHay: 0,
             ordenarNomAsc: 1,
             ordenarNomDesc: 0,
@@ -321,10 +318,8 @@ export default {
             handler(value) {
                 if (value > 0) {
                     setTimeout(() => {
-                        var timerCount = 5;
-                        timerCount--;
-
-                        if (timerCount == 0) this.noHay = 1;
+                        this.timerCount--;
+                        if (this.timerCount == 0) this.noHay = 1;
                     }, 1000);
                 }
             },
@@ -338,7 +333,7 @@ export default {
 /*Lista de restaurantes*/
 .caja {
     border: var(--main-border);
-    border-radius: var(--main-border-radius);
+    border-radius: 20px;
     background-color: var(--bs-light);
 }
 

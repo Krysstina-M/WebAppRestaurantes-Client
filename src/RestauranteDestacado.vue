@@ -1,10 +1,10 @@
 <template>
     <div id="div" class="container-fluid">
-        <p class="pError" v-if="errorS">
+        <p class="error" v-if="errorS">
             No se ha podido conectar con el servidor. Inténtelo de nuevo más
             tarde.
         </p>
-        <p class="pError" v-else-if="errorDB">
+        <p class="error" v-else-if="errorDB">
             No se ha podido conectar con la base de datos.
         </p>
         <div class="container-fluid" v-else-if="restaurante != ''">

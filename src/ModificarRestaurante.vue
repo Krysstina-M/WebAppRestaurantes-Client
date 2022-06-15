@@ -8,6 +8,7 @@
                         <a
                             class="bi bi-arrow-left"
                             href="/get-restaurantes"
+                            tabindex="-1"
                         ></a>
                     </button>
                 </div>
@@ -99,14 +100,13 @@
                         />
                     </div>
                 </div>
-                <div class="row justify-content-center">
+                <div class="row justify-content-center mb-4">
                     <label class="col-md-2 col-form-label" for="precio"
                         >Precio</label
                     >
                     <div class="col-md-8">
                         <select
                             class="form-select"
-                            aria-label="Select"
                             v-model="restaurante.precio"
                         >
                             <option selected></option>
@@ -116,10 +116,10 @@
                         </select>
                     </div>
                 </div>
-                <errorDB v-show="errorDB"></errorDB>
-                <errorS v-show="errorS"></errorS>
+                <errorDB v-if="errorDB"></errorDB>
+                <errorS v-else-if="errorS"></errorS>
                 <div
-                    class="row justify-content-end my-4"
+                    class="row justify-content-end mb-4"
                     v-if="idEliminar != restaurante.id"
                 >
                     <div class="col-7">
