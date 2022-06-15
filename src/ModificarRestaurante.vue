@@ -107,12 +107,13 @@
                     <div class="col-md-8">
                         <select
                             class="form-select"
+                            name="precio"
                             v-model="restaurante.precio"
                         >
-                            <option selected></option>
-                            <option value="bajo">Bajo</option>
-                            <option value="medio">Medio</option>
-                            <option value="alto">Alto</option>
+                            <option value=""></option>
+                            <option value="Bajo">Bajo</option>
+                            <option value="Medio">Medio</option>
+                            <option value="Alto">Alto</option>
                         </select>
                     </div>
                 </div>

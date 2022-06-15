@@ -76,10 +76,11 @@
 </template>
 
 <script>
-//FIXME mensajes de error
-//FIXME el precio en modificar no sale
+//FIXME mensajes de error + dev
+//FIXME lo de active en el navbar + dev
+//TODO poner botón para editar en ver restuarante
+//TODO arreglar lo de los tamaños de pantalla
 //TODO que la imagen se abra en modal
-//FIXME lo de active en el navbar
 //TODO hacer login y registro
 //TODO Meter imagen en la BD
 import Vue from "vue";
