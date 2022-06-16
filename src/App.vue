@@ -53,10 +53,7 @@
                         <li class="nav-item">
                             <router-link
                                 class="nav-link"
-                                :to="{
-                                    name: 'restaurante-destacado',
-                                    params: { id: 0 },
-                                }"
+                                to="/restaurante-destacado"
                                 v-bind:class="{
                                     active:
                                         this.$route.path ==
@@ -68,10 +65,7 @@
                         <li class="nav-item">
                             <router-link
                                 class="nav-link"
-                                :to="{
-                                    name: 'restaurante-random',
-                                    params: { id: 0 },
-                                }"
+                                to="/restaurante-random"
                                 v-bind:class="{
                                     active:
                                         this.$route.path ==
@@ -102,11 +96,11 @@
 </template>
 
 <script>
+//TODO hacer lo del restaurante random como lo tengo en apuntes
 //FIXME mensajes de error + dev
-//FIXME lo de active en el navbar + dev
 //TODO poner botón para editar en ver restuarante
-//TODO arreglar lo de los tamaños de pantalla
 //TODO que la imagen se abra en modal
+//TODO arreglar lo de los tamaños de pantalla
 //TODO hacer login y registro
 //TODO Meter imagen en la BD
 import Vue from "vue";

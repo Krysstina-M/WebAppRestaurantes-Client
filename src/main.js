@@ -21,8 +21,8 @@ const routes = [
     { path: '/alta-restaurante', name: 'alta-restaurante', component: AltaRestaurante },
     { path: '/modificar-restaurante/:id', name: 'modificar-restaurante', component: ModificarRestaurante },
     { path: '/ver-restaurante/:id', name: 'ver-restaurante', component: VerRestaurante },
-    { path: '/restaurante-destacado/:id', name: 'restaurante-destacado', component: RestauranteDestacado },
-    { path: '/restaurante-random/:id', name: 'restaurante-random', component: RestauranteRandom },
+    { path: '/restaurante-destacado', name: 'restaurante-destacado', component: RestauranteDestacado },
+    { path: '/restaurante-random', name: 'restaurante-random', component: RestauranteRandom },
     { path: '/contacto', component: Contacto },
 ];
 

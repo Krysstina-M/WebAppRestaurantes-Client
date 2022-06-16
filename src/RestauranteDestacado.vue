@@ -67,7 +67,7 @@ export default {
                     this.restaurante = respuesta.data.data;
 
                     this.$router
-                        .push("/restaurante-destacado/" + this.restaurante.id)
+                        .push("/restaurante-destacado")
                         .catch(() => console.error(ERRORES.ERROR_REDIRIGIR));
                 } else {
                     console.error(ERRORES.ERROR_DB);

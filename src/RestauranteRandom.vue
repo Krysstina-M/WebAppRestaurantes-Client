@@ -81,7 +81,7 @@ export default {
                         ) {
                             this.$router
                                 .push(
-                                    "/restaurante-random/" + this.restaurante.id
+                                    "/restaurante-random"
                                 )
                                 .catch(() =>
                                     console.error(ERRORES.ERROR_REDIRIGIR)
