@@ -16,7 +16,7 @@
             ></i>
             Ordenar por código
         </button>
-        <button class="ordenar" @click="ordenarPorNombre()">
+        <button class="ordenar" @click="getRestaurantes()">
             <i
                 :class="[
                     ordenarNomAsc
@@ -101,8 +101,8 @@ export default {
             errorS: 0,
             hay: 1,
             timerCount: 5,
-            ordenarNomAsc: 1,
-            ordenarNomDesc: 0,
+            ordenarNomAsc: 0,
+            ordenarNomDesc: 1,
             ordenarCodAsc: 0,
             ordenarCodDesc: 1,
             scrollpx: 0,
@@ -116,27 +116,6 @@ export default {
     },
     methods: {
         getRestaurantes() {
-            axios
-                .get(
-                    "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes"
-                )
-                .then((respuesta) => {
-                    if (respuesta.data.status == "OK") {
-                        this.restaurantes = respuesta.data.data;
-
-                        this.ordenarNomAsc = 1;
-                        this.ordenarNomDesc = 0;
-                    } else {
-                        console.error(CONST.ERROR_DB);
-                        this.errorDB = 1;
-                    }
-                })
-                .catch((error) => {
-                    console.error(CONST.ERROR_SERVER, error);
-                    this.errorS = 1;
-                });
-        },
-        ordenarPorNombre() {
             this.ordenarCodAsc = 0;
             this.ordenarCodDesc = 1;
 
