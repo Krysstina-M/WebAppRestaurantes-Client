@@ -58,8 +58,6 @@ export default {
         };
     },
     mounted() {
-        this.getRoute();
-
         axios
             .get(
                 "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurante-destacado"

@@ -10,8 +10,5 @@ export default {
             titulo: "contacto",
         };
     },
-    mounted() {
-        this.getRoute();
-    },
 };
 </script>

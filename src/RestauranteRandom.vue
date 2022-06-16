@@ -63,8 +63,6 @@ export default {
         };
     },
     mounted() {
-        this.getRoute();
-
         this.getRestaurante();
     },
     methods: {
