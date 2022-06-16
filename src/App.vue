@@ -96,7 +96,7 @@
 </template>
 
 <script>
-//TODO hacer lo del restaurante random como lo tengo en apuntes
+//TODO cuando borras un restaurante desde get restaurantes que no se reinicie lo de ordenar
 //FIXME mensajes de error + dev
 //TODO poner botón para editar en ver restuarante
 //TODO que la imagen se abra en modal

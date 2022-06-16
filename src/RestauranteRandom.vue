@@ -60,6 +60,7 @@ export default {
             errorImg: ERRORES.ERROR_IMG,
             hay: 1,
             timerCount: 5,
+            idAnterior: 0,
         };
     },
     mounted() {
@@ -75,18 +76,8 @@ export default {
                     if (respuesta.data.status == "OK") {
                         this.restaurante = respuesta.data.data;
 
-                        if (
-                            this.$router.currentRoute.params.id !==
-                            this.restaurante.id
-                        ) {
-                            this.$router
-                                .push(
-                                    "/restaurante-random"
-                                )
-                                .catch(() =>
-                                    console.error(ERRORES.ERROR_REDIRIGIR)
-                                );
-                        }
+                        if (this.restaurante.id == this.idAnterior)
+                            this.getRestaurante();
                     } else {
                         console.error(ERRORES.ERROR_DB);
                         this.errorDB = 1;
@@ -99,6 +90,8 @@ export default {
         },
         refrescar() {
             this.getRestaurante();
+
+            this.idAnterior = this.restaurante.id;
         },
     },
     watch: {
