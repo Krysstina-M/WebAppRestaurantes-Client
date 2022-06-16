@@ -10,5 +10,8 @@ export default {
             texto: "home",
         };
     },
+    mounted() {
+        this.getRoute();
+    },
 };
 </script>

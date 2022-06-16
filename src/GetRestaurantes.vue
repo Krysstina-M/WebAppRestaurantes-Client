@@ -160,6 +160,8 @@ export default {
         };
     },
     mounted() {
+        this.getRoute();
+
         this.getRestaurantes();
 
         window.addEventListener("scroll", this.handleScroll);

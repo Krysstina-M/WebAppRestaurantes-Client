@@ -30,12 +30,23 @@
                 >
                     <ul class="navbar-nav mx-auto">
                         <li class="nav-item">
-                            <router-link class="nav-link" to="/"
+                            <router-link
+                                class="nav-link"
+                                to="/"
+                                v-bind:class="{
+                                    active: this.$route.path == '/',
+                                }"
                                 >Home</router-link
                             >
                         </li>
                         <li class="nav-item">
-                            <router-link class="nav-link" to="/get-restaurantes"
+                            <router-link
+                                class="nav-link"
+                                to="/get-restaurantes"
+                                v-bind:class="{
+                                    active:
+                                        this.$route.path == '/get-restaurantes',
+                                }"
                                 >Restaurantes</router-link
                             >
                         </li>
@@ -45,6 +56,11 @@
                                 :to="{
                                     name: 'restaurante-destacado',
                                     params: { id: 0 },
+                                }"
+                                v-bind:class="{
+                                    active:
+                                        this.$route.path ==
+                                        '/restaurante-destacado',
                                 }"
                                 >Restaurante destacado</router-link
                             >
@@ -56,11 +72,21 @@
                                     name: 'restaurante-random',
                                     params: { id: 0 },
                                 }"
+                                v-bind:class="{
+                                    active:
+                                        this.$route.path ==
+                                        '/restaurante-random',
+                                }"
                                 ><a>¿Dónde comer?</a></router-link
                             >
                         </li>
                         <li class="nav-item">
-                            <router-link class="nav-link" to="/contacto"
+                            <router-link
+                                class="nav-link"
+                                to="/contacto"
+                                v-bind:class="{
+                                    active: this.$route.path == '/contacto',
+                                }"
                                 >Contacto</router-link
                             >
                         </li>
@@ -125,21 +151,6 @@ export default {
         return {
             titulo: "Restaurantes",
         };
-    },
-    mounted() {
-        /*var header = document.getElementById("app");
-        var btns = header.getElementsByClassName("nav-item");
-
-        for (var i = 0; i < btns.length; i++) {
-            btns[i].addEventListener("click", function () {
-                var current = document.getElementsByClassName("active");
-                current[0].className = current[0].className.replace(
-                    " active",
-                    ""
-                );
-                this.className += " active";
-            });
-        }*/
     },
 };
 </script>
@@ -259,6 +270,15 @@ a {
     color: var(--bs-white);
 }
 
+.active {
+    background-color: var(--main-gris);
+    color: var(--bs-white);
+}
+
+.navbar-nav .nav-link.active {
+    color: var(--bs-white);
+}
+
 /*Botones principales (los verdes)*/
 .btn-primary {
     background-color: var(--main-verde);
@@ -323,7 +343,7 @@ a {
 
 /*Círculo de loading que gira*/
 .spinner-border {
-    color: var(--main-gris)
+    color: var(--main-gris);
 }
 
 /*Formulario*/
