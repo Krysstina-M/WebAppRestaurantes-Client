@@ -43,7 +43,7 @@
 <script>
 import axios from "axios";
 import Puntuacion from "./Puntuacion.vue";
-import { ERRORES } from "./main";
+import { CONST } from "./main";
 
 export default {
     name: "restauranteDestacado",
@@ -53,7 +53,7 @@ export default {
             restaurante: "",
             errorS: 0,
             errorDB: 0,
-            errorImg: ERRORES.ERROR_IMG,
+            errorImg: CONST.ERROR_IMG,
             hay: 1,
             timerCount: 5,
         };
@@ -69,14 +69,14 @@ export default {
 
                     this.$router
                         .push("/restaurante-destacado/" + this.restaurante.id)
-                        .catch(() => console.error(ERRORES.ERROR_REDIRIGIR));
+                        .catch(() => console.error(CONST.ERROR_REDIRIGIR));
                 } else {
-                    console.error(ERRORES.ERROR_DB);
+                    console.error(CONST.ERROR_DB);
                     this.errorDB = 1;
                 }
             })
             .catch((error) => {
-                console.error(ERRORES.ERROR_SERVER, error);
+                console.error(CONST.ERROR_SERVER, error);
                 this.errorS = 1;
             });
     },

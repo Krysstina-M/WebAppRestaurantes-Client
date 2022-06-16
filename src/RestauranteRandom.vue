@@ -51,7 +51,7 @@
 <script>
 import axios from "axios";
 import Puntuacion from "./Puntuacion.vue";
-import { ERRORES } from "./main";
+import { CONST } from "./main";
 export default {
     name: "restauranteRandom",
     data() {
@@ -60,7 +60,7 @@ export default {
             restaurante: "",
             errorS: 0,
             errorDB: 0,
-            errorImg: ERRORES.ERROR_IMG,
+            errorImg: CONST.ERROR_IMG,
             hay: 1,
             timerCount: 5,
             idAnterior: 0,
@@ -78,15 +78,16 @@ export default {
                 .then((respuesta) => {
                     if (respuesta.data.status == "OK") {
                         this.restaurante = respuesta.data.data;
+
                         if (this.restaurante.id == this.idAnterior)
                             this.getRestaurante();
                     } else {
-                        console.error(ERRORES.ERROR_DB);
+                        console.error(CONST.ERROR_DB);
                         this.errorDB = 1;
                     }
                 })
                 .catch((error) => {
-                    console.error(ERRORES.ERROR_SERVER, error);
+                    console.error(CONST.ERROR_SERVER, error);
                     this.errorS = 1;
                 });
         },

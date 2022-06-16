@@ -33,7 +33,7 @@ const router = new VueRouter({
 });
 
 //Constantes para los mensajes de error
-export const ERRORES = {
+export const CONST = {
     ERROR_SERVER: "Error del servidor",
     ERROR_DB: "Error de base de datos",
     ERROR_REDIRIGIR: "Error al redirigir a la página",

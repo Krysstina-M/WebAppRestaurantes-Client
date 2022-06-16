@@ -90,7 +90,7 @@
 
 <script>
 import axios from "axios";
-import { ERRORES } from "./main";
+import { CONST } from "./main";
 
 export default {
     name: "getRestaurantes",
@@ -127,12 +127,12 @@ export default {
                         this.ordenarNomAsc = 1;
                         this.ordenarNomDesc = 0;
                     } else {
-                        console.error(ERRORES.ERROR_DB);
+                        console.error(CONST.ERROR_DB);
                         this.errorDB = 1;
                     }
                 })
                 .catch((error) => {
-                    console.error(ERRORES.ERROR_SERVER, error);
+                    console.error(CONST.ERROR_SERVER, error);
                     this.errorS = 1;
                 });
         },
@@ -152,12 +152,12 @@ export default {
                             this.ordenarNomAsc = 0;
                             this.ordenarNomDesc = 1;
                         } else {
-                            console.error(ERRORES.ERROR_DB);
+                            console.error(CONST.ERROR_DB);
                             this.errorDB = 1;
                         }
                     })
                     .catch((error) => {
-                        console.error(ERRORES.ERROR_SERVER, error);
+                        console.error(CONST.ERROR_SERVER, error);
                         this.errorS = 1;
                     });
             } else if (this.ordenarNomDesc) {
@@ -172,12 +172,12 @@ export default {
                             this.ordenarNomAsc = 1;
                             this.ordenarNomDesc = 0;
                         } else {
-                            console.error(ERRORES.ERROR_DB);
+                            console.error(CONST.ERROR_DB);
                             this.errorDB = 1;
                         }
                     })
                     .catch((error) => {
-                        console.error(ERRORES.ERROR_SERVER, error);
+                        console.error(CONST.ERROR_SERVER, error);
                         this.errorS = 1;
                     });
             }
@@ -198,12 +198,12 @@ export default {
                             this.ordenarCodAsc = 0;
                             this.ordenarCodDesc = 1;
                         } else {
-                            console.error(ERRORES.ERROR_DB);
+                            console.error(CONST.ERROR_DB);
                             this.errorDB = 1;
                         }
                     })
                     .catch((error) => {
-                        console.error(ERRORES.ERROR_SERVER, error);
+                        console.error(CONST.ERROR_SERVER, error);
                         this.errorS = 1;
                     });
             } else if (this.ordenarCodDesc) {
@@ -218,12 +218,12 @@ export default {
                             this.ordenarCodAsc = 1;
                             this.ordenarCodDesc = 0;
                         } else {
-                            console.error(ERRORES.ERROR_DB);
+                            console.error(CONST.ERROR_DB);
                             this.errorDB = 1;
                         }
                     })
                     .catch((error) => {
-                        console.error(ERRORES.ERROR_SERVER, error);
+                        console.error(CONST.ERROR_SERVER, error);
                         this.errorS = 1;
                     });
             }
@@ -255,12 +255,12 @@ export default {
                         this.idEliminar = "";
                         this.getRestaurantes();
                     } else {
-                        console.error(ERRORES.ERROR_DB);
+                        console.error(CONST.ERROR_DB);
                         this.errorDB = 1;
                     }
                 })
                 .catch((error) => {
-                    console.error(ERRORES.ERROR_SERVER, error);
+                    console.error(CONST.ERROR_SERVER, error);
                     this.errorS = 1;
                 });
         },
