@@ -93,6 +93,7 @@
 <script>
 import axios from "axios";
 import { CONST } from "./main";
+
 export default {
     name: "getRestaurantes",
     data() {
@@ -264,6 +265,7 @@ export default {
                 if (value > 0) {
                     setTimeout(() => {
                         this.timerCount--;
+
                         if (this.timerCount == 0) this.hay = 0;
                     }, 1000);
                 }

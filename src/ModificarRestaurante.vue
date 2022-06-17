@@ -208,9 +208,7 @@ export default {
 
                         this.$router
                             .push("/ver-restaurante/" + this.id)
-                            .catch(() =>
-                                console.error(CONST.ERROR_REDIRIGIR)
-                            );
+                            .catch(() => console.error(CONST.ERROR_REDIRIGIR));
                     } else {
                         console.error(CONST.ERROR_DB);
                         this.errorDB = 1;
@@ -228,6 +226,7 @@ export default {
             this.restaurante.imagen = "";
             this.restaurante.web = "";
             this.restaurante.precio = "";
+
             this.existe = 0;
             this.errorDB = 0;
             this.errorS = 0;
@@ -255,9 +254,7 @@ export default {
 
                         this.$router
                             .push({ path: "/get-restaurantes" })
-                            .catch(() =>
-                                console.error(CONST.ERROR_REDIRIGIR)
-                            );
+                            .catch(() => console.error(CONST.ERROR_REDIRIGIR));
                     } else {
                         console.error(CONST.ERROR_DB);
                         this.errorDB = 1;
