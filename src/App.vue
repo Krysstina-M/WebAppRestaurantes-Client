@@ -96,6 +96,8 @@
 </template>
 
 <script>
+//FIXME navbar not expanding
+//TODO cambiar flechas por chevron
 //TODO que la imagen se abra en modal
 //TODO arreglar lo de los tamaños de pantalla
 //TODO hacer login y registro
@@ -365,11 +367,11 @@ a:active {
 .img-fluid {
     height: 100%;
     width: 50%;
+    transition: transform 0.25s ease;
 }
 
 .img-fluid:hover {
     -webkit-transform: scale(2);
     transform: scale(2);
-    transition: transform 0.25s ease;
 }
 </style>
