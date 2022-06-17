@@ -9,25 +9,25 @@
         <button class="ordenar" @click="ordenarPorCodigo()">
             <i
                 :class="[
-                    ordenarCodAsc
+                    (seleccionado == 'codA')
+                    | ((seleccionado == 'nomA') | (seleccionado == 'nomD'))
                         ? 'fa-solid fa-arrow-down-1-9'
                         : 'fa-solid fa-arrow-down-9-1',
                 ]"
             ></i>
             Ordenar por código
         </button>
-        <!--  -->
         <button class="ordenar" @click="ordenarPorNombre()">
             <i
                 :class="[
-                    ordenarNomAsc
+                    (seleccionado == 'nomA')
+                    | ((seleccionado == 'codA') | (seleccionado == 'codD'))
                         ? 'fa-solid fa-arrow-down-a-z'
                         : 'fa-solid fa-arrow-down-z-a',
                 ]"
             ></i>
-            Ordenar por nombre</button
-        ><button class="ordenar" @click="a()">a</button>
-        <!--  -->
+            Ordenar por nombre
+        </button>
         <div class="lista">
             <ul id="GetRestaurantes" v-if="restaurantes != ''">
                 <li
@@ -102,10 +102,6 @@ export default {
             errorS: 0,
             hay: 1,
             timerCount: 5,
-            ordenarNomAsc: 1,
-            ordenarNomDesc: 0,
-            ordenarCodAsc: 0,
-            ordenarCodDesc: 1,
             seleccionado: "nomA",
             scrollpx: 0,
             idEliminar: "",
@@ -117,18 +113,9 @@ export default {
         window.addEventListener("scroll", this.handleScroll);
     },
     methods: {
-        a() {
-            console.log(
-                this.ordenarNomAsc,
-                this.ordenarNomDesc,
-                this.ordenarCodAsc,
-                this.ordenarCodDesc,
-                this.seleccionado
-            );
-        },
         ordenarPorNombre() {
-            if (this.ordenarNomAsc) this.ordenarPorNombreDesc();
-            else if (this.ordenarNomDesc) this.ordenarPorNombreAsc();
+            if (this.seleccionado == "nomA") this.ordenarPorNombreDesc();
+            else if (this.seleccionado == "nomD") this.ordenarPorNombreAsc();
 
             if ((this.seleccionado == "codA") | (this.seleccionado == "codD"))
                 this.ordenarPorNombreAsc();
@@ -142,8 +129,6 @@ export default {
                     if (respuesta.data.status == "OK") {
                         this.restaurantes = respuesta.data.data;
 
-                        this.ordenarNomAsc = 1;
-                        this.ordenarNomDesc = 0;
                         this.seleccionado = "nomA";
                     } else {
                         console.error(CONST.ERROR_DB);
@@ -164,8 +149,6 @@ export default {
                     if (respuesta.data.status == "OK") {
                         this.restaurantes = respuesta.data.data;
 
-                        this.ordenarNomAsc = 0;
-                        this.ordenarNomDesc = 1;
                         this.seleccionado = "nomD";
                     } else {
                         console.error(CONST.ERROR_DB);
@@ -178,8 +161,8 @@ export default {
                 });
         },
         ordenarPorCodigo() {
-            if (this.ordenarCodAsc) this.ordenarPorCodigoDesc();
-            else if (this.ordenarCodDesc) this.ordenarPorCodigoAsc();
+            if (this.seleccionado == "codA") this.ordenarPorCodigoDesc();
+            else if (this.seleccionado == "codD") this.ordenarPorCodigoAsc();
 
             if ((this.seleccionado == "nomA") | (this.seleccionado == "nomD"))
                 this.ordenarPorCodigoAsc();
@@ -193,8 +176,6 @@ export default {
                     if (respuesta.data.status == "OK") {
                         this.restaurantes = respuesta.data.data;
 
-                        this.ordenarCodAsc = 1;
-                        this.ordenarCodDesc = 0;
                         this.seleccionado = "codA";
                     } else {
                         console.error(CONST.ERROR_DB);
@@ -215,8 +196,6 @@ export default {
                     if (respuesta.data.status == "OK") {
                         this.restaurantes = respuesta.data.data;
 
-                        this.ordenarCodAsc = 0;
-                        this.ordenarCodDesc = 1;
                         this.seleccionado = "codD";
                     } else {
                         console.error(CONST.ERROR_DB);
