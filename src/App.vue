@@ -97,7 +97,6 @@
 
 <script>
 //FIXME mensajes de error + dev
-//TODO poner botón para editar en ver restuarante
 //TODO que la imagen se abra en modal
 //TODO arreglar lo de los tamaños de pantalla
 //TODO hacer login y registro
@@ -240,11 +239,6 @@ export default {
 *:focus {
     outline: none !important;
     box-shadow: none !important;
-}
-
-/*Link de dentro de los botones*/
-a {
-    display: block;
 }
 
 /*Barra de navegación*/

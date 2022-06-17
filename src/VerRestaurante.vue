@@ -10,6 +10,19 @@
                         @click="anterior()"
                     ></a>
                 </button>
+                <!--  -->
+                <button class="btn btn-form" type="button">
+                    <router-link
+                        class="bi bi-pencil-fill"
+                        tabindex="-1"
+                        :to="{
+                            name: 'modificar-restaurante',
+                            params: { id: restaurante.id },
+                        }"
+                    >
+                    </router-link>
+                </button>
+                <!--  -->
                 <button class="btn btn-secondary" type="button">
                     <a
                         class="bi bi-arrow-right"
