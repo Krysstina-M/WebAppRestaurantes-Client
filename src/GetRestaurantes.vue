@@ -16,7 +16,7 @@
             ></i>
             Ordenar por código
         </button>
-        <button class="ordenar" @click="getRestaurantes()">
+        <button class="ordenar" @click="ordenarPorNombre()">
             <i
                 :class="[
                     ordenarNomAsc
@@ -90,8 +90,7 @@
 
 <script>
 import axios from "axios";
-import { CONST } from "./main";
-
+import { ERRORES } from "./main";
 export default {
     name: "getRestaurantes",
     data() {
@@ -101,8 +100,8 @@ export default {
             errorS: 0,
             hay: 1,
             timerCount: 5,
-            ordenarNomAsc: 0,
-            ordenarNomDesc: 1,
+            ordenarNomAsc: 1,
+            ordenarNomDesc: 0,
             ordenarCodAsc: 0,
             ordenarCodDesc: 1,
             scrollpx: 0,
@@ -116,6 +115,27 @@ export default {
     },
     methods: {
         getRestaurantes() {
+            axios
+                .get(
+                    "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes"
+                )
+                .then((respuesta) => {
+                    if (respuesta.data.status == "OK") {
+                        this.restaurantes = respuesta.data.data;
+
+                        this.ordenarNomAsc = 1;
+                        this.ordenarNomDesc = 0;
+                    } else {
+                        console.error(ERRORES.ERROR_DB);
+                        this.errorDB = 1;
+                    }
+                })
+                .catch((error) => {
+                    console.error(ERRORES.ERROR_SERVER, error);
+                    this.errorS = 1;
+                });
+        },
+        ordenarPorNombre() {
             this.ordenarCodAsc = 0;
             this.ordenarCodDesc = 1;
 
@@ -127,16 +147,15 @@ export default {
                     .then((respuesta) => {
                         if (respuesta.data.status == "OK") {
                             this.restaurantes = respuesta.data.data;
-
                             this.ordenarNomAsc = 0;
                             this.ordenarNomDesc = 1;
                         } else {
-                            console.error(CONST.ERROR_DB);
+                            console.error(ERRORES.ERROR_DB);
                             this.errorDB = 1;
                         }
                     })
                     .catch((error) => {
-                        console.error(CONST.ERROR_SERVER, error);
+                        console.error(ERRORES.ERROR_SERVER, error);
                         this.errorS = 1;
                     });
             } else if (this.ordenarNomDesc) {
@@ -147,16 +166,15 @@ export default {
                     .then((respuesta) => {
                         if (respuesta.data.status == "OK") {
                             this.restaurantes = respuesta.data.data;
-
                             this.ordenarNomAsc = 1;
                             this.ordenarNomDesc = 0;
                         } else {
-                            console.error(CONST.ERROR_DB);
+                            console.error(ERRORES.ERROR_DB);
                             this.errorDB = 1;
                         }
                     })
                     .catch((error) => {
-                        console.error(CONST.ERROR_SERVER, error);
+                        console.error(ERRORES.ERROR_SERVER, error);
                         this.errorS = 1;
                     });
             }
@@ -164,7 +182,6 @@ export default {
         ordenarPorCodigo() {
             this.ordenarNomAsc = 0;
             this.ordenarNomDesc = 1;
-
             if (this.ordenarCodAsc) {
                 axios
                     .get(
@@ -173,16 +190,15 @@ export default {
                     .then((respuesta) => {
                         if (respuesta.data.status == "OK") {
                             this.restaurantes = respuesta.data.data;
-
                             this.ordenarCodAsc = 0;
                             this.ordenarCodDesc = 1;
                         } else {
-                            console.error(CONST.ERROR_DB);
+                            console.error(ERRORES.ERROR_DB);
                             this.errorDB = 1;
                         }
                     })
                     .catch((error) => {
-                        console.error(CONST.ERROR_SERVER, error);
+                        console.error(ERRORES.ERROR_SERVER, error);
                         this.errorS = 1;
                     });
             } else if (this.ordenarCodDesc) {
@@ -193,16 +209,15 @@ export default {
                     .then((respuesta) => {
                         if (respuesta.data.status == "OK") {
                             this.restaurantes = respuesta.data.data;
-
                             this.ordenarCodAsc = 1;
                             this.ordenarCodDesc = 0;
                         } else {
-                            console.error(CONST.ERROR_DB);
+                            console.error(ERRORES.ERROR_DB);
                             this.errorDB = 1;
                         }
                     })
                     .catch((error) => {
-                        console.error(CONST.ERROR_SERVER, error);
+                        console.error(ERRORES.ERROR_SERVER, error);
                         this.errorS = 1;
                     });
             }
@@ -230,16 +245,15 @@ export default {
                 .then((respuesta) => {
                     if (respuesta.data.status == "OK") {
                         console.info(respuesta.data.message);
-
                         this.idEliminar = "";
                         this.getRestaurantes();
                     } else {
-                        console.error(CONST.ERROR_DB);
+                        console.error(ERRORES.ERROR_DB);
                         this.errorDB = 1;
                     }
                 })
                 .catch((error) => {
-                    console.error(CONST.ERROR_SERVER, error);
+                    console.error(ERRORES.ERROR_SERVER, error);
                     this.errorS = 1;
                 });
         },
@@ -250,7 +264,6 @@ export default {
                 if (value > 0) {
                     setTimeout(() => {
                         this.timerCount--;
-
                         if (this.timerCount == 0) this.hay = 0;
                     }, 1000);
                 }
@@ -269,7 +282,6 @@ export default {
     margin-top: 20px;
     margin-right: -20%;
 }
-
 .alta a {
     display: block;
     color: #2c3e50;
@@ -279,15 +291,12 @@ export default {
     font-size: 15px;
     font-weight: bold;
 }
-
 .alta a:hover {
     color: #42b983;
 }
-
 .alta:hover {
     background-color: #2c3e50;
 }
-
 /*Botones ordenar restaurantes*/
 .ordenar {
     background: #42b983;
@@ -303,19 +312,16 @@ export default {
     font-size: 15px;
     font-weight: bold;
 }
-
 .ordenar:hover {
     background-color: #2c3e50;
     color: #42b983;
     cursor: pointer;
 }
-
 .ordenar:disabled {
     background: #2c3e50;
     color: #42b983;
     cursor: default;
 }
-
 /*Lista de restaurantes*/
 .lista ul {
     display: flex;
@@ -323,13 +329,11 @@ export default {
     flex-wrap: wrap;
     justify-content: center;
 }
-
 /*ID de arriba a la izquierda*/
 .id {
     margin: -10px 0px 10px 0px;
     text-align: left;
 }
-
 /*Cajas de restaurantes (li)*/
 .cajas {
     margin: 15px;
@@ -342,7 +346,6 @@ export default {
     list-style-type: none;
     font-size: 20px;
 }
-
 .cajas a {
     display: block;
     cursor: pointer;
@@ -356,12 +359,10 @@ export default {
     padding: 5px;
     font-weight: bold;
 }
-
 .cajas a:hover {
     background-color: #2c3e50;
     color: white;
 }
-
 /*Botón para ir arriba del todo*/
 .arriba {
     border: none;
@@ -372,13 +373,11 @@ export default {
     bottom: 0px;
     right: 0px;
 }
-
 .arriba a {
     text-decoration: none;
     color: #42b983;
     transition: all 200ms ease;
 }
-
 .arriba a:hover {
     color: #2c3e50;
     cursor: pointer;
