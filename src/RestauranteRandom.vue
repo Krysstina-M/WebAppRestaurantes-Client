@@ -38,11 +38,11 @@
         </div>
         <p v-else-if="hay">Cargando restaurante...</p>
         <p v-else-if="!hay & (!errorS & !errorDB)">No hay restaurantes</p>
-        <p class="error" v-else-if="errorS">
+        <p class="pError" v-else-if="errorS">
             No se ha podido conectar con el servidor. Inténtelo de nuevo más
             tarde.
         </p>
-        <p class="error" v-else-if="errorDB">
+        <p class="pError" v-else-if="errorDB">
             No se ha podido conectar con la base de datos.
         </p>
     </div>
@@ -88,7 +88,9 @@ export default {
                 })
                 .catch((error) => {
                     console.error(CONST.ERROR_SERVER, error);
-                    this.errorS = 1;
+                    error.toString().includes("500")
+                        ? (this.hay = 0)
+                        : (this.errorS = 1);
                 });
         },
         refrescar() {
