@@ -20,7 +20,9 @@
                 >
                     <i
                         :class="[
-                            ordenarNomAsc
+                            (seleccionado == 'nomA')
+                            | ((seleccionado == 'codA')
+                                | (seleccionado == 'codD'))
                                 ? 'bi bi-sort-alpha-down'
                                 : 'bi bi-sort-alpha-up',
                         ]"
@@ -34,7 +36,9 @@
                 >
                     <i
                         :class="[
-                            ordenarCodAsc
+                            (seleccionado == 'codA')
+                            | ((seleccionado == 'nomA')
+                                | (seleccionado == 'nomD'))
                                 ? 'bi bi-sort-numeric-down'
                                 : 'bi bi-sort-numeric-up',
                         ]"
@@ -140,7 +144,7 @@
 
 <script>
 import axios from "axios";
-import { ERRORES } from "./main";
+import { CONST } from "./main";
 
 export default {
     name: "getRestaurantes",
@@ -151,21 +155,25 @@ export default {
             errorS: 0,
             hay: 1,
             timerCount: 5,
-            ordenarNomAsc: 1,
-            ordenarNomDesc: 0,
-            ordenarCodAsc: 0,
-            ordenarCodDesc: 1,
+            seleccionado: "nomA",
             scrollpx: 0,
             idEliminar: "",
         };
     },
     mounted() {
-        this.getRestaurantes();
+        this.ordenarPorNombreAsc();
 
         window.addEventListener("scroll", this.handleScroll);
     },
     methods: {
-        getRestaurantes() {
+        ordenarPorNombre() {
+            if (this.seleccionado == "nomA") this.ordenarPorNombreDesc();
+            else if (this.seleccionado == "nomD") this.ordenarPorNombreAsc();
+
+            if ((this.seleccionado == "codA") | (this.seleccionado == "codD"))
+                this.ordenarPorNombreAsc();
+        },
+        ordenarPorNombreAsc() {
             axios
                 .get(
                     "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes"
@@ -174,109 +182,83 @@ export default {
                     if (respuesta.data.status == "OK") {
                         this.restaurantes = respuesta.data.data;
 
-                        this.ordenarNomAsc = 1;
-                        this.ordenarNomDesc = 0;
+                        this.seleccionado = "nomA";
                     } else {
-                        console.error(ERRORES.ERROR_DB);
+                        console.error(CONST.ERROR_DB);
                         this.errorDB = 1;
                     }
                 })
                 .catch((error) => {
-                    console.error(ERRORES.ERROR_SERVER, error);
+                    console.error(CONST.ERROR_SERVER, error);
                     this.errorS = 1;
                 });
         },
-        ordenarPorNombre() {
-            this.ordenarCodAsc = 0;
-            this.ordenarCodDesc = 1;
+        ordenarPorNombreDesc() {
+            axios
+                .get(
+                    "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes-nom-desc"
+                )
+                .then((respuesta) => {
+                    if (respuesta.data.status == "OK") {
+                        this.restaurantes = respuesta.data.data;
 
-            if (this.ordenarNomAsc) {
-                axios
-                    .get(
-                        "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes-nom-desc"
-                    )
-                    .then((respuesta) => {
-                        if (respuesta.data.status == "OK") {
-                            this.restaurantes = respuesta.data.data;
-
-                            this.ordenarNomAsc = 0;
-                            this.ordenarNomDesc = 1;
-                        } else {
-                            console.error(ERRORES.ERROR_DB);
-                            this.errorDB = 1;
-                        }
-                    })
-                    .catch((error) => {
-                        console.error(ERRORES.ERROR_SERVER, error);
-                        this.errorS = 1;
-                    });
-            } else if (this.ordenarNomDesc) {
-                axios
-                    .get(
-                        "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes"
-                    )
-                    .then((respuesta) => {
-                        if (respuesta.data.status == "OK") {
-                            this.restaurantes = respuesta.data.data;
-
-                            this.ordenarNomAsc = 1;
-                            this.ordenarNomDesc = 0;
-                        } else {
-                            console.error(ERRORES.ERROR_DB);
-                            this.errorDB = 1;
-                        }
-                    })
-                    .catch((error) => {
-                        console.error(ERRORES.ERROR_SERVER, error);
-                        this.errorS = 1;
-                    });
-            }
+                        this.seleccionado = "nomD";
+                    } else {
+                        console.error(CONST.ERROR_DB);
+                        this.errorDB = 1;
+                    }
+                })
+                .catch((error) => {
+                    console.error(CONST.ERROR_SERVER, error);
+                    this.errorS = 1;
+                });
         },
         ordenarPorCodigo() {
-            this.ordenarNomAsc = 0;
-            this.ordenarNomDesc = 1;
+            if (this.seleccionado == "codA") this.ordenarPorCodigoDesc();
+            else if (this.seleccionado == "codD") this.ordenarPorCodigoAsc();
 
-            if (this.ordenarCodAsc) {
-                axios
-                    .get(
-                        "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes-cod-desc"
-                    )
-                    .then((respuesta) => {
-                        if (respuesta.data.status == "OK") {
-                            this.restaurantes = respuesta.data.data;
+            if ((this.seleccionado == "nomA") | (this.seleccionado == "nomD"))
+                this.ordenarPorCodigoAsc();
+        },
+        ordenarPorCodigoAsc() {
+            axios
+                .get(
+                    "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes-cod-asc"
+                )
+                .then((respuesta) => {
+                    if (respuesta.data.status == "OK") {
+                        this.restaurantes = respuesta.data.data;
 
-                            this.ordenarCodAsc = 0;
-                            this.ordenarCodDesc = 1;
-                        } else {
-                            console.error(ERRORES.ERROR_DB);
-                            this.errorDB = 1;
-                        }
-                    })
-                    .catch((error) => {
-                        console.error(ERRORES.ERROR_SERVER, error);
-                        this.errorS = 1;
-                    });
-            } else if (this.ordenarCodDesc) {
-                axios
-                    .get(
-                        "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes-cod-asc"
-                    )
-                    .then((respuesta) => {
-                        if (respuesta.data.status == "OK") {
-                            this.restaurantes = respuesta.data.data;
+                        this.seleccionado = "codA";
+                    } else {
+                        console.error(CONST.ERROR_DB);
+                        this.errorDB = 1;
+                    }
+                })
+                .catch((error) => {
+                    console.error(CONST.ERROR_SERVER, error);
+                    this.errorS = 1;
+                });
+        },
+        ordenarPorCodigoDesc() {
+            axios
+                .get(
+                    "http://localhost/Proyectos/WebAppRestaurantes-Server/restaurantes-api.php/restaurantes-cod-desc"
+                )
+                .then((respuesta) => {
+                    if (respuesta.data.status == "OK") {
+                        this.restaurantes = respuesta.data.data;
 
-                            this.ordenarCodAsc = 1;
-                            this.ordenarCodDesc = 0;
-                        } else {
-                            console.error(ERRORES.ERROR_DB);
-                            this.errorDB = 1;
-                        }
-                    })
-                    .catch((error) => {
-                        console.error(ERRORES.ERROR_SERVER, error);
-                        this.errorS = 1;
-                    });
-            }
+                        this.seleccionado = "codD";
+                    } else {
+                        console.error(CONST.ERROR_DB);
+                        this.errorDB = 1;
+                    }
+                })
+                .catch((error) => {
+                    console.error(CONST.ERROR_SERVER, error);
+                    this.errorS = 1;
+                });
         },
         handleScroll() {
             this.scrollpx = window.scrollY;
@@ -303,14 +285,28 @@ export default {
                         console.info(respuesta.data.message);
 
                         this.idEliminar = "";
-                        this.getRestaurantes();
+
+                        switch (this.seleccionado) {
+                            case "nomD":
+                                this.ordenarPorNombreDesc();
+                                break;
+                            case "codA":
+                                this.ordenarPorCodigoAsc();
+                                break;
+                            case "codD":
+                                this.ordenarPorCodigoDesc();
+                                break;
+                            default:
+                                this.ordenarPorNombreAsc();
+                                break;
+                        }
                     } else {
-                        console.error(ERRORES.ERROR_DB);
+                        console.error(CONST.ERROR_DB);
                         this.errorDB = 1;
                     }
                 })
                 .catch((error) => {
-                    console.error(ERRORES.ERROR_SERVER, error);
+                    console.error(CONST.ERROR_SERVER, error);
                     this.errorS = 1;
                 });
         },

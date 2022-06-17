@@ -165,7 +165,7 @@
 
 <script>
 import axios from "axios";
-import { ERRORES } from "./main";
+import { CONST } from "./main";
 
 export default {
     name: "modificarRestaurante",
@@ -205,11 +205,11 @@ export default {
                 } else {
                     this.$router
                         .push("/get-restaurantes/")
-                        .catch(() => console.error(ERRORES.ERROR_REDIRIGIR));
+                        .catch(() => console.error(CONST.ERROR_REDIRIGIR));
                 }
             })
             .catch((error) => {
-                console.error(ERRORES.ERROR_SERVER, error);
+                console.error(CONST.ERROR_SERVER, error);
                 this.errorS = 1;
             });
     },
@@ -240,12 +240,12 @@ export default {
 
                         if (!this.existe) this.guardarRestaurante();
                     } else {
-                        console.error(ERRORES.ERROR_DB);
+                        console.error(CONST.ERROR_DB);
                         this.errorDB = 1;
                     }
                 })
                 .catch((error) => {
-                    console.error(ERRORES.ERROR_SERVER, error);
+                    console.error(CONST.ERROR_SERVER, error);
                     this.errorS = 1;
                 });
         },
@@ -262,16 +262,14 @@ export default {
 
                         this.$router
                             .push("/ver-restaurante/" + this.id)
-                            .catch(() =>
-                                console.error(ERRORES.ERROR_REDIRIGIR)
-                            );
+                            .catch(() => console.error(CONST.ERROR_REDIRIGIR));
                     } else {
-                        console.error(ERRORES.ERROR_DB);
+                        console.error(CONST.ERROR_DB);
                         this.errorDB = 1;
                     }
                 })
                 .catch((error) => {
-                    console.error(ERRORES.ERROR_SERVER, error);
+                    console.error(CONST.ERROR_SERVER, error);
                     this.errorS = 1;
                 });
         },
@@ -281,6 +279,7 @@ export default {
             this.restaurante.descripcion = "";
             this.restaurante.imagen = "";
             this.restaurante.precio = "Medio";
+
             this.existe = 0;
             this.errorDB = 0;
             this.errorS = 0;
@@ -308,16 +307,14 @@ export default {
 
                         this.$router
                             .push({ path: "/get-restaurantes" })
-                            .catch(() =>
-                                console.error(ERRORES.ERROR_REDIRIGIR)
-                            );
+                            .catch(() => console.error(CONST.ERROR_REDIRIGIR));
                     } else {
-                        console.error(ERRORES.ERROR_DB);
+                        console.error(CONST.ERROR_DB);
                         this.errorDB = 1;
                     }
                 })
                 .catch((error) => {
-                    console.error(ERRORES.ERROR_SERVER, error);
+                    console.error(CONST.ERROR_SERVER, error);
                     this.errorS = 1;
                 });
         },

@@ -133,7 +133,7 @@
 
 <script>
 import axios from "axios";
-import { ERRORES } from "./main";
+import { CONST } from "./main";
 
 export default {
     name: "altaRestaurante",
@@ -174,12 +174,12 @@ export default {
 
                         if (!this.existe) this.altaRestaurante();
                     } else {
-                        console.error(ERRORES.ERROR_DB);
+                        console.error(CONST.ERROR_DB);
                         this.errorDB = 1;
                     }
                 })
                 .catch((error) => {
-                    console.error(ERRORES.ERROR_SERVER, error);
+                    console.error(CONST.ERROR_SERVER, error);
                     this.errorS = 1;
                 });
         },
@@ -195,16 +195,14 @@ export default {
 
                         this.$router
                             .push("/ver-restaurante/" + respuesta.data.data.id)
-                            .catch(() =>
-                                console.error(ERRORES.ERROR_REDIRIGIR)
-                            );
+                            .catch(() => console.error(CONST.ERROR_REDIRIGIR));
                     } else {
-                        console.error(ERRORES.ERROR_DB);
+                        console.error(CONST.ERROR_DB);
                         this.errorDB = 1;
                     }
                 })
                 .catch((error) => {
-                    console.error(ERRORES.ERROR_SERVER, error);
+                    console.error(CONST.ERROR_SERVER, error);
                     this.errorS = 1;
                 });
         },
@@ -214,6 +212,7 @@ export default {
             this.restaurante.descripcion = "";
             this.restaurante.imagen = "";
             this.restaurante.precio = "";
+
             this.existe = 0;
             this.errorDB = 0;
             this.errorS = 0;

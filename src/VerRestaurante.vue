@@ -58,7 +58,7 @@
 <script>
 import axios from "axios";
 import Puntuacion from "./Puntuacion.vue";
-import { ERRORES } from "./main";
+import { CONST } from "./main";
 
 export default {
     name: "datosRestaurante",
@@ -68,7 +68,7 @@ export default {
             restaurante: "",
             errorS: 0,
             errorDB: 0,
-            errorImg: ERRORES.ERROR_IMG,
+            errorImg: CONST.ERROR_IMG,
             hay: 1,
             timerCount: 5,
             idPrimero: "",
@@ -95,12 +95,12 @@ export default {
 
                         this.getIds();
                     } else {
-                        console.error(ERRORES.ERROR_DB);
+                        console.error(CONST.ERROR_DB);
                         this.errorDB = 1;
                     }
                 })
                 .catch((error) => {
-                    console.error(ERRORES.ERROR_SERVER, error);
+                    console.error(CONST.ERROR_SERVER, error);
                     this.errorS = 1;
                 });
         },
@@ -136,19 +136,19 @@ export default {
                                 : (this.idSiguiente = 0);
                         }
                     } else {
-                        console.error(ERRORES.ERROR_DB);
+                        console.error(CONST.ERROR_DB);
                         this.errorDB = 1;
                     }
                 })
                 .catch((error) => {
-                    console.error(ERRORES.ERROR_SERVER, error);
+                    console.error(CONST.ERROR_SERVER, error);
                     this.errorS = 1;
                 });
         },
         anterior() {
             this.$router
                 .push("/ver-restaurante/" + this.idAnterior)
-                .catch(() => console.error(ERRORES.ERROR_REDIRIGIR));
+                .catch(() => console.error(CONST.ERROR_REDIRIGIR));
 
             this.id = this.idAnterior;
 
@@ -157,7 +157,7 @@ export default {
         siguiente() {
             this.$router
                 .push("/ver-restaurante/" + this.idSiguiente)
-                .catch(() => console.error(ERRORES.ERROR_REDIRIGIR));
+                .catch(() => console.error(CONST.ERROR_REDIRIGIR));
 
             this.id = this.idSiguiente;
 
