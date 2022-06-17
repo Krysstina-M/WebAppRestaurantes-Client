@@ -9,7 +9,16 @@
                     class="fa-solid fa-chevron-left"
                 ></a>
             </button>
-            <button class="siguiente">
+            <button class="modificar">
+                <router-link
+                    :to="{
+                        name: 'modificar-restaurante',
+                        params: { id: restaurante.id },
+                    }"
+                >
+                    <i class="fa-solid fa-pencil"></i>
+                </router-link></button
+            ><button class="siguiente">
                 <a
                     v-if="restaurante.id < Number(idUltimo)"
                     @click="siguiente()"
@@ -197,6 +206,24 @@ export default {
 }
 
 .anterior a:hover {
+    color: #42b983;
+    cursor: pointer;
+}
+
+/*Botón modificar*/
+.modificar {
+    border: none;
+    background-color: inherit;
+    font-size: 35px;
+}
+
+.modificar a {
+    text-decoration: none;
+    color: #2c3e50;
+    transition: all 200ms ease;
+}
+
+.modificar a:hover {
     color: #42b983;
     cursor: pointer;
 }
