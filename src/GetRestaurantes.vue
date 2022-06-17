@@ -9,7 +9,7 @@
         <button class="ordenar" @click="ordenarPorCodigo()">
             <i
                 :class="[
-                    seleccionado == 'codA'
+                    ordenarCodAsc
                         ? 'fa-solid fa-arrow-down-1-9'
                         : 'fa-solid fa-arrow-down-9-1',
                 ]"
@@ -20,15 +20,13 @@
         <button class="ordenar" @click="ordenarPorNombre()">
             <i
                 :class="[
-                    seleccionado == 'nomA'
+                    ordenarNomAsc
                         ? 'fa-solid fa-arrow-down-a-z'
                         : 'fa-solid fa-arrow-down-z-a',
                 ]"
             ></i>
-            Ordenar por nombre
-        </button><button class="ordenar" @click="a()">
-            a
-        </button>
+            Ordenar por nombre</button
+        ><button class="ordenar" @click="a()">a</button>
         <!--  -->
         <div class="lista">
             <ul id="GetRestaurantes" v-if="restaurantes != ''">
@@ -106,8 +104,8 @@ export default {
             timerCount: 5,
             ordenarNomAsc: 1,
             ordenarNomDesc: 0,
-            ordenarCodAsc: 1,
-            ordenarCodDesc: 0,
+            ordenarCodAsc: 0,
+            ordenarCodDesc: 1,
             seleccionado: "nomA",
             scrollpx: 0,
             idEliminar: "",
@@ -119,7 +117,7 @@ export default {
         window.addEventListener("scroll", this.handleScroll);
     },
     methods: {
-        a (){
+        a() {
             console.log(
                 this.ordenarNomAsc,
                 this.ordenarNomDesc,
@@ -131,6 +129,9 @@ export default {
         ordenarPorNombre() {
             if (this.ordenarNomAsc) this.ordenarPorNombreDesc();
             else if (this.ordenarNomDesc) this.ordenarPorNombreAsc();
+
+            if ((this.seleccionado == "codA") | (this.seleccionado == "codD"))
+                this.ordenarPorNombreAsc();
         },
         ordenarPorNombreAsc() {
             axios
@@ -143,6 +144,7 @@ export default {
 
                         this.ordenarNomAsc = 1;
                         this.ordenarNomDesc = 0;
+                        this.seleccionado = "nomA";
                     } else {
                         console.error(CONST.ERROR_DB);
                         this.errorDB = 1;
@@ -178,6 +180,9 @@ export default {
         ordenarPorCodigo() {
             if (this.ordenarCodAsc) this.ordenarPorCodigoDesc();
             else if (this.ordenarCodDesc) this.ordenarPorCodigoAsc();
+
+            if ((this.seleccionado == "nomA") | (this.seleccionado == "nomD"))
+                this.ordenarPorCodigoAsc();
         },
         ordenarPorCodigoAsc() {
             axios
