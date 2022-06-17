@@ -24,7 +24,7 @@
                     </p>
                     <puntuacion :punt="restaurante.puntuacion"></puntuacion>
                 </div>
-                <div class="col">
+                <div class="col" v-if="restaurante.imagen != null">
                     <img
                         class="img-fluid rounded"
                         :alt="errorImg"

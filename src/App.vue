@@ -96,7 +96,6 @@
 </template>
 
 <script>
-//TODO revisar que muetra imagenes solo cuando las hay
 //TODO que la imagen se abra en modal
 //TODO arreglar lo de los tamaños de pantalla
 //TODO hacer login y registro

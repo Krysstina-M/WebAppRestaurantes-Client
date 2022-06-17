@@ -16,7 +16,7 @@
                     </p>
                     <puntuacion :punt="restaurante.puntuacion"></puntuacion>
                 </div>
-                <div class="col">
+                <div class="col" v-if="restaurante.imagen != null">
                     <img
                         class="img-fluid rounded"
                         :alt="errorImg"
@@ -65,10 +65,6 @@ export default {
             .then((respuesta) => {
                 if (respuesta.data.status == "OK") {
                     this.restaurante = respuesta.data.data;
-
-                    this.$router
-                        .push("/restaurante-destacado")
-                        .catch(() => console.error(CONST.ERROR_REDIRIGIR));
                 } else {
                     console.error(CONST.ERROR_DB);
                     this.errorDB = 1;
