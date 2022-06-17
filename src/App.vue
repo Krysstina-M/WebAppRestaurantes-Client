@@ -96,7 +96,6 @@
 </template>
 
 <script>
-//FIXME mensajes de error + dev
 //TODO que la imagen se abra en modal
 //TODO arreglar lo de los tamaños de pantalla
 //TODO hacer login y registro

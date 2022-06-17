@@ -112,7 +112,9 @@ export default {
                 })
                 .catch((error) => {
                     console.error(CONST.ERROR_SERVER, error);
-                    this.errorS = 1;
+                    error.toString().includes("500")
+                        ? (this.hay = 0)
+                        : (this.errorS = 1);
                 });
         },
         getIds() {
