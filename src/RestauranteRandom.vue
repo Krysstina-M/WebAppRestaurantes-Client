@@ -1,7 +1,10 @@
 <template>
     <div id="div" class="container-fluid">
         <div class="container-fluid" v-if="restaurante != ''">
-            <h2>Estás viendo el restaurante nº {{ restaurante.id }}</h2>
+            <h2>
+                Hoy podrás comer o cenar en el restaurante nº
+                {{ restaurante.id }}
+            </h2>
             <div class="btn-group d-flex">
                 <button class="btn btn-secondary" type="button">
                     <a class="bi bi-arrow-clockwise" @click="refrescar()"> </a>
