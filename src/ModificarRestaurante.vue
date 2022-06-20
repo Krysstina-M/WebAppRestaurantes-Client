@@ -90,7 +90,7 @@
                             v-if="idEliminar != restaurante.id"
                         >
                             <a
-                                class="fa fa-trash-o"
+                                class="fa-solid fa-trash-can"
                                 @click="eliminarRestaurante(restaurante.id)"
                             ></a>
                         </button>

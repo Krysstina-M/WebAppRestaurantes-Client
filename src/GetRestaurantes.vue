@@ -84,7 +84,7 @@
                 No se ha podido conectar con la base de datos
             </p>
             <button class="arriba" v-show="scrollpx > 400" @click="irArriba()">
-                <a class="fa-solid fa-circle-arrow-up"></a>
+                <a class="fa-solid fa-circle-chevron-up"></a>
             </button>
         </div>
     </div>
