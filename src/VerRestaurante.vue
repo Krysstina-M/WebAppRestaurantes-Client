@@ -1,7 +1,20 @@
 <template>
     <div id="div" class="container-fluid">
         <div class="container-fluid" v-if="restaurante != ''">
-            <h2>Estás viendo el restaurante nº {{ restaurante.id }}</h2>
+            <div class="row justify-content-center">
+                <div class="col-2">
+                    <button class="btn btn-icono-gr" type="button">
+                        <a
+                            class="bi bi-arrow-left"
+                            href="/get-restaurantes"
+                            tabindex="-1"
+                        ></a>
+                    </button>
+                </div>
+                <div class="col-4 d-flex align-items-center">
+                    <h4>Estás viendo el restaurante nº {{ restaurante.id }}</h4>
+                </div>
+            </div>
             <div class="btn-group d-flex">
                 <button class="btn btn-icono-gr" type="button">
                     <a

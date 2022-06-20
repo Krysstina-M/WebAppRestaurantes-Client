@@ -1,10 +1,10 @@
 <template>
     <div id="div" class="container-fluid">
         <div class="container-fluid" v-if="restaurante != ''">
-            <h2>
+            <span class="h4">
                 Hoy podrás comer o cenar en el restaurante nº
                 {{ restaurante.id }}
-            </h2>
+            </span>
             <div class="btn-group d-flex">
                 <button class="btn btn-icono-gr" type="button">
                     <a class="bi bi-arrow-clockwise" @click="refrescar()"> </a>

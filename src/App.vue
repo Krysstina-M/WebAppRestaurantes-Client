@@ -96,10 +96,7 @@
 </template>
 
 <script>
-//TODO añadir botón de ir atrás en verRestaurante
-//TODO ponerle un border o algo al botón de ir pa' 'riba que casi no se ve
 //TODO hacer un dark mode por el bien de mi vista
-//TODO el icono de modificar en verRestaurante sale movido en el último  y primer restaurante
 //TODO que la imagen se abra en modal
 //TODO arreglar lo de los tamaños de pantalla
 //TODO hacer login y registro
@@ -237,6 +234,7 @@ export default {
 #app {
     font-family: "Avenir", Helvetica, Arial, sans-serif;
     text-align: center;
+    color: var(--main-gris);
 }
 
 *:focus {
@@ -298,12 +296,14 @@ export default {
     font-size: 30px;
 }
 
-.btn-icono-gr {
+.btn-icono-gr,
+.btn-up {
     font-size: 50px;
 }
 
 .btn-icono-pq,
-.btn-icono-gr {
+.btn-icono-gr,
+.btn-up {
     background-color: inherit;
     border: none;
 }
@@ -313,10 +313,16 @@ export default {
     color: var(--main-gris);
 }
 
+.btn-up > a {
+    color: var(--main-verde);
+}
+
 .btn-icono-pq:hover,
 .btn-icono-pq:focus,
 .btn-icono-gr:hover,
-.btn-icono-gr:focus {
+.btn-icono-gr:focus,
+.btn-up:hover,
+.btn-up:focus {
     background-color: inherit;
     cursor: default;
 }
@@ -326,6 +332,12 @@ export default {
 .btn-icono-gr > a:hover,
 .btn-icono-gr:focus > a {
     color: var(--main-verde);
+    cursor: pointer;
+}
+
+.btn-up > a:hover,
+.btn-up:focus > a {
+    color: var(--main-gris);
     cursor: pointer;
 }
 

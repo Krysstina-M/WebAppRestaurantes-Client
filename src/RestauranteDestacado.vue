@@ -1,7 +1,9 @@
 <template>
     <div id="div" class="container-fluid">
         <div class="container-fluid" v-if="restaurante != ''">
-            <h2>El restaurante destacado es el nº {{ restaurante.id }}</h2>
+            <span class="h4"
+                >El restaurante destacado es el nº {{ restaurante.id }}</span
+            >
             <div class="row align-items-center mt-4">
                 <div class="col">
                     <h3>

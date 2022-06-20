@@ -131,12 +131,12 @@
                 No se ha podido conectar con la base de datos
             </p>
             <button
-                class="btn btn-icono-gr fixed-bottom ms-auto me-5"
+                class="btn btn-up fixed-bottom ms-auto me-5"
                 type="button"
                 v-show="scrollpx > 300"
                 @click="irArriba()"
             >
-                <a class="bi bi-chevron-bar-up"></a>
+                <a class="bi bi-arrow-up-circle-fill"></a>
             </button>
         </div>
     </div>
