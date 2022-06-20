@@ -3,14 +3,14 @@
         <div class="container-fluid" v-if="restaurante != ''">
             <h2>Estás viendo el restaurante nº {{ restaurante.id }}</h2>
             <div class="btn-group d-flex">
-                <button class="btn btn-secondary" type="button">
+                <button class="btn btn-icono-gr" type="button">
                     <a
-                        class="bi bi-arrow-left"
+                        class="bi bi bi-chevron-compact-left"
                         v-if="restaurante.id > Number(idPrimero)"
                         @click="anterior()"
                     ></a>
                 </button>
-                <button class="btn btn-form" type="button">
+                <button class="btn btn-icono-pq" type="button">
                     <router-link
                         class="bi bi-pencil-fill"
                         tabindex="-1"
@@ -21,9 +21,9 @@
                     >
                     </router-link>
                 </button>
-                <button class="btn btn-secondary" type="button">
+                <button class="btn btn-icono-gr" type="button">
                     <a
-                        class="bi bi-arrow-right"
+                        class="bi bi bi-chevron-compact-right"
                         v-if="restaurante.id < Number(idUltimo)"
                         @click="siguiente()"
                     ></a>

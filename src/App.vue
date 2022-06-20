@@ -96,8 +96,10 @@
 </template>
 
 <script>
-//FIXME navbar not expanding
-//TODO cambiar flechas por chevron
+//TODO añadir botón de ir atrás en verRestaurante
+//TODO ponerle un border o algo al botón de ir pa' 'riba que casi no se ve
+//TODO hacer un dark mode por el bien de mi vista
+//TODO el icono de modificar en verRestaurante sale movido en el último  y primer restaurante
 //TODO que la imagen se abra en modal
 //TODO arreglar lo de los tamaños de pantalla
 //TODO hacer login y registro
@@ -291,36 +293,40 @@ export default {
     color: var(--bs-white);
 }
 
-/*Botones que tienen iconos*/
-.btn-secondary {
-    background-color: inherit;
-    border: none;
-    font-size: 50px;
-}
-
-.btn-form {
-    background-color: inherit;
-    border: none;
+/*Botones con iconos*/
+.btn-icono-pq {
     font-size: 30px;
 }
 
-.btn-secondary > a,
-.btn-form > a {
+.btn-icono-gr {
+    font-size: 50px;
+}
+
+.btn-icono-pq,
+.btn-icono-gr {
+    background-color: inherit;
+    border: none;
+}
+
+.btn-icono-pq > a,
+.btn-icono-gr > a {
     color: var(--main-gris);
 }
 
-.btn-secondary:hover,
-.btn-secondary:focus,
-.btn-form:hover,
-.btn-form:focus {
+.btn-icono-pq:hover,
+.btn-icono-pq:focus,
+.btn-icono-gr:hover,
+.btn-icono-gr:focus {
     background-color: inherit;
+    cursor: default;
 }
 
-.btn-secondary > a:hover,
-.btn-secondary:focus > a,
-.btn-form > a:hover,
-.btn-form:focus > a {
+.btn-icono-pq > a:hover,
+.btn-icono-pq:focus > a,
+.btn-icono-gr > a:hover,
+.btn-icono-gr:focus > a {
     color: var(--main-verde);
+    cursor: pointer;
 }
 
 /*Mensajes de error*/

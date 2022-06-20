@@ -131,12 +131,12 @@
                 No se ha podido conectar con la base de datos
             </p>
             <button
-                class="btn btn-link fixed-bottom ms-auto me-5"
+                class="btn btn-icono-gr fixed-bottom ms-auto me-5"
                 type="button"
-                v-show="scrollpx > 400"
+                v-show="scrollpx > 300"
                 @click="irArriba()"
             >
-                <a class="bi bi-arrow-up-circle-fill"></a>
+                <a class="bi bi-chevron-bar-up"></a>
             </button>
         </div>
     </div>
@@ -339,26 +339,5 @@ export default {
 /*ID de arriba a la izquierda*/
 .id {
     margin-top: -10px;
-}
-
-/*Botón para ir arriba del todo*/
-.btn-link {
-    background-color: inherit;
-    border: none;
-    font-size: 50px;
-}
-
-.btn-link > a {
-    color: var(--main-verde);
-}
-
-.btn-link:hover,
-.btn-link:focus {
-    background-color: inherit;
-}
-
-.btn-link:hover > a,
-.btn-link:focus > a {
-    color: var(--main-gris);
 }
 </style>

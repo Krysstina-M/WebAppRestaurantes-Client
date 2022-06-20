@@ -4,7 +4,7 @@
         <div class="container-fluid caja-form w-50">
             <div class="row justify-content-between">
                 <div class="col-2">
-                    <button class="btn btn-form" type="button">
+                    <button class="btn btn-icono-pq" type="button">
                         <a
                             class="bi bi-arrow-left"
                             href="/get-restaurantes"
@@ -14,7 +14,7 @@
                 </div>
                 <div class="col-2">
                     <button
-                        class="btn btn-form"
+                        class="btn btn-icono-pq"
                         type="button"
                         @click.prevent="limpiar"
                     >
@@ -130,7 +130,7 @@
                     </div>
 
                     <div class="col-2">
-                        <button class="btn btn-form">
+                        <button class="btn btn-icono-pq">
                             <a
                                 class="bi bi-trash-fill"
                                 @click="eliminarRestaurante(restaurante.id)"

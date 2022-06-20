@@ -6,7 +6,7 @@
                 {{ restaurante.id }}
             </h2>
             <div class="btn-group d-flex">
-                <button class="btn btn-secondary" type="button">
+                <button class="btn btn-icono-gr" type="button">
                     <a class="bi bi-arrow-clockwise" @click="refrescar()"> </a>
                 </button>
             </div>
