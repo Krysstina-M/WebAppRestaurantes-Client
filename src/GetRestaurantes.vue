@@ -333,7 +333,7 @@ export default {
 .caja {
     border: var(--main-border);
     border-radius: 20px;
-    background-color: var(--bs-light);
+    background-color: whitesmoke;
 }
 
 /*ID de arriba a la izquierda*/
