@@ -10,7 +10,7 @@
                 >
                     <img
                         class="d-inline-block align-text-center me-2"
-                        src="./assets/logo-blanco.png"
+                        src="../dist/logo-blanco.png"
                         alt=""
                         width="30"
                         height="25"
