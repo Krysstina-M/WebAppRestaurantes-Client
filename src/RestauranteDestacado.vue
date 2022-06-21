@@ -20,10 +20,35 @@
                 </div>
                 <div class="col" v-if="restaurante.imagen != null">
                     <img
-                        class="img-fluid rounded"
+                        class="img-fluid img-pq rounded"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modal"
                         :alt="errorImg"
                         :src="restaurante.imagen"
                     />
+                </div>
+                <div class="modal" id="modal" tabindex="-1">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">
+                                    {{ restaurante.nombre }}
+                                </h4>
+                                <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                ></button>
+                            </div>
+                            <div class="modal-body">
+                                <img
+                                    class="img-fluid rounded w-100 h-100"
+                                    :alt="errorImg"
+                                    :src="restaurante.imagen"
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

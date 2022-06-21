@@ -97,7 +97,6 @@
 
 <script>
 //TODO hacer un dark mode por el bien de mi vista
-//TODO que la imagen se abra en modal
 //TODO arreglar lo de los tamaños de pantalla
 //TODO hacer login y registro
 //TODO Meter imagen en la BD
@@ -293,15 +292,21 @@ a:active {
     text-decoration: none;
 }
 
+/*Modal*/
+.modal-header {
+    background-color: var(--main-verde);
+}
+
 /*Imagen*/
-.img-fluid {
+.img-pq {
     height: 100%;
     width: 50%;
     transition: transform 0.25s ease;
 }
 
-.img-fluid:hover {
-    -webkit-transform: scale(2);
-    transform: scale(2);
+.img-pq:hover {
+    -webkit-transform: scale(1.5);
+    transform: scale(1.5);
+    cursor: pointer;
 }
 </style>
