@@ -16,6 +16,17 @@
                         height="25"
                     />{{ titulo }}
                 </a>
+                <!--  -->
+                <div class="form-check form-switch d-inline-block">
+                    <input
+                        class="form-check-input"
+                        id="darkMode"
+                        type="checkbox"
+                        v-model="dark"
+                    />
+                    <i class="bi bi-moon-fill"></i>
+                </div>
+                <!--  -->
                 <button
                     class="navbar-toggler"
                     type="button"
@@ -96,6 +107,7 @@
 </template>
 
 <script>
+//TODO revisar mejores formas de hacer el CSS con W3schools https://www.w3schools.com/css/css_attribute_selectors.asp
 //TODO hacer un dark mode por el bien de mi vista
 //TODO arreglar lo de los tamaños de pantalla
 //TODO hacer login y registro
@@ -141,7 +153,20 @@ export default {
     data() {
         return {
             titulo: "Restaurantes",
+            dark: 0,
         };
+    },
+    mounted() {
+        console.log("Mounted", localStorage.dark);
+        this.dark = localStorage.dark;
+    },
+    watch: {
+        dark(dark) {
+            console.log("Switch", dark);
+            localStorage.dark = dark;
+
+            if (localStorage.dark) document.body.classList.toggle("dark");
+        },
     },
 };
 </script>
@@ -160,12 +185,13 @@ export default {
     color: var(--main-gris);
 }
 
+/*Focus*/
 *:focus {
     outline: none !important;
     box-shadow: none !important;
 }
 
-/*Barra de navegación*/
+/*Barra de navegación-------------------------------------------------*/
 .navbar {
     background-color: var(--main-verde);
     border: var(--main-border);
@@ -178,17 +204,21 @@ export default {
     color: white;
 }
 
+/*Links*/
+a:link,
+a:hover,
+a:visited,
+a:active {
+    color: var(--main-gris);
+    text-decoration: none;
+}
+
 /*Botones principales (los verdes)*/
 .btn-primary {
     background-color: var(--main-verde);
     color: var(--main-gris);
     border: var(--main-border);
     border-radius: 0;
-}
-
-.btn-primary > a {
-    color: var(--main-gris);
-    text-decoration: none;
 }
 
 .btn-primary:hover,
@@ -241,14 +271,10 @@ export default {
 .btn-icono-pq > a:hover,
 .btn-icono-pq:focus > a,
 .btn-icono-gr > a:hover,
-.btn-icono-gr:focus > a {
-    color: var(--main-verde);
-    cursor: pointer;
-}
-
+.btn-icono-gr:focus > a,
 .btn-up > a:hover,
 .btn-up:focus > a {
-    color: var(--main-gris);
+    color: var(--main-verde);
     cursor: pointer;
 }
 
@@ -276,20 +302,12 @@ export default {
 .form-control:focus,
 .form-select:focus {
     border-color: var(--main-verde);
+    background-color: whitesmoke;
 }
 
 /*Estrellas puntuación*/
 .checked {
     color: gold;
-}
-
-/*Links*/
-a:link,
-a:hover,
-a:visited,
-a:active {
-    color: var(--main-gris);
-    text-decoration: none;
 }
 
 /*Modal*/
@@ -308,5 +326,97 @@ a:active {
     -webkit-transform: scale(1.5);
     transform: scale(1.5);
     cursor: pointer;
+}
+
+/*Dark mode--------Verde-->Gris-->White-->Black----------Hover-->Verde------*/
+.dark {
+    background-color: black;
+}
+
+.dark #app {
+    color: white;
+}
+
+.dark .navbar {
+    background-color: var(--main-gris);
+}
+
+.dark .nav-item > a:hover,
+.dark .nav-link:focus,
+.dark .navbar-nav .nav-link.active {
+    background-color: var(--main-verde);
+    color: black;
+}
+
+.dark a:link,
+.dark a:hover,
+.dark a:visited,
+.dark a:active {
+    color: var(--main-verde);
+}
+
+.dark .btn-primary {
+    background-color: var(--main-gris);
+    color: var(--main-verde);
+}
+
+.dark .btn-primary:hover,
+.dark .btn-primary:focus {
+    background-color: var(--main-verde);
+    color: black;
+}
+
+.dark .btn-primary:hover > a,
+.dark .btn-primary:focus > a {
+    color: black;
+}
+
+.dark .btn-icono-pq > a,
+.dark .btn-icono-gr > a {
+    color: var(--main-verde);
+}
+
+.dark .btn-up > a {
+    color: var(--main-gris);
+}
+
+.dark .btn-icono-pq > a:hover,
+.dark .btn-icono-pq:focus > a,
+.dark .btn-icono-gr > a:hover,
+.dark .btn-icono-gr:focus > a {
+    color: white;
+}
+
+.btn-up > a:hover,
+.btn-up:focus > a {
+    color: var(--main-verde);
+}
+
+.dark .spinner-border {
+    color: var(--main-verde);
+}
+
+.dark .caja-form {
+    border: 5px solid white;
+}
+
+.dark .form-control,
+.dark .form-select {
+    border-color: var(--main-verde);
+    background-color: silver;
+}
+
+.dark .form-control:focus,
+.dark .form-select:focus {
+    border-color: var(--main-gris);
+    background-color: white;
+}
+
+.dark .modal-header {
+    background-color: var(--main-gris);
+}
+
+.dark .modal-body {
+    background-color: silver;
 }
 </style>

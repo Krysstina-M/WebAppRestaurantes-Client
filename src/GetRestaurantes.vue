@@ -98,7 +98,9 @@
                         </button>
                         <div class="container-fluid" v-else>
                             <!--Si se le ha dado click a "Eliminar", el botón desaparece"-->
-                            <p>¿Estás seguro de que quieres borrarlo?</p>
+                            <p class="pregunta">
+                                ¿Estás seguro de que quieres borrarlo?
+                            </p>
                             <div class="btn-group gap-2 mb-4">
                                 <button
                                     class="btn btn-primary"
@@ -339,5 +341,16 @@ export default {
 /*ID de arriba a la izquierda*/
 .id {
     margin-top: -10px;
+}
+
+/*Dark*/
+.dark .caja {
+    background-color: silver;
+}
+
+.dark h5,
+.dark h6,
+.dark .pregunta {
+    color: black;
 }
 </style>
