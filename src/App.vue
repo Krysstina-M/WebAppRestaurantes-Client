@@ -107,6 +107,7 @@
 </template>
 
 <script>
+//TODO cambiar los methods de onclick a watch
 //TODO arreglar lo de los tamaños de pantalla
 //TODO hacer login y registro
 //TODO Meter imagen en la BD
@@ -163,7 +164,7 @@ export default {
             console.log("Switch", dark);
             localStorage.dark = dark;
 
-            if (localStorage.dark) document.body.classList.toggle("dark");
+            document.body.classList.toggle("dark");
         },
     },
 };
