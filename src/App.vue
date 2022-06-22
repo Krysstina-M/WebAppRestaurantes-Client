@@ -107,8 +107,6 @@
 </template>
 
 <script>
-//TODO revisar mejores formas de hacer el CSS con W3schools https://www.w3schools.com/css/css_attribute_selectors.asp
-//TODO hacer un dark mode por el bien de mi vista
 //TODO arreglar lo de los tamaños de pantalla
 //TODO hacer login y registro
 //TODO Meter imagen en la BD
@@ -175,6 +173,7 @@ export default {
 :root {
     --main-verde: #42b983;
     --main-gris: #2c3e50;
+    --main-negro: #232327;
     --main-border: 1px solid black;
 }
 
@@ -191,7 +190,7 @@ export default {
     box-shadow: none !important;
 }
 
-/*Barra de navegación-------------------------------------------------*/
+/*Barra de navegación*/
 .navbar {
     background-color: var(--main-verde);
     border: var(--main-border);
@@ -211,6 +210,20 @@ a:visited,
 a:active {
     color: var(--main-gris);
     text-decoration: none;
+}
+
+/*Nombre restaurante*/
+h3,
+h3 > a:link,
+h3 > a:visited,
+h3 > a:active {
+    color: var(--main-verde);
+    text-decoration: none;
+}
+
+h3 > a:hover,
+h3 > a:focus {
+    color: var(--main-gris);
 }
 
 /*Botones principales (los verdes)*/
@@ -305,6 +318,10 @@ a:active {
     background-color: whitesmoke;
 }
 
+textarea {
+    max-height: 100px;
+}
+
 /*Estrellas puntuación*/
 .checked {
     color: gold;
@@ -328,9 +345,9 @@ a:active {
     cursor: pointer;
 }
 
-/*Dark mode--------Verde-->Gris-->White-->Black----------Hover-->Verde------*/
+/*Dark mode*/
 .dark {
-    background-color: black;
+    background-color: var(--main-negro);
 }
 
 .dark #app {
@@ -353,6 +370,19 @@ a:active {
 .dark a:visited,
 .dark a:active {
     color: var(--main-verde);
+    text-decoration: none;
+}
+
+h3,
+.dark h3 > a:link,
+.dark h3 > a:visited,
+.dark h3 > a:active {
+    color: var(--main-verde);
+}
+
+.dark h3 > a:hover,
+.dark h3 > a:focus {
+    color: white;
 }
 
 .dark .btn-primary {
@@ -394,10 +424,6 @@ a:active {
 
 .dark .spinner-border {
     color: var(--main-verde);
-}
-
-.dark .caja-form {
-    border: 5px solid white;
 }
 
 .dark .form-control,
