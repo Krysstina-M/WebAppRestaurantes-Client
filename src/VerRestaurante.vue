@@ -73,8 +73,8 @@
                                     {{ restaurante.nombre }}
                                 </h4>
                                 <button
-                                    type="button"
                                     class="btn-close"
+                                    type="button"
                                     data-bs-dismiss="modal"
                                 ></button>
                             </div>

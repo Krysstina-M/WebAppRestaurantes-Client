@@ -440,9 +440,10 @@ h3,
 
 .dark .modal-header {
     background-color: var(--main-gris);
+    color:var(--main-verde)
 }
 
 .dark .modal-body {
-    background-color: silver;
+    background-color: var(--main-negro);
 }
 </style>
