@@ -204,29 +204,6 @@ export default {
     color: white;
 }
 
-/*Links*/
-a:link,
-a:hover,
-a:visited,
-a:active {
-    color: var(--main-gris);
-    text-decoration: none;
-}
-
-/*Nombre restaurante*/
-h3,
-h3 > a:link,
-h3 > a:visited,
-h3 > a:active {
-    color: var(--main-verde);
-    text-decoration: none;
-}
-
-h3 > a:hover,
-h3 > a:focus {
-    color: var(--main-gris);
-}
-
 /*Botones principales (los verdes)*/
 .btn-primary {
     background-color: var(--main-verde);
@@ -290,6 +267,29 @@ h3 > a:focus {
 .btn-up:focus > a {
     color: var(--main-verde);
     cursor: pointer;
+}
+
+/*Links*/
+a:link,
+a:hover,
+a:visited,
+a:active {
+    color: var(--main-gris);
+    text-decoration: none;
+}
+
+/*Nombre restaurante*/
+h3,
+h3 > a:link,
+h3 > a:visited,
+h3 > a:active {
+    color: var(--main-verde);
+    text-decoration: none;
+}
+
+h3 > a:hover,
+h3 > a:focus {
+    color: var(--main-gris);
 }
 
 /*Mensajes de error*/
