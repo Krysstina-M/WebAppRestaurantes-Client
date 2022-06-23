@@ -96,7 +96,8 @@
 </template>
 
 <script>
-//TODO hacer un dark mode por el bien de mi vista
+//TODO poner un ?sort=asc en get restuarantes
+//TODO cuando haga el login y el registro poner las comprobaciones del user y pass en un watcher
 //TODO arreglar lo de los tamaños de pantalla
 //TODO hacer login y registro
 //TODO Meter imagen en la BD
