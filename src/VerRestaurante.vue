@@ -6,7 +6,7 @@
                     <button class="btn btn-icono-gr" type="button">
                         <a
                             class="bi bi-arrow-left"
-                            href="/get-restaurantes"
+                            href="/restaurantes"
                             tabindex="-1"
                         ></a>
                     </button>
@@ -198,7 +198,7 @@ export default {
         },
         anterior() {
             this.$router
-                .push("/ver-restaurante/" + this.idAnterior)
+                .push("/restaurante/" + this.idAnterior)
                 .catch(() => console.error(CONST.ERROR_REDIRIGIR));
 
             this.id = this.idAnterior;
@@ -207,7 +207,7 @@ export default {
         },
         siguiente() {
             this.$router
-                .push("/ver-restaurante/" + this.idSiguiente)
+                .push("/restaurante/" + this.idSiguiente)
                 .catch(() => console.error(CONST.ERROR_REDIRIGIR));
 
             this.id = this.idSiguiente;

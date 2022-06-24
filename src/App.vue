@@ -53,10 +53,10 @@
                         <li class="nav-item">
                             <router-link
                                 class="nav-link"
-                                to="/get-restaurantes"
+                                to="/restaurantes"
                                 v-bind:class="{
                                     active:
-                                        this.$route.path == '/get-restaurantes',
+                                        this.$route.path == '/restaurantes',
                                 }"
                                 >Restaurantes</router-link
                             >

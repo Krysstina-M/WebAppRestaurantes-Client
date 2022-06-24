@@ -67,7 +67,7 @@
                                 class="bi bi-eye-fill"
                                 tabindex="-1"
                                 :to="{
-                                    name: 'ver-restaurante',
+                                    name: 'restaurante',
                                     params: {
                                         id: restaurante.id,
                                     },

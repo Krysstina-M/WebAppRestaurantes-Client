@@ -17,10 +17,10 @@ Vue.use(VueRouter);
 //URLs para acceder a cada sección
 const routes = [
     { path: '/', component: Home },
-    { path: '/get-restaurantes', component: GetRestaurantes },
+    { path: '/restaurantes', component: GetRestaurantes },
     { path: '/alta-restaurante', name: 'alta-restaurante', component: AltaRestaurante },
     { path: '/modificar-restaurante/:id', name: 'modificar-restaurante', component: ModificarRestaurante },
-    { path: '/ver-restaurante/:id', name: 'ver-restaurante', component: VerRestaurante },
+    { path: '/restaurante/:id', name: 'restaurante', component: VerRestaurante },
     { path: '/restaurante-destacado', name: 'restaurante-destacado', component: RestauranteDestacado },
     { path: '/restaurante-random', name: 'restaurante-random', component: RestauranteRandom },
     { path: '/contacto', component: Contacto },
