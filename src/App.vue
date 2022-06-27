@@ -55,8 +55,7 @@
                                 class="nav-link"
                                 to="/restaurantes"
                                 v-bind:class="{
-                                    active:
-                                        this.$route.path == '/restaurantes',
+                                    active: this.$route.path == '/restaurantes',
                                 }"
                                 >Restaurantes</router-link
                             >
@@ -107,6 +106,7 @@
 </template>
 
 <script>
+//TODO promise --> keep alive get restaurantes para que se guarde el orden
 //TODO cambiar los methods de onclick a watch
 //TODO arreglar lo de los tamaños de pantalla
 //TODO hacer login y registro
@@ -441,7 +441,7 @@ h3,
 
 .dark .modal-header {
     background-color: var(--main-gris);
-    color:var(--main-verde)
+    color: var(--main-verde);
 }
 
 .dark .modal-body {
