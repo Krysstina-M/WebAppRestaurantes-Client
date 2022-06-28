@@ -108,7 +108,6 @@
 
 <script>
 //TODO cambiar css del navbar toggler
-//TODO arreglar los inputs de error
 //TODO meter transiciones
 //TODO cambiar los methods de onclick a watch
 //TODO arreglar lo de los tamaños de pantalla
@@ -121,7 +120,7 @@ Vue.component("errorS", {
     template: `
     <div class="row justify-content-center">
         <div class="col-md">
-            <input class="form-control text-center error" value="No se ha podido conectar con el servidor" disabled/>
+            <input class="form-control error text-center" value="No se ha podido conectar con el servidor" disabled/>
         </div>
     </div>
 `,
@@ -132,7 +131,7 @@ Vue.component("errorDB", {
     template: `
     <div class="row justify-content-center">
         <div class="col-md">
-            <input class="form-control text-center error" value="No se ha podido conectar con la base de datos" disabled/>
+            <input class="form-control error text-center error" value="No se ha podido conectar con la base de datos" disabled/>
         </div>
     </div>
 `,
@@ -144,7 +143,7 @@ Vue.component("errorNomDir", {
     <div class="row justify-content-center">
         <label class="col-md-2"></label>
         <div class="col-md-8">
-            <input class="form-control text-center error" value="Este restaurante ya existe" disabled/>
+            <input class="form-control error text-center error" value="Este restaurante ya existe" disabled/>
         </div>
     </div>
 `,
@@ -212,6 +211,28 @@ export default {
 .navbar-nav .nav-link.active {
     background-color: var(--main-gris);
     color: white;
+}
+
+/*Links*/
+a:link,
+a:hover,
+a:visited,
+a:active {
+    color: var(--main-gris);
+    text-decoration: none;
+}
+
+/*Nombre restaurante*/
+h3 > a:link,
+h3 > a:visited,
+h3 > a:active {
+    color: var(--main-verde);
+    text-decoration: none;
+}
+
+h3 > a:hover,
+h3 > a:focus {
+    color: var(--main-gris);
 }
 
 /*Botones principales (los verdes)*/
@@ -284,39 +305,6 @@ export default {
     color: var(--main-gris);
 }
 
-/*Links*/
-a:link,
-a:hover,
-a:visited,
-a:active {
-    color: var(--main-gris);
-    text-decoration: none;
-}
-
-/*Nombre restaurante*/
-h3 > a:link,
-h3 > a:visited,
-h3 > a:active {
-    color: var(--main-verde);
-    text-decoration: none;
-}
-
-h3 > a:hover,
-h3 > a:focus {
-    color: var(--main-gris);
-}
-
-/*Mensajes de error*/
-.error {
-    color: red;
-    border: none;
-}
-
-/*Círculo de loading que gira*/
-.spinner-border {
-    color: var(--main-gris);
-}
-
 /*Formulario*/
 .caja-form {
     border: 5px solid var(--main-verde);
@@ -337,9 +325,17 @@ textarea {
     max-height: 100px;
 }
 
-/*Estrellas puntuación*/
-.checked {
-    color: gold;
+/*Mensajes de error*/
+.error,
+.form-control.error {
+    color: red;
+    border: none;
+    background-color: inherit;
+}
+
+/*Círculo de loading que gira*/
+.spinner-border {
+    color: var(--main-gris);
 }
 
 /*Modal*/
@@ -358,6 +354,11 @@ textarea {
     -webkit-transform: scale(1.5);
     transform: scale(1.5);
     cursor: pointer;
+}
+
+/*Estrellas puntuación*/
+.checked {
+    color: gold;
 }
 
 /*Dark mode*/
@@ -436,10 +437,6 @@ textarea {
     color: var(--main-gris);
 }
 
-.dark .spinner-border {
-    color: var(--main-verde);
-}
-
 .dark .form-control :not(.error),
 .dark .form-select :not(.error) {
     border-color: var(--main-verde);
@@ -450,6 +447,10 @@ textarea {
 .dark .form-select:focus :not(.error) {
     border-color: var(--main-gris);
     background-color: white;
+}
+
+.dark .spinner-border {
+    color: var(--main-verde);
 }
 
 .dark .modal-header {
