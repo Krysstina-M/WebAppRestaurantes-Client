@@ -7,7 +7,7 @@
                     <button class="btn btn-icono-pq" type="button">
                         <a
                             class="bi bi-arrow-left"
-                            href="/get-restaurantes"
+                            href="/restaurantes"
                             tabindex="-1"
                         ></a>
                     </button>
@@ -204,7 +204,7 @@ export default {
                     this.dirAnterior = this.restaurante.direccion;
                 } else {
                     this.$router
-                        .push("/get-restaurantes/")
+                        .push("/restaurantes/")
                         .catch(() => console.error(CONST.ERROR_REDIRIGIR));
                 }
             })
@@ -261,7 +261,7 @@ export default {
                         console.info(respuesta.data.message);
 
                         this.$router
-                            .push("/ver-restaurante/" + this.id)
+                            .push("/restaurante/" + this.id)
                             .catch(() => console.error(CONST.ERROR_REDIRIGIR));
                     } else {
                         console.error(CONST.ERROR_DB);
@@ -278,7 +278,8 @@ export default {
             this.restaurante.direccion = "";
             this.restaurante.descripcion = "";
             this.restaurante.imagen = "";
-            this.restaurante.precio = "Medio";
+            this.restaurante.web = "";
+            this.restaurante.precio = "";
 
             this.existe = 0;
             this.errorDB = 0;
@@ -306,7 +307,7 @@ export default {
                         this.idEliminar = "";
 
                         this.$router
-                            .push({ path: "/get-restaurantes" })
+                            .push({ path: "/restaurantes" })
                             .catch(() => console.error(CONST.ERROR_REDIRIGIR));
                     } else {
                         console.error(CONST.ERROR_DB);

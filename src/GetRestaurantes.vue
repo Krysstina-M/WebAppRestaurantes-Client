@@ -67,7 +67,7 @@
                                 class="bi bi-eye-fill"
                                 tabindex="-1"
                                 :to="{
-                                    name: 'ver-restaurante',
+                                    name: 'restaurante',
                                     params: {
                                         id: restaurante.id,
                                     },
@@ -339,5 +339,10 @@ export default {
 /*ID de arriba a la izquierda*/
 .id {
     margin-top: -10px;
+}
+
+.dark .caja,
+.dark .id {
+    color: var(--main-gris);
 }
 </style>

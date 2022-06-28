@@ -7,7 +7,7 @@
                     <button class="btn btn-icono-pq" type="button">
                         <a
                             class="bi bi-arrow-left"
-                            href="/get-restaurantes"
+                            href="/restaurantes"
                             tabindex="-1"
                         ></a>
                     </button>
@@ -194,7 +194,7 @@ export default {
                         console.info(respuesta.data.message);
 
                         this.$router
-                            .push("/ver-restaurante/" + respuesta.data.data.id)
+                            .push("/restaurante/" + respuesta.data.data.id)
                             .catch(() => console.error(CONST.ERROR_REDIRIGIR));
                     } else {
                         console.error(CONST.ERROR_DB);
@@ -211,6 +211,7 @@ export default {
             this.restaurante.direccion = "";
             this.restaurante.descripcion = "";
             this.restaurante.imagen = "";
+            this.restaurante.web = "";
             this.restaurante.precio = "";
 
             this.existe = 0;

@@ -104,6 +104,9 @@
 </template>
 
 <script>
+//TODO arreglar el switch
+//TODO quitar lo de prevent
+//TODO si el título del restaurante tiene web que salga verde, sino que salga gris
 //TODO meter transiciones
 //TODO cambiar los methods de onclick a watch
 //TODO arreglar lo de los tamaños de pantalla
