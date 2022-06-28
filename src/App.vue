@@ -16,6 +16,15 @@
                         height="25"
                     />{{ titulo }}
                 </a>
+                <div class="form-check form-switch d-inline-block">
+                    <input
+                        class="form-check-input"
+                        id="darkMode"
+                        type="checkbox"
+                        v-model="dark"
+                    />
+                    <i class="bi bi-moon-fill"></i>
+                </div>
                 <button
                     class="navbar-toggler"
                     type="button"
@@ -42,10 +51,9 @@
                         <li class="nav-item">
                             <router-link
                                 class="nav-link"
-                                to="/get-restaurantes"
+                                to="/restaurantes"
                                 v-bind:class="{
-                                    active:
-                                        this.$route.path == '/get-restaurantes',
+                                    active: this.$route.path == '/restaurantes',
                                 }"
                                 >Restaurantes</router-link
                             >
@@ -96,8 +104,8 @@
 </template>
 
 <script>
-//TODO poner un ?sort=asc en get restuarantes
-//TODO cuando haga el login y el registro poner las comprobaciones del user y pass en un watcher
+//TODO meter transiciones
+//TODO cambiar los methods de onclick a watch
 //TODO arreglar lo de los tamaños de pantalla
 //TODO hacer login y registro
 //TODO Meter imagen en la BD
@@ -108,7 +116,7 @@ Vue.component("errorS", {
     template: `
     <div class="row justify-content-center">
         <div class="col-md">
-            <input class="form-control text-center error" value="No se ha podido conectar con el servidor" />
+            <input class="form-control text-center error" value="No se ha podido conectar con el servidor" disabled/>
         </div>
     </div>
 `,
@@ -119,7 +127,7 @@ Vue.component("errorDB", {
     template: `
     <div class="row justify-content-center">
         <div class="col-md">
-            <input class="form-control text-center error" value="No se ha podido conectar con la base de datos" />
+            <input class="form-control text-center error" value="No se ha podido conectar con la base de datos" disabled/>
         </div>
     </div>
 `,
@@ -131,7 +139,7 @@ Vue.component("errorNomDir", {
     <div class="row justify-content-center">
         <label class="col-md-2"></label>
         <div class="col-md-8">
-            <input class="form-control text-center error" value="Este restaurante ya existe" />
+            <input class="form-control text-center error" value="Este restaurante ya existe" disabled/>
         </div>
     </div>
 `,
@@ -142,7 +150,27 @@ export default {
     data() {
         return {
             titulo: "Restaurantes",
+            dark: 0,
+            elSwitch: 1,
         };
+    },
+    mounted() {
+        this.elSwitch = document.getElementById("darkMode");
+
+        if (localStorage.dark == "true") {
+            this.elSwitch.checked = true;
+            document.body.classList.add("dark");
+        } else {
+            this.elSwitch.checked = false;
+            document.body.classList.remove("dark");
+        }
+    },
+    watch: {
+        dark(dark) {
+            localStorage.dark = dark;
+
+            document.body.classList.toggle("dark");
+        },
     },
 };
 </script>
@@ -151,6 +179,7 @@ export default {
 :root {
     --main-verde: #42b983;
     --main-gris: #2c3e50;
+    --main-negro: #232327;
     --main-border: 1px solid black;
 }
 
@@ -161,6 +190,7 @@ export default {
     color: var(--main-gris);
 }
 
+/*Focus*/
 *:focus {
     outline: none !important;
     box-shadow: none !important;
@@ -185,11 +215,6 @@ export default {
     color: var(--main-gris);
     border: var(--main-border);
     border-radius: 0;
-}
-
-.btn-primary > a {
-    color: var(--main-gris);
-    text-decoration: none;
 }
 
 .btn-primary:hover,
@@ -242,15 +267,34 @@ export default {
 .btn-icono-pq > a:hover,
 .btn-icono-pq:focus > a,
 .btn-icono-gr > a:hover,
-.btn-icono-gr:focus > a {
+.btn-icono-gr:focus > a,
+.btn-up > a:hover,
+.btn-up:focus > a {
     color: var(--main-verde);
     cursor: pointer;
 }
 
-.btn-up > a:hover,
-.btn-up:focus > a {
+/*Links*/
+a:link,
+a:hover,
+a:visited,
+a:active {
     color: var(--main-gris);
-    cursor: pointer;
+    text-decoration: none;
+}
+
+/*Nombre restaurante*/
+h3,
+h3 > a:link,
+h3 > a:visited,
+h3 > a:active {
+    color: var(--main-verde);
+    text-decoration: none;
+}
+
+h3 > a:hover,
+h3 > a:focus {
+    color: var(--main-gris);
 }
 
 /*Mensajes de error*/
@@ -277,20 +321,16 @@ export default {
 .form-control:focus,
 .form-select:focus {
     border-color: var(--main-verde);
+    background-color: whitesmoke;
+}
+
+textarea {
+    max-height: 100px;
 }
 
 /*Estrellas puntuación*/
 .checked {
     color: gold;
-}
-
-/*Links*/
-a:link,
-a:hover,
-a:visited,
-a:active {
-    color: var(--main-gris);
-    text-decoration: none;
 }
 
 /*Modal*/
@@ -309,5 +349,107 @@ a:active {
     -webkit-transform: scale(1.5);
     transform: scale(1.5);
     cursor: pointer;
+}
+
+/*Dark mode*/
+.dark {
+    background-color: var(--main-negro);
+}
+
+.dark #app {
+    color: white;
+}
+
+.dark .navbar {
+    background-color: var(--main-gris);
+}
+
+.dark .nav-item > a:hover,
+.dark .nav-link:focus,
+.dark .navbar-nav .nav-link.active {
+    background-color: var(--main-verde);
+    color: black;
+}
+
+.dark a:link,
+.dark a:hover,
+.dark a:visited,
+.dark a:active {
+    color: var(--main-verde);
+    text-decoration: none;
+}
+
+h3,
+.dark h3 > a:link,
+.dark h3 > a:visited,
+.dark h3 > a:active {
+    color: var(--main-verde);
+}
+
+.dark h3 > a:hover,
+.dark h3 > a:focus {
+    color: white;
+}
+
+.dark .btn-primary {
+    background-color: var(--main-gris);
+    color: var(--main-verde);
+}
+
+.dark .btn-primary:hover,
+.dark .btn-primary:focus {
+    background-color: var(--main-verde);
+    color: black;
+}
+
+.dark .btn-primary:hover > a,
+.dark .btn-primary:focus > a {
+    color: black;
+}
+
+.dark .btn-icono-pq > a,
+.dark .btn-icono-gr > a {
+    color: var(--main-verde);
+}
+
+.dark .btn-up > a {
+    color: var(--main-gris);
+}
+
+.dark .btn-icono-pq > a:hover,
+.dark .btn-icono-pq:focus > a,
+.dark .btn-icono-gr > a:hover,
+.dark .btn-icono-gr:focus > a {
+    color: white;
+}
+
+.btn-up > a:hover,
+.btn-up:focus > a {
+    color: var(--main-verde);
+}
+
+.dark .spinner-border {
+    color: var(--main-verde);
+}
+
+.dark .form-control :not(.error),
+.dark .form-select :not(.error) {
+    border-color: var(--main-verde);
+    background-color: silver;
+}
+
+.dark .form-control:focus :not(.error),
+.dark .form-select:focus :not(.error) {
+    border-color: var(--main-gris);
+    background-color: white;
+}
+
+.dark .modal-header {
+    background-color: var(--main-gris);
+    color: var(--main-verde);
+}
+
+.dark .modal-body {
+    background-color: var(--main-negro);
 }
 </style>
