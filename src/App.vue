@@ -109,7 +109,6 @@
 <script>
 //TODO cambiar css del navbar toggler
 //TODO arreglar los inputs de error
-//TODO si el título del restaurante tiene web que salga verde, sino que salga gris
 //TODO meter transiciones
 //TODO cambiar los methods de onclick a watch
 //TODO arreglar lo de los tamaños de pantalla
@@ -295,7 +294,6 @@ a:active {
 }
 
 /*Nombre restaurante*/
-h3,
 h3 > a:link,
 h3 > a:visited,
 h3 > a:active {
@@ -390,7 +388,6 @@ textarea {
     text-decoration: none;
 }
 
-h3,
 .dark h3 > a:link,
 .dark h3 > a:visited,
 .dark h3 > a:active {
