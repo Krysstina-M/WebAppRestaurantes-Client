@@ -9,16 +9,7 @@
                     class="fa-solid fa-chevron-left"
                 ></a>
             </button>
-            <button class="modificar">
-                <router-link
-                    :to="{
-                        name: 'modificar-restaurante',
-                        params: { id: restaurante.id },
-                    }"
-                >
-                    <i class="fa-solid fa-pencil"></i>
-                </router-link></button
-            ><button class="siguiente">
+            <button class="siguiente">
                 <a
                     v-if="restaurante.id < Number(idUltimo)"
                     @click="siguiente()"
