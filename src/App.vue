@@ -16,7 +16,6 @@
                         height="25"
                     />{{ titulo }}
                 </a>
-                <!--  -->
                 <div class="form-check form-switch d-inline-block">
                     <input
                         class="form-check-input"
@@ -26,7 +25,6 @@
                     />
                     <i class="bi bi-moon-fill"></i>
                 </div>
-                <!--  -->
                 <button
                     class="navbar-toggler"
                     type="button"
@@ -106,7 +104,7 @@
 </template>
 
 <script>
-//TODO promise --> keep alive get restaurantes para que se guarde el orden
+//TODO meter transiciones
 //TODO cambiar los methods de onclick a watch
 //TODO arreglar lo de los tamaños de pantalla
 //TODO hacer login y registro
@@ -118,7 +116,7 @@ Vue.component("errorS", {
     template: `
     <div class="row justify-content-center">
         <div class="col-md">
-            <input class="form-control text-center error" value="No se ha podido conectar con el servidor" />
+            <input class="form-control text-center error" value="No se ha podido conectar con el servidor" disabled/>
         </div>
     </div>
 `,
@@ -129,7 +127,7 @@ Vue.component("errorDB", {
     template: `
     <div class="row justify-content-center">
         <div class="col-md">
-            <input class="form-control text-center error" value="No se ha podido conectar con la base de datos" />
+            <input class="form-control text-center error" value="No se ha podido conectar con la base de datos" disabled/>
         </div>
     </div>
 `,
@@ -141,7 +139,7 @@ Vue.component("errorNomDir", {
     <div class="row justify-content-center">
         <label class="col-md-2"></label>
         <div class="col-md-8">
-            <input class="form-control text-center error" value="Este restaurante ya existe" />
+            <input class="form-control text-center error" value="Este restaurante ya existe" disabled/>
         </div>
     </div>
 `,
@@ -153,15 +151,22 @@ export default {
         return {
             titulo: "Restaurantes",
             dark: 0,
+            elSwitch: 1,
         };
     },
     mounted() {
-        console.log("Mounted", localStorage.dark);
-        this.dark = localStorage.dark;
+        this.elSwitch = document.getElementById("darkMode");
+
+        if (localStorage.dark == "true") {
+            this.elSwitch.checked = true;
+            document.body.classList.add("dark");
+        } else {
+            this.elSwitch.checked = false;
+            document.body.classList.remove("dark");
+        }
     },
     watch: {
         dark(dark) {
-            console.log("Switch", dark);
             localStorage.dark = dark;
 
             document.body.classList.toggle("dark");
@@ -427,14 +432,14 @@ h3,
     color: var(--main-verde);
 }
 
-.dark .form-control,
-.dark .form-select {
+.dark .form-control :not(.error),
+.dark .form-select :not(.error) {
     border-color: var(--main-verde);
     background-color: silver;
 }
 
-.dark .form-control:focus,
-.dark .form-select:focus {
+.dark .form-control:focus :not(.error),
+.dark .form-select:focus :not(.error) {
     border-color: var(--main-gris);
     background-color: white;
 }

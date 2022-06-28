@@ -16,7 +16,7 @@
                     <button
                         class="btn btn-icono-pq"
                         type="button"
-                        @click.prevent="limpiar"
+                        @click="limpiar"
                     >
                         <a class="bi bi-eraser-fill"></a>
                     </button>
@@ -211,6 +211,7 @@ export default {
             this.restaurante.direccion = "";
             this.restaurante.descripcion = "";
             this.restaurante.imagen = "";
+            this.restaurante.web = "";
             this.restaurante.precio = "";
 
             this.existe = 0;

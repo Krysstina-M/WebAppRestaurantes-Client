@@ -47,7 +47,6 @@
                 </button>
             </div>
         </div>
-
         <div class="container-fluid mt-4">
             <div
                 id="GetRestaurantes"
