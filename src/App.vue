@@ -16,14 +16,17 @@
                         height="25"
                     />{{ titulo }}
                 </a>
-                <div class="form-check form-switch d-inline-block">
-                    <input
-                        class="form-check-input"
-                        id="darkMode"
-                        type="checkbox"
-                        v-model="dark"
-                    />
-                    <i class="bi bi-moon-fill"></i>
+                <div class="form-group">
+                    <label><i class="bi bi-sun-fill"></i></label>
+                    <div class="form-check form-switch d-inline-block">
+                        <input
+                            class="form-check-input"
+                            id="darkMode"
+                            type="checkbox"
+                            v-model="dark"
+                        />
+                        <i class="bi bi-moon-fill"></i>
+                    </div>
                 </div>
                 <button
                     class="navbar-toggler"
@@ -104,8 +107,8 @@
 </template>
 
 <script>
-//TODO arreglar el switch
-//TODO quitar lo de prevent
+//TODO cambiar css del navbar toggler
+//TODO arreglar los inputs de error
 //TODO si el título del restaurante tiene web que salga verde, sino que salga gris
 //TODO meter transiciones
 //TODO cambiar los methods de onclick a watch
@@ -253,10 +256,6 @@ export default {
     color: var(--main-gris);
 }
 
-.btn-up > a {
-    color: var(--main-verde);
-}
-
 .btn-icono-pq:hover,
 .btn-icono-pq:focus,
 .btn-icono-gr:hover,
@@ -275,6 +274,15 @@ export default {
 .btn-up:focus > a {
     color: var(--main-verde);
     cursor: pointer;
+}
+
+.btn-up > a {
+    color: var(--main-verde);
+}
+
+.btn-up > a:hover,
+.btn-up:focus > a {
+    color: var(--main-gris);
 }
 
 /*Links*/
@@ -415,10 +423,6 @@ h3,
     color: var(--main-verde);
 }
 
-.dark .btn-up > a {
-    color: var(--main-gris);
-}
-
 .dark .btn-icono-pq > a:hover,
 .dark .btn-icono-pq:focus > a,
 .dark .btn-icono-gr > a:hover,
@@ -426,9 +430,13 @@ h3,
     color: white;
 }
 
-.btn-up > a:hover,
-.btn-up:focus > a {
+.dark .btn-up > a {
     color: var(--main-verde);
+}
+
+.dark .btn-up > a:hover,
+.dark .btn-up:focus > a {
+    color: var(--main-gris);
 }
 
 .dark .spinner-border {
