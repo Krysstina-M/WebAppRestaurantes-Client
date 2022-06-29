@@ -16,6 +16,7 @@
                 <button
                     class="btn btn-primary me-2"
                     type="button"
+                    v-show="restaurantes != ''"
                     @click="ordenarPorNombre()"
                 >
                     <i
@@ -32,6 +33,7 @@
                 <button
                     class="btn btn-primary ms-2"
                     type="button"
+                    v-show="restaurantes != ''"
                     @click="ordenarPorCodigo()"
                 >
                     <i
@@ -47,77 +49,78 @@
                 </button>
             </div>
         </div>
-
         <div class="container-fluid mt-4">
-            <div
-                id="GetRestaurantes"
-                class="row row-cols-6 justify-content-center"
-                v-if="restaurantes != ''"
-            >
-                <div
-                    class="col caja p-4 m-2"
-                    v-for="restaurante in restaurantes"
-                    :key="restaurante.id"
+            <div id="GetRestaurantes" v-if="restaurantes != ''">
+                <transition-group
+                    class="row row-cols-6 justify-content-center"
+                    name="flip-list"
+                    tag="ul"
                 >
-                    <h6 class="text-start id">{{ restaurante.id }}</h6>
-                    <h5>{{ restaurante.nombre }}</h5>
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-primary" type="button">
-                            <router-link
-                                class="bi bi-eye-fill"
-                                tabindex="-1"
-                                :to="{
-                                    name: 'restaurante',
-                                    params: {
-                                        id: restaurante.id,
-                                    },
-                                }"
-                            >
-                                Ver
-                            </router-link>
-                        </button>
-                        <button class="btn btn-primary" type="button">
-                            <router-link
-                                class="bi bi-pencil-fill"
-                                tabindex="-1"
-                                :to="{
-                                    name: 'modificar-restaurante',
-                                    params: { id: restaurante.id },
-                                }"
-                            >
-                                Modificar
-                            </router-link>
-                        </button>
-                        <button
-                            class="btn btn-primary"
-                            type="button"
-                            v-if="idEliminar != restaurante.id"
-                            @click="eliminarRestaurante(restaurante.id)"
-                        >
-                            <i class="bi bi-trash-fill"></i> Eliminar
-                        </button>
-                        <div class="container-fluid" v-else>
-                            <!--Si se le ha dado click a "Eliminar", el botón desaparece"-->
-                            <p>¿Estás seguro de que quieres borrarlo?</p>
-                            <div class="btn-group gap-2 mb-4">
-                                <button
-                                    class="btn btn-primary"
-                                    type="button"
-                                    @click="siBorrar(restaurante.id)"
+                    <div
+                        class="col caja p-4 m-2"
+                        v-for="restaurante in restaurantes"
+                        :key="restaurante.id"
+                    >
+                        <h6 class="text-start id">{{ restaurante.id }}</h6>
+                        <h5>{{ restaurante.nombre }}</h5>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary" type="button">
+                                <router-link
+                                    class="bi bi-eye-fill"
+                                    tabindex="-1"
+                                    :to="{
+                                        name: 'restaurante',
+                                        params: {
+                                            id: restaurante.id,
+                                        },
+                                    }"
                                 >
-                                    Sí
-                                </button>
-                                <button
-                                    class="btn btn-primary"
-                                    type="button"
-                                    @click="noBorrar()"
+                                    Ver
+                                </router-link>
+                            </button>
+                            <button class="btn btn-primary" type="button">
+                                <router-link
+                                    class="bi bi-pencil-fill"
+                                    tabindex="-1"
+                                    :to="{
+                                        name: 'modificar-restaurante',
+                                        params: { id: restaurante.id },
+                                    }"
                                 >
-                                    No
-                                </button>
+                                    Modificar
+                                </router-link>
+                            </button>
+                            <button
+                                class="btn btn-primary"
+                                type="button"
+                                v-if="idEliminar != restaurante.id"
+                                @click="eliminarRestaurante(restaurante.id)"
+                            >
+                                <i class="bi bi-trash-fill"></i> Eliminar
+                            </button>
+                            <div class="container-fluid" v-else>
+                                <!--Si se le ha dado click a "Eliminar", el botón desaparece"-->
+                                <p>¿Estás seguro de que quieres borrarlo?</p>
+                                <div class="btn-group gap-2 mb-4">
+                                    <button
+                                        class="btn btn-primary"
+                                        type="button"
+                                        @click="siBorrar(restaurante.id)"
+                                    >
+                                        Sí
+                                    </button>
+                                    <button
+                                        class="btn btn-primary"
+                                        type="button"
+                                        @click="noBorrar()"
+                                    >
+                                        No
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </transition-group>
             </div>
             <div class="spinner-border" role="status" v-else-if="hay">
                 <span class="visually-hidden">Cargando restaurantes...</span>
@@ -329,6 +332,11 @@ export default {
 </script>
 
 <style>
+/*Transición*/
+.flip-list-move {
+    transition: transform 1s;
+}
+
 /*Lista de restaurantes*/
 .caja {
     border: var(--main-border);

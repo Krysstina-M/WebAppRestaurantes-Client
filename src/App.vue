@@ -102,13 +102,15 @@
         <img src="../dist/logo.png" />
 
         <!--Router-->
-        <router-view></router-view>
+        <transition name="component-fade" mode="out-in">
+            <router-view></router-view>
+        </transition>
     </div>
 </template>
 
 <script>
-//TODO meter transiciones
-//TODO cambiar los methods de onclick a watch
+//TODO las funciones que son iguales meterlas en un archivo aparte de js
+//TODO los componentes que son iguales meterlas en un archivo aparte de js
 //TODO arreglar lo de los tamaños de pantalla
 //TODO hacer login y registro
 //TODO Meter imagen en la BD
@@ -191,6 +193,17 @@ export default {
     font-family: "Avenir", Helvetica, Arial, sans-serif;
     text-align: center;
     color: var(--main-gris);
+}
+
+/*Transiciones*/
+.component-fade-enter-active,
+.component-fade-leave-active {
+    transition: opacity 0.3s ease;
+}
+
+.component-fade-enter,
+.component-fade-leave-to {
+    opacity: 0;
 }
 
 /*Focus*/
