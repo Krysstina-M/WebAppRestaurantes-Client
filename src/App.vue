@@ -34,7 +34,7 @@
                     data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent"
                 >
-                    <span class="navbar-toggler-icon"></span>
+                    <i class="bi bi-list"></i>
                 </button>
                 <div
                     class="navbar-collapse collapse"
@@ -107,7 +107,6 @@
 </template>
 
 <script>
-//TODO cambiar css del navbar toggler
 //TODO meter transiciones
 //TODO cambiar los methods de onclick a watch
 //TODO arreglar lo de los tamaños de pantalla
@@ -204,6 +203,10 @@ export default {
 .navbar {
     background-color: var(--main-verde);
     border: var(--main-border);
+}
+
+.navbar-toggler {
+    font-size: 25px;
 }
 
 .nav-item > a:hover,
@@ -343,6 +346,23 @@ textarea {
     background-color: var(--main-verde);
 }
 
+.modal-title > a:hover,
+.modal-title > a:focus {
+    color: white;
+}
+
+.bi-x-lg {
+    border: none;
+    background-color: inherit;
+    font-size: 20px;
+    color: var(--main-gris);
+}
+
+.bi-x-lg:hover,
+.bi-x-lg:focus {
+    color: white;
+}
+
 /*Imagen*/
 .img-pq {
     height: 100%;
@@ -372,6 +392,11 @@ textarea {
 
 .dark .navbar {
     background-color: var(--main-gris);
+}
+
+.dark .navbar-toggler {
+    color: var(--main-verde);
+    border-color: var(--main-verde);
 }
 
 .dark .nav-item > a:hover,
@@ -458,7 +483,20 @@ textarea {
     color: var(--main-verde);
 }
 
+.dark .modal-title > a:hover {
+    color: white;
+}
+
 .dark .modal-body {
     background-color: var(--main-negro);
+}
+
+.dark .bi-x-lg {
+    color: var(--main-verde);
+}
+
+.dark .bi-x-lg:hover,
+.dark .bi-x-lg:focus {
+    color: white;
 }
 </style>

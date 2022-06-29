@@ -42,7 +42,7 @@
                                 </h4>
                                 <button
                                     type="button"
-                                    class="btn-close"
+                                    class="bi bi-x-lg"
                                     data-bs-dismiss="modal"
                                 ></button>
                             </div>

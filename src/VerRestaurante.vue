@@ -70,11 +70,15 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title">
-                                    {{ restaurante.nombre }}
+                                    <a
+                                        :href="restaurante.web"
+                                        target="_blank"
+                                        >{{ restaurante.nombre }}</a
+                                    >
                                 </h4>
                                 <button
                                     type="button"
-                                    class="btn-close"
+                                    class="bi bi-x-lg"
                                     data-bs-dismiss="modal"
                                 ></button>
                             </div>
